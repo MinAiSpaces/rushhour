@@ -60,6 +60,18 @@ class Vehicle:
         self.start_row = start_row
         self.length = length
         self.is_carter = is_carter
+        self.location = self.update_location(start_col, start_row)
+    
+    def update_location(self, col, row):
+        location = []
+
+        for i in range(self.length):
+            if self.orientation == Orientation.HORIZONTAL:
+                location.append((row, col + i))
+            else:
+                location.append((row + i, col))
+        
+        return location
 
 
 def get_board_size_from_filename(filename):
