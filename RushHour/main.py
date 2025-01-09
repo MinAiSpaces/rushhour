@@ -3,6 +3,8 @@ from enum import Enum
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 
 
 class Orientation(Enum):
@@ -35,9 +37,10 @@ class Board:
         self.size = size
         self.vehicles = {}
         self.steps = []
-        self.locations = np.zeros((self.size, self.size), dtype='object')
+        self.locations = np.zeros((self.size, self.size), dtype='int')
 
     def add_vehicle(self, name, vehicle):
+        id = len(self.vehicles) + 1 if name != 'X' else -1
         self.vehicles[name] = vehicle
 
         for i in range(vehicle.length):
@@ -45,12 +48,54 @@ class Board:
             row = vehicle.start_row
 
             if vehicle.orientation == Orientation.HORIZONTAL:
-                self.locations[row, col + i] = name
+                self.locations[row, col + i] = id
             else:
-                self.locations[row + i, col] = name
+                self.locations[row + i, col] = id
 
     def move_vehicle(self):
         pass
+    
+    def plot_board(self):
+        
+
+
+        #https://stackoverflow.com/questions/43971138/python-plotting-colored-grid-based-on-values
+        # data = np.random.rand(10, 10) * 20
+        # create discrete colormap
+        cmap = mcolors.ListedColormap(['green', 'yellow', 'blue', 'orange', 'purple', 'pink', 'grey', 'brown', 'beige', 'cyan', 'magenta'])
+        # cmap = mcolors.ListedColormap(list(mcolors.CSS4_COLORS.keys())[:46])
+        # bounds = [0,10,20]
+        # norm = colors.BoundaryNorm(bounds, cmap.N)
+        available_colors = ['green', 'yellow', 'blue', 'orange', 'purple', 'pink', 'grey', 'brown', 'beige', 'cyan', 'magenta']
+        grid_colors = []
+
+        color='white'
+        for row in self.locations:
+            for cell in row:
+
+                if cell == -1:
+                    color = 'red'
+                elif cell == 0:
+                    color = 'white'
+                else:
+                    num = (len(available_colors) - 1) % cell
+                    print(num)
+                    color = available_colors[num]
+            
+                grid_colors.append(color)
+
+        cmap = mcolors.ListedColormap(grid_colors)
+        print(cmap)
+        fig, ax = plt.subplots()
+        ax.imshow(self.locations, cmap=cmap)
+
+        # draw gridlines
+        ax.grid(which='major', axis='both', linestyle='-', color='k', linewidth=2)
+        ax.set_xticks(np.arange(0, self.size+1, 1));
+        ax.set_yticks(np.arange(0, self.size+1, 1));
+
+        plt.show()
+
 
 
 class Vehicle:
@@ -121,6 +166,7 @@ def main():
     board = setup_board(df_gameboard, board_size)
 
     print(board.locations)
+    board.plot_board()
 
 
 if __name__ == '__main__':
