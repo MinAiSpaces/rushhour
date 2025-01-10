@@ -38,14 +38,14 @@ class Board:
         name = vehicle.name
         self.vehicles[name] = vehicle
 
-        for i in range(vehicle.length):
-            col = vehicle.start_col
-            row = vehicle.start_row
+        coords = vehicle.location
+        self.update_locations(coords, name)
 
-            if vehicle.orientation == Orientation.HORIZONTAL:
-                self.locations[row, col + i] = name
-            else:
-                self.locations[row + i, col] = name
+    def update_locations(self, coords, value):
+        for i in range(len(coords)):
+            row, col = coords[i]
+
+            self.locations[row, col] = value
 
     def check_move_forwards(self, vehicle):
         board_boundary = self.size - 1
@@ -97,8 +97,8 @@ class Board:
             if -steps > self.check_move_backwards(vehicle):
                 raise ValueError
 
-        row_vehicle_front, col_vehicle_front = vehicle.location[-1]
-        row_vehicle_back, col_vehicle_back = vehicle.location[0]
+        old_coords = vehicle.location
+        row_vehicle_back, col_vehicle_back = old_coords[0]
 
         if steps > 0:
             if vehicle.orientation == Orientation.HORIZONTAL:
@@ -110,8 +110,11 @@ class Board:
                 vehicle.update_location(col_vehicle_back + steps, row_vehicle_back)
             else:
                 vehicle.update_location(col_vehicle_back, row_vehicle_back + steps)
-        
+
         self.steps.append((vehicle.name, steps))
+
+        self.update_locations(old_coords, 0)
+        self.update_locations(vehicle.location, vehicle.name)
 
     def plot_board(self):
 
@@ -120,9 +123,10 @@ class Board:
         fig, ax = plt.subplots()
 
         # draw gridlines
-        ax.grid(which='major', axis='both', linestyle='-', color='k', linewidth=2)
+        ax.grid(which='major', axis='both', linestyle='-', color='k', linewidth=1, zorder=0)
         ax.set_xticks(np.arange(0, self.size + 1, 1));
         ax.set_yticks(np.arange(0, self.size + 1, 1));
+        ax.invert_yaxis()
 
         # draw patches
         for idx, vehicle in enumerate(self.vehicles.values()):
@@ -130,13 +134,19 @@ class Board:
             color = available_colors[num]
             color = 'red' if vehicle.is_carter else color
 
-            ax.add_patch(Rectangle((vehicle.location[0][1], vehicle.location[0][0]),
-                                    vehicle.length if vehicle.orientation == Orientation.HORIZONTAL else 1,
-                                    vehicle.length if vehicle.orientation == Orientation.VERTICAL else 1,
-                                    edgecolor = 'black',
-                                    facecolor = color,
-                                    fill = True,
-                                    lw = 1))
+            ax.add_patch(
+                Rectangle(
+                    (vehicle.location[0][1], vehicle.location[0][0]),
+                        vehicle.length if vehicle.orientation == Orientation.HORIZONTAL else 1,
+                        vehicle.length if vehicle.orientation == Orientation.VERTICAL else 1,
+                        edgecolor='black',
+                        facecolor=color,
+                        fill=True,
+                        lw=2,
+                        zorder=5
+                ),
+
+            )
 
         plt.show()
 
