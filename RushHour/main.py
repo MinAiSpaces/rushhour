@@ -1,8 +1,8 @@
+import csv
 import os
 from enum import Enum
 
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 
@@ -54,7 +54,7 @@ class Board:
 
     def move_vehicle(self):
         pass
-    
+
     def plot_board(self):
 
         available_colors = ['green', 'yellow', 'blue', 'orange', 'purple', 'pink', 'grey', 'brown', 'beige', 'cyan', 'magenta']
@@ -65,15 +65,15 @@ class Board:
         ax.grid(which='major', axis='both', linestyle='-', color='k', linewidth=2)
         ax.set_xticks(np.arange(0, self.size + 1, 1));
         ax.set_yticks(np.arange(0, self.size + 1, 1));
-        
+
         # draw patches
         for idx, vehicle in enumerate(self.vehicles.values()):
             num = idx % len(available_colors)
             color = available_colors[num]
             color = 'red' if vehicle.is_carter else color
 
-            ax.add_patch(Rectangle((vehicle.start_col, vehicle.start_row), 
-                                    vehicle.length if vehicle.orientation == Orientation.HORIZONTAL else 1, 
+            ax.add_patch(Rectangle((vehicle.start_col, vehicle.start_row),
+                                    vehicle.length if vehicle.orientation == Orientation.HORIZONTAL else 1,
                                     vehicle.length if vehicle.orientation == Orientation.VERTICAL else 1,
                                     edgecolor = 'black',
                                     facecolor = color,
@@ -81,6 +81,19 @@ class Board:
                                     lw = 1))
 
         plt.show()
+
+    def export_steps(self, dest_file):
+        with open(dest_file, 'w') as f:
+            fieldnames = ['car', 'move']
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+
+            writer.writeheader()
+
+            for step in self.steps:
+                writer.writerow({
+                    'car': step[0],
+                    'move': step[1]
+                })
 
 
 class Vehicle:
@@ -91,7 +104,7 @@ class Vehicle:
         self.length = length
         self.is_carter = is_carter
         self.location = self.update_location(start_col, start_row)
-    
+
     def update_location(self, col, row):
         location = []
 
@@ -100,7 +113,7 @@ class Vehicle:
                 location.append((row, col + i))
             else:
                 location.append((row + i, col))
-        
+
         return location
 
 
@@ -110,18 +123,18 @@ def get_board_size_from_filename(filename):
     return int(name_first_part.split('x')[1])
 
 
-def setup_board(df_gameboard, board_size):
+def setup_board(board_size, data):
     board = Board(board_size)
 
-    for car_name, orientation, start_col, start_row, length in zip(
-            df_gameboard['car'],
-            df_gameboard['orientation'],
-            df_gameboard['col'],
-            df_gameboard['row'],
-            df_gameboard['length'],
-    ):
-        start_col -= 1
-        start_row -= 1
+    for data_row in data:
+        car_name = data_row['car'].upper()
+        orientation = data_row['orientation'].upper()
+        col = int(data_row['col'])
+        row = int(data_row['row'])
+        length = int(data_row['length'])
+
+        start_col = col - 1
+        start_row = row - 1
         orientation = Orientation.HORIZONTAL if orientation == 'H' else Orientation.VERTICAL
         is_carter = car_name == 'X'
 
@@ -131,12 +144,13 @@ def setup_board(df_gameboard, board_size):
 
 
 def load_board_from_csv(filename_path):
-    df = pd.read_csv(filename_path)
+    data = None
 
-    df['car'] = df['car'].apply(lambda x: x.upper())
-    df['orientation'] = df['orientation'].apply(lambda x: x.upper())
+    with open(filename_path, 'r') as f:
+        reader = csv.DictReader(f, skipinitialspace=True)
+        data = list(reader)
 
-    return df
+    return data
 
 
 def main():
@@ -144,14 +158,17 @@ def main():
     current_dir = os.path.dirname(__file__)
     filename_path = os.path.join(current_dir, '..', 'gameboards', filename)
 
-    df_gameboard = load_board_from_csv(filename_path)
+    data = load_board_from_csv(filename_path)
 
     board_size = get_board_size_from_filename(filename)
 
-    board = setup_board(df_gameboard, board_size)
+    board = setup_board(board_size, data)
 
     print(board.locations)
     board.plot_board()
+
+    export_file_path = os.path.join(current_dir, '..', 'output', f'Steps_{filename}')
+    board.export_steps(export_file_path)
 
 
 if __name__ == '__main__':
