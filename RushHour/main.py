@@ -115,6 +115,8 @@ class Board:
                 vehicle.update_location(col_vehicle_back + steps, row_vehicle_back)
             else:
                 vehicle.update_location(col_vehicle_back, row_vehicle_back + steps)
+        
+        self.steps.append((vehicle.name, steps))
 
     def plot_board(self):
 
@@ -144,7 +146,7 @@ class Board:
         plt.show()
 
     def export_steps(self, dest_file):
-        with open(dest_file, 'w') as f:
+        with open(dest_file, 'w', newline='') as f:
             fieldnames = ['car', 'move']
             writer = csv.DictWriter(f, fieldnames=fieldnames)
 
@@ -239,13 +241,17 @@ def main():
 
     print(vehicle_b.location)
     print(board.check_move_forwards(vehicle_b))
+    board.move_vehicle(vehicle_b, 2)
     print(board.check_move_backwards(vehicle_b))
 
     print(vehicle_a.location)
     board.move_vehicle(vehicle_a, 3)
+    board.move_vehicle(vehicle_a, -1)
     print(vehicle_a.location)
 
+    print(board.steps)
     board.plot_board()
+    board.export_steps(export_file_path)
 
 
 if __name__ == '__main__':
