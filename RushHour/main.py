@@ -52,8 +52,69 @@ class Board:
             else:
                 self.locations[row + i, col] = name
 
-    def move_vehicle(self):
-        pass
+    def check_move_forwards(self, vehicle):
+        board_boundary = self.size - 1
+        orientation = vehicle.orientation
+        row_vehicle_front, col_vehicle_front = vehicle.location[-1]
+
+        if orientation == Orientation.HORIZONTAL:
+            possible_steps = board_boundary - col_vehicle_front
+
+            for step in range(1, possible_steps + 1):
+                if self.locations[row_vehicle_front, col_vehicle_front + step] != 0:
+                    return step - 1
+        else:
+            possible_steps = board_boundary - row_vehicle_front
+
+            for step in range(1, possible_steps + 1):
+                if self.locations[row_vehicle_front + step, col_vehicle_front] != 0:
+                    return step - 1
+
+        return possible_steps
+
+    def check_move_backwards(self, vehicle):
+        orientation = vehicle.orientation
+        row_vehicle_back, col_vehicle_back = vehicle.location[0]
+
+        if orientation == Orientation.HORIZONTAL:
+            possible_steps = col_vehicle_back
+
+            for step in range(1, possible_steps + 1):
+                if self.locations[row_vehicle_back, col_vehicle_back - step] != 0:
+                    return step - 1
+        else:
+            possible_steps = row_vehicle_back
+
+            for step in range(1, possible_steps + 1):
+                if self.locations[row_vehicle_back - step, col_vehicle_back] != 0:
+                    return step - 1
+
+        return possible_steps
+
+    def move_vehicle(self, vehicle, steps):
+        if steps == 0:
+            raise ValueError
+
+        if steps > 0:
+            if steps > self.check_move_forwards(vehicle):
+                raise ValueError
+        else:
+            if -steps > self.check_move_backwards(vehicle):
+                raise ValueError
+
+        row_vehicle_front, col_vehicle_front = vehicle.location[-1]
+        row_vehicle_back, col_vehicle_back = vehicle.location[0]
+
+        if steps > 0:
+            if vehicle.orientation == Orientation.HORIZONTAL:
+                vehicle.update_location(col_vehicle_back + steps, row_vehicle_back)
+            else:
+                vehicle.update_location(col_vehicle_back, row_vehicle_back + steps)
+        else:
+            if vehicle.orientation == Orientation.HORIZONTAL:
+                vehicle.update_location(col_vehicle_back + steps, row_vehicle_back)
+            else:
+                vehicle.update_location(col_vehicle_back, row_vehicle_back + steps)
 
     def plot_board(self):
 
@@ -72,7 +133,7 @@ class Board:
             color = available_colors[num]
             color = 'red' if vehicle.is_carter else color
 
-            ax.add_patch(Rectangle((vehicle.start_col, vehicle.start_row),
+            ax.add_patch(Rectangle((vehicle.location[0][1], vehicle.location[0][0]),
                                     vehicle.length if vehicle.orientation == Orientation.HORIZONTAL else 1,
                                     vehicle.length if vehicle.orientation == Orientation.VERTICAL else 1,
                                     edgecolor = 'black',
@@ -104,7 +165,9 @@ class Vehicle:
         self.start_row = start_row
         self.length = length
         self.is_carter = name == 'X'
-        self.location = self.update_location(start_col, start_row)
+        self.location = []
+
+        self.update_location(start_col, start_row)
 
     def update_location(self, col, row):
         location = []
@@ -115,7 +178,7 @@ class Vehicle:
             else:
                 location.append((row + i, col))
 
-        return location
+        self.location = location
 
 
 def get_board_size_from_filename(filename):
@@ -154,9 +217,9 @@ def load_board_from_csv(filename_path):
 
 
 def main():
-    filename = 'RushHour6x6_1.csv'
+    filename = 'RushHour6x6_test.csv'
     current_dir = os.path.dirname(__file__)
-    filename_path = os.path.join(current_dir, '..', 'gameboards', filename)
+    filename_path = os.path.join(current_dir, '..', 'tests', 'gameboards', filename)
 
     data = load_board_from_csv(filename_path)
 
@@ -169,6 +232,20 @@ def main():
 
     export_file_path = os.path.join(current_dir, '..', 'output', f'Steps_{filename}')
     board.export_steps(export_file_path)
+
+    vehicle_x = board.vehicles['X']
+    vehicle_a = board.vehicles['A']
+    vehicle_b = board.vehicles['B']
+
+    print(vehicle_b.location)
+    print(board.check_move_forwards(vehicle_b))
+    print(board.check_move_backwards(vehicle_b))
+
+    print(vehicle_a.location)
+    board.move_vehicle(vehicle_a, 3)
+    print(vehicle_a.location)
+
+    board.plot_board()
 
 
 if __name__ == '__main__':
