@@ -37,10 +37,10 @@ class Board:
         self.size = size
         self.vehicles = {}
         self.steps = []
-        self.locations = np.zeros((self.size, self.size), dtype='int')
+        self.locations = np.zeros((self.size, self.size), dtype='object')
 
-    def add_vehicle(self, name, vehicle):
-        id = len(self.vehicles) + 1 if name != 'X' else -1
+    def add_vehicle(self, vehicle):
+        name = vehicle.name
         self.vehicles[name] = vehicle
 
         for i in range(vehicle.length):
@@ -48,9 +48,9 @@ class Board:
             row = vehicle.start_row
 
             if vehicle.orientation == Orientation.HORIZONTAL:
-                self.locations[row, col + i] = id
+                self.locations[row, col + i] = name
             else:
-                self.locations[row + i, col] = id
+                self.locations[row + i, col] = name
 
     def move_vehicle(self):
         pass
@@ -97,12 +97,13 @@ class Board:
 
 
 class Vehicle:
-    def __init__(self, orientation, start_col, start_row, length, is_carter):
+    def __init__(self, name, orientation, start_col, start_row, length):
+        self.name = name
         self.orientation = orientation
         self.start_col = start_col
         self.start_row = start_row
         self.length = length
-        self.is_carter = is_carter
+        self.is_carter = name == 'X'
         self.location = self.update_location(start_col, start_row)
 
     def update_location(self, col, row):
@@ -136,9 +137,8 @@ def setup_board(board_size, data):
         start_col = col - 1
         start_row = row - 1
         orientation = Orientation.HORIZONTAL if orientation == 'H' else Orientation.VERTICAL
-        is_carter = car_name == 'X'
 
-        board.add_vehicle(car_name, Vehicle(orientation, start_col, start_row, length, is_carter))
+        board.add_vehicle(Vehicle(car_name, orientation, start_col, start_row, length))
 
     return board
 
