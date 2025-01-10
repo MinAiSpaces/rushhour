@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+from matplotlib.patches import Rectangle
 
 
 class Orientation(Enum):
@@ -56,46 +57,31 @@ class Board:
         pass
     
     def plot_board(self):
-        
 
-
-        #https://stackoverflow.com/questions/43971138/python-plotting-colored-grid-based-on-values
-        # data = np.random.rand(10, 10) * 20
-        # create discrete colormap
-        cmap = mcolors.ListedColormap(['green', 'yellow', 'blue', 'orange', 'purple', 'pink', 'grey', 'brown', 'beige', 'cyan', 'magenta'])
-        # cmap = mcolors.ListedColormap(list(mcolors.CSS4_COLORS.keys())[:46])
-        # bounds = [0,10,20]
-        # norm = colors.BoundaryNorm(bounds, cmap.N)
         available_colors = ['green', 'yellow', 'blue', 'orange', 'purple', 'pink', 'grey', 'brown', 'beige', 'cyan', 'magenta']
-        grid_colors = []
 
-        color='white'
-        for row in self.locations:
-            for cell in row:
-
-                if cell == -1:
-                    color = 'red'
-                elif cell == 0:
-                    color = 'white'
-                else:
-                    num = (len(available_colors) - 1) % cell
-                    print(num)
-                    color = available_colors[num]
-            
-                grid_colors.append(color)
-
-        cmap = mcolors.ListedColormap(grid_colors)
-        print(cmap)
         fig, ax = plt.subplots()
-        ax.imshow(self.locations, cmap=cmap)
 
         # draw gridlines
         ax.grid(which='major', axis='both', linestyle='-', color='k', linewidth=2)
-        ax.set_xticks(np.arange(0, self.size+1, 1));
-        ax.set_yticks(np.arange(0, self.size+1, 1));
+        ax.set_xticks(np.arange(0, self.size + 1, 1));
+        ax.set_yticks(np.arange(0, self.size + 1, 1));
+        
+        # draw patches
+        for idx, vehicle in enumerate(self.vehicles.values()):
+            num = idx % len(available_colors)
+            color = available_colors[num]
+            color = 'red' if vehicle.is_carter else color
+
+            ax.add_patch(Rectangle((vehicle.start_col, vehicle.start_row), 
+                                    vehicle.length if vehicle.orientation == Orientation.HORIZONTAL else 1, 
+                                    vehicle.length if vehicle.orientation == Orientation.VERTICAL else 1,
+                                    edgecolor = 'black',
+                                    facecolor = color,
+                                    fill = True,
+                                    lw = 1))
 
         plt.show()
-
 
 
 class Vehicle:
