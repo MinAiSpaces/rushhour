@@ -43,14 +43,14 @@ class Board:
         name = vehicle.name
         self.vehicles[name] = vehicle
 
-        for i in range(vehicle.length):
-            col = vehicle.start_col
-            row = vehicle.start_row
+        coords = vehicle.location
+        self.update_locations(coords, name)
 
-            if vehicle.orientation == Orientation.HORIZONTAL:
-                self.locations[row, col + i] = name
-            else:
-                self.locations[row + i, col] = name
+    def update_locations(self, coords, value):
+        for i in range(len(coords)):
+            row, col = coords[i]
+
+            self.locations[row, col] = value
 
     def check_move_forwards(self, vehicle):
         board_boundary = self.size - 1
@@ -102,8 +102,8 @@ class Board:
             if -steps > self.check_move_backwards(vehicle):
                 raise ValueError
 
-        row_vehicle_front, col_vehicle_front = vehicle.location[-1]
-        row_vehicle_back, col_vehicle_back = vehicle.location[0]
+        old_coords = vehicle.location
+        row_vehicle_back, col_vehicle_back = old_coords[0]
 
         if steps > 0:
             if vehicle.orientation == Orientation.HORIZONTAL:
@@ -115,8 +115,11 @@ class Board:
                 vehicle.update_location(col_vehicle_back + steps, row_vehicle_back)
             else:
                 vehicle.update_location(col_vehicle_back, row_vehicle_back + steps)
-        
+
         self.steps.append((vehicle.name, steps))
+
+        self.update_locations(old_coords, 0)
+        self.update_locations(vehicle.location, vehicle.name)
 
     def plot_board(self):
 
@@ -252,6 +255,8 @@ def main():
     print(board.steps)
     board.plot_board()
     board.export_steps(export_file_path)
+
+    print(board.locations)
 
 
 if __name__ == '__main__':
