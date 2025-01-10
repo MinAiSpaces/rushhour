@@ -125,9 +125,10 @@ class Board:
         fig, ax = plt.subplots()
 
         # draw gridlines
-        ax.grid(which='major', axis='both', linestyle='-', color='k', linewidth=2)
+        ax.grid(which='major', axis='both', linestyle='-', color='k', linewidth=1, zorder=0)
         ax.set_xticks(np.arange(0, self.size + 1, 1));
         ax.set_yticks(np.arange(0, self.size + 1, 1));
+        ax.invert_yaxis()
 
         # draw patches
         for idx, vehicle in enumerate(self.vehicles.values()):
@@ -135,13 +136,19 @@ class Board:
             color = available_colors[num]
             color = 'red' if vehicle.is_carter else color
 
-            ax.add_patch(Rectangle((vehicle.location[0][1], vehicle.location[0][0]),
-                                    vehicle.length if vehicle.orientation == Orientation.HORIZONTAL else 1,
-                                    vehicle.length if vehicle.orientation == Orientation.VERTICAL else 1,
-                                    edgecolor = 'black',
-                                    facecolor = color,
-                                    fill = True,
-                                    lw = 1))
+            ax.add_patch(
+                Rectangle(
+                    (vehicle.location[0][1], vehicle.location[0][0]),
+                        vehicle.length if vehicle.orientation == Orientation.HORIZONTAL else 1,
+                        vehicle.length if vehicle.orientation == Orientation.VERTICAL else 1,
+                        edgecolor='black',
+                        facecolor=color,
+                        fill=True,
+                        lw=2,
+                        zorder=5
+                ),
+
+            )
 
         plt.show()
 
