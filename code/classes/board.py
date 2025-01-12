@@ -135,7 +135,7 @@ class Board:
         fig, ax = plt.subplots()
 
         # draw gridlines
-        ticks = np.arange(1, self.size + 1)
+        ticks = np.arange(0, self.size + 1)
         ax.set_xticks(ticks)
         ax.set_yticks(ticks)
 
