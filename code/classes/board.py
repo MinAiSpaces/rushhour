@@ -127,6 +127,7 @@ class Board:
         ax.set_xticks(np.arange(0, self.size + 1, 1));
         ax.set_yticks(np.arange(0, self.size + 1, 1));
         ax.invert_yaxis()
+        ax.set_aspect('equal', adjustable='box')
 
         # draw patches
         for idx, vehicle in enumerate(self.vehicles.values()):
