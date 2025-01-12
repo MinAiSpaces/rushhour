@@ -28,7 +28,14 @@ class Board:
         ...
     }
     """
-    def __init__(self, size):
+    def __init__(self, size: int) -> None:
+        """
+        Initializes the Board with a size, applicable to both its width and length. 
+        Also sets up a dictionary to store vehicles (vehicle names as keys and 
+        vehicle objects as values), a list to track the movement steps of vehicles 
+        (vehicle names and step sizes as tuples), and an empty 2-D array to 
+        represent the Board's layout.
+        """
         self.size = size
         self.vehicles = {}
         self.steps = []
