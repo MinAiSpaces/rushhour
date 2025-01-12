@@ -117,36 +117,61 @@ class Board:
         self.update_locations(vehicle.location, vehicle.name)
 
     def plot_board(self):
-
-        available_colors = ['green', 'yellow', 'blue', 'orange', 'purple', 'pink', 'grey', 'brown', 'beige', 'cyan', 'magenta']
+        available_colors = [
+            'green',
+            'yellow',
+            'blue',
+            'orange',
+            'purple',
+            'limegreen',
+            'skyblue',
+            'brown',
+            'hotpink',
+            'tomato',
+            'magenta',
+            'slateblue',
+        ]
 
         fig, ax = plt.subplots()
 
         # draw gridlines
-        ax.grid(which='major', axis='both', linestyle='-', color='k', linewidth=1, zorder=0)
-        ax.set_xticks(np.arange(0, self.size + 1, 1));
-        ax.set_yticks(np.arange(0, self.size + 1, 1));
+        ticks = np.arange(0, self.size + 1)
+        ax.set_xticks(ticks)
+        ax.set_yticks(ticks)
+
+        ax.grid(linestyle='--', color='k', linewidth=1, zorder=0)
+
         ax.invert_yaxis()
-        ax.set_aspect('equal', adjustable='box')
+        ax.set_aspect('equal')
 
         # draw patches
         for idx, vehicle in enumerate(self.vehicles.values()):
             num = idx % len(available_colors)
             color = available_colors[num]
-            color = 'red' if vehicle.is_carter else color
 
-            ax.add_patch(
-                Rectangle(
-                    (vehicle.location[0][1], vehicle.location[0][0]),
-                    vehicle.length if vehicle.orientation == Orientation.HORIZONTAL else 1,
-                    vehicle.length if vehicle.orientation == Orientation.VERTICAL else 1,
-                    edgecolor='black',
-                    facecolor=color,
-                    fill=True,
-                    lw=2,
-                    zorder=5
-                ),
+            if vehicle.is_carter:
+                color = 'red'
 
+            rectangle = Rectangle(
+                (vehicle.location[0][1], vehicle.location[0][0]),
+                vehicle.length if vehicle.orientation == Orientation.HORIZONTAL else 1,
+                vehicle.length if vehicle.orientation == Orientation.VERTICAL else 1,
+                edgecolor='k',
+                facecolor=color,
+                fill=True,
+                linewidth=2,
+                zorder=5
+            )
+
+            ax.add_patch(rectangle)
+            ax.annotate(
+                vehicle.name,
+                (0.5, 0.5),
+                xycoords=rectangle,
+                color='k',
+                horizontalalignment='center',
+                verticalalignment='center_baseline',
+                zorder=10
             )
 
         plt.show()
