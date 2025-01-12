@@ -41,11 +41,16 @@ class Board:
         self.steps = []
         self.locations = np.zeros((self.size, self.size), dtype='object')
 
-    def add_vehicle(self, vehicle):
-        name = vehicle.name
+    def add_vehicle(self, vehicle: object) -> None:
+        """
+        Adds a Vehicle to the Board by storing it in the vehicles dictionary and 
+        updating the Board's layout to include the Vehicle's position.
+        """
+        name: str = vehicle.name
         self.vehicles[name] = vehicle
 
-        coords = vehicle.location
+        # save the rows and columns occupied by the vehicle
+        coords: list[tuple] = vehicle.location
         self.update_locations(coords, name)
 
     def update_locations(self, coords, value):
