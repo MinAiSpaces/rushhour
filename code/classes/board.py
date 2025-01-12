@@ -135,14 +135,14 @@ class Board:
         fig, ax = plt.subplots()
 
         # draw gridlines
-        ticks = np.arange(0, self.size + 1, 1)
+        ticks = np.arange(1, self.size + 1)
         ax.set_xticks(ticks)
         ax.set_yticks(ticks)
 
-        ax.grid(which='major', axis='both', linestyle='--', color='k', linewidth=1, zorder=0)
+        ax.grid(linestyle='--', color='k', linewidth=1, zorder=0)
 
         ax.invert_yaxis()
-        ax.set_aspect('equal', adjustable='box')
+        ax.set_aspect('equal')
 
         # draw patches
         for idx, vehicle in enumerate(self.vehicles.values()):
@@ -159,7 +159,7 @@ class Board:
                 edgecolor='k',
                 facecolor=color,
                 fill=True,
-                lw=2,
+                linewidth=2,
                 zorder=5
             )
 
