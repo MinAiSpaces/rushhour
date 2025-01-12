@@ -53,7 +53,11 @@ class Board:
         coords: list[tuple] = vehicle.location
         self.update_locations(coords, name)
 
-    def update_locations(self, coords, value):
+    def update_locations(self, coords: list[tuple], value: str) -> None:
+        """
+        Updates the Board's layout by placing the name of the Vehicle on the 
+        position.
+        """
         for i in range(len(coords)):
             row, col = coords[i]
 
