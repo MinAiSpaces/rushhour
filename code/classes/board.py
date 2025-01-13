@@ -9,24 +9,9 @@ from .vehicle import Vehicle, Orientation
 
 class Board:
     """
-    locations = [
-         1 2 3 4 5 6
-      1 [0,A,A,B,B,B],
-      2 [0,C,C,E,D,D],
-      3 [X,X,G,E,0,I=,
-      4 [F,F,G,H,H,I],
-      5 [K,0,L,0,J,J],
-      6 [K,0,L,0,0,0],
-    ]
-
-    vehicles = {
-        'A': Vehicle,
-        'B': Vehicle,
-        'C': Vehicle,
-        'D': Vehicle,
-        'E': Vehicle,
-        ...
-    }
+    This class creates a new Board object when it is called and keeps track of all the 
+    moves of the Vehicles in an internal representation, with the names of all the Vehicle 
+    objects displayed at their corresponding locations. 
     """
     def __init__(self, size: int) -> None:
         """
