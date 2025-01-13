@@ -10,7 +10,7 @@ class Vehicle:
     """
     Vehicle represents the cars(lenght 2) and trucks(lenght 3) on the board.
     """
-    def __init__(self, name: str, orientation: object, start_col: int, start_row: int, length: int):
+    def __init__(self, name: str, orientation: Orientation, start_col: int, start_row: int, length: int) -> None:
         """
         Uses start_col and start_row only to calculate the start location of the vehicle.
         Saves the location of the vehicle in a list of tuples containing all the
@@ -23,11 +23,11 @@ class Vehicle:
         self.start_row = start_row
         self.length = length
         self.is_carter = name == 'X'
-        self.location = []
+        self.location: list[tuple] = []
 
         self.update_location(start_col, start_row)
 
-    def update_location(self, col: int, row: int):
+    def update_location(self, col: int, row: int) -> None:
         """
         Updates the location of the Vehicle starting at row,col.
         Col and row represent the coordinates of the back of the car.
@@ -41,4 +41,4 @@ class Vehicle:
             else:
                 location.append((row + i, col))
 
-        self.location: list[tuple] = location
+        self.location = location
