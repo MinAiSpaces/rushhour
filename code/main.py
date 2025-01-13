@@ -15,7 +15,7 @@ def get_board_size_from_filename(filename: str) -> int:
     return int(name_first_part.split('x')[1])
 
 
-def setup_board(board_size, data):
+def setup_board(board_size: int, data: list[dict]) -> Board:
     """
     Initialize a new board and add all vehicles from data to the board.
     """
