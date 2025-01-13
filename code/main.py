@@ -16,8 +16,12 @@ def get_board_size_from_filename(filename):
 
 
 def setup_board(board_size, data):
+    """
+    Initialize a new board and add all vehicles from data to the board.
+    """
     board = Board(board_size)
 
+    # get all parameters for the vehicles
     for data_row in data:
         car_name = data_row['car'].upper()
         orientation = data_row['orientation'].upper()
@@ -25,6 +29,7 @@ def setup_board(board_size, data):
         row = int(data_row['row'])
         length = int(data_row['length'])
 
+        # change col and row to be from 0 to 5 instead of 1 to 6 for easier plotting
         start_col = col - 1
         start_row = row - 1
         orientation = Orientation.HORIZONTAL if orientation == 'H' else Orientation.VERTICAL
