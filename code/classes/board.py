@@ -164,7 +164,12 @@ class Board:
         self.update_locations(old_coords, 0)
         self.update_locations(vehicle.location, vehicle.name)
 
-    def plot_board(self):
+    def plot_board(self) -> None:
+        """
+        Draws the Board with its size and the gridlines, and colors the 
+        locations of the Vehicles on the Board's layout with distinctive 
+        colors.
+        """
         available_colors = [
             'green',
             'yellow',
@@ -182,24 +187,27 @@ class Board:
 
         fig, ax = plt.subplots()
 
-        # draw gridlines
+        # set the labels of the axes and the corresponding gridlines
         ticks = np.arange(0, self.size + 1)
         ax.set_xticks(ticks)
         ax.set_yticks(ticks)
-
         ax.grid(linestyle='--', color='k', linewidth=1, zorder=0)
 
         ax.invert_yaxis()
+
+        # make the board square
         ax.set_aspect('equal')
 
-        # draw patches
         for idx, vehicle in enumerate(self.vehicles.values()):
+
+            # prevent adjacent vehicles from having the same color
             num = idx % len(available_colors)
             color = available_colors[num]
 
             if vehicle.is_carter:
                 color = 'red'
 
+            # create the vehicle's patch over the grid
             rectangle = Rectangle(
                 (vehicle.location[0][1], vehicle.location[0][0]),
                 vehicle.length if vehicle.orientation == Orientation.HORIZONTAL else 1,
@@ -212,6 +220,8 @@ class Board:
             )
 
             ax.add_patch(rectangle)
+
+            # place the vehicle's name in the middle of the patch
             ax.annotate(
                 vehicle.name,
                 (0.5, 0.5),
