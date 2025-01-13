@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 
-from .vehicle import Orientation
+from .vehicle import Vehicle, Orientation
 
 
 class Board:
@@ -41,7 +41,7 @@ class Board:
         self.steps = []
         self.locations = np.zeros((self.size, self.size), dtype='object')
 
-    def add_vehicle(self, vehicle: object) -> None:
+    def add_vehicle(self, vehicle: Vehicle) -> None:
         """
         Adds a Vehicle to the Board by storing it in the vehicles dictionary and 
         updating the Board's layout to include the Vehicle's position.
@@ -63,7 +63,7 @@ class Board:
 
             self.locations[row, col] = name
 
-    def check_move_forwards(self, vehicle: object) -> int:
+    def check_move_forwards(self, vehicle: Vehicle) -> int:
         """
         Counts the number of possible steps a Vehicle can make forward until 
         collision with another Vehicle happens or the boundary is detected, 
@@ -71,7 +71,7 @@ class Board:
         """
         board_boundary: int = self.size - 1
         unoccupied: int = 0
-        orientation: object = vehicle.orientation
+        orientation: Orientation = vehicle.orientation
         row_vehicle_front, col_vehicle_front = vehicle.location[-1]
 
         if orientation == Orientation.HORIZONTAL:
@@ -92,14 +92,14 @@ class Board:
 
         return possible_steps
 
-    def check_move_backwards(self, vehicle: object) -> int:
+    def check_move_backwards(self, vehicle: Vehicle) -> int:
         """
         Counts the number of possible steps a Vehicle can make backward until 
         collision with another Vehicle happens or the boundary is detected, 
         and returns the number of possible steps.
         """
         unoccupied: int = 0
-        orientation: object = vehicle.orientation
+        orientation: Orientation = vehicle.orientation
         row_vehicle_back, col_vehicle_back = vehicle.location[0]
 
         if orientation == Orientation.HORIZONTAL:
@@ -119,7 +119,7 @@ class Board:
 
         return possible_steps
 
-    def move_vehicle(self, vehicle: object, steps: int) -> None:
+    def move_vehicle(self, vehicle: Vehicle, steps: int) -> None:
         """
         Checks if the Vehicle can be moved to the new location. If so, the 
         move of the Vehicle with its steps is saved and the Board's layout 
