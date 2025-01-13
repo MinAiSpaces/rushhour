@@ -22,7 +22,7 @@ class Board:
         represent the Board's layout.
         """
         self.size = size
-        self.vehicles: dict[str: Vehicle] = {}
+        self.vehicles: dict[str, Vehicle] = {}
         self.steps: list[tuple[str, int]] = []
         self.locations = np.zeros((self.size, self.size), dtype='object')
 
@@ -40,8 +40,8 @@ class Board:
 
     def update_locations(self, coords: list[tuple[int, int]], name: str) -> None:
         """
-        Updates the Board's layout by placing the name of the Vehicle on the 
-        position.
+        Updates the Board's layout by storing the name of the Vehicle on the 
+        coordinates.
         """
         for i in range(len(coords)):
             row, col = coords[i]
@@ -224,7 +224,6 @@ class Board:
         Exports all the moves of all the Vehicles to a destinated csv file.
         """
         with open(dest_file, 'w', newline='') as f:
-
             fieldnames = ['car', 'move']
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()

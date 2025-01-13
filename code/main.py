@@ -15,7 +15,7 @@ def get_board_size_from_filename(filename: str) -> int:
     return int(name_first_part.split('x')[1])
 
 
-def setup_board(board_size: int, data: list[dict]) -> Board:
+def setup_board(board_size: int, data: list[dict[str, str | int]]) -> Board:
     """
     Initialize a new board and add all vehicles from data to the board.
     """
@@ -39,7 +39,7 @@ def setup_board(board_size: int, data: list[dict]) -> Board:
     return board
 
 
-def load_board_from_csv(filename_path: str) -> list[dict]:
+def load_board_from_csv(filename_path: str) -> list[dict[str, str | int]]:
     """
     Read csv file and return as list of dictionaries.
     Every dictionary represents 1 vehicle.

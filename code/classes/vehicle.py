@@ -8,14 +8,14 @@ class Orientation(Enum):
 
 class Vehicle:
     """
-    Vehicle represents the cars(lenght 2) and trucks(lenght 3) on the board.
+    Vehicle represents the cars (length 2) and trucks (length 3) on the board.
     """
     def __init__(self, name: str, orientation: Orientation, start_col: int, start_row: int, length: int) -> None:
         """
-        Uses start_col and start_row only to calculate the start location of the vehicle.
-        Saves the location of the vehicle in a list of tuples containing all the
-        coordinates the vehicle occupies.
-        Is_carter keeps track of the red car.
+        Uses start_col and start_row only to calculate the start location of the Vehicle.
+        Saves the location of the Vehicle in a list of tuples containing all the
+        coordinates the Vehicle occupies.
+        is_carter keeps track if this Vehicle is the red car.
         """
         self.name = name
         self.orientation = orientation
@@ -29,7 +29,7 @@ class Vehicle:
 
     def update_location(self, col: int, row: int) -> None:
         """
-        Updates the location of the Vehicle starting at row,col.
+        Updates the location of the Vehicle starting at row, col.
         Col and row represent the coordinates of the back of the car.
         """
         location = []
