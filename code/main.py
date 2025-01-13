@@ -5,15 +5,23 @@ from classes import Board, Vehicle, Orientation
 from helpers import get_input_path, get_output_path, check_or_create_dir
 
 
-def get_board_size_from_filename(filename):
+def get_board_size_from_filename(filename: str) -> int:
+    """
+    Get the size of the board from the filename.
+    Filename example: 'Rushhour6x6_1.csv'.
+    """
     name_first_part = filename.split('_')[0]
 
     return int(name_first_part.split('x')[1])
 
 
-def setup_board(board_size, data):
+def setup_board(board_size: int, data: list[dict]) -> Board:
+    """
+    Initialize a new board and add all vehicles from data to the board.
+    """
     board = Board(board_size)
 
+    # get all parameters for the vehicles
     for data_row in data:
         car_name = data_row['car'].upper()
         orientation = data_row['orientation'].upper()
@@ -21,6 +29,7 @@ def setup_board(board_size, data):
         row = int(data_row['row'])
         length = int(data_row['length'])
 
+        # change col and row to be from 0 to 5 instead of 1 to 6 for easier plotting
         start_col = col - 1
         start_row = row - 1
         orientation = Orientation.HORIZONTAL if orientation == 'H' else Orientation.VERTICAL
@@ -30,7 +39,11 @@ def setup_board(board_size, data):
     return board
 
 
-def load_board_from_csv(filename_path):
+def load_board_from_csv(filename_path: str) -> list[dict]:
+    """
+    Read csv file and return as list of dictionaries.
+    Every dictionary represents 1 vehicle.
+    """
     data = None
 
     with open(filename_path, 'r') as f:
