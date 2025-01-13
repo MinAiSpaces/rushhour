@@ -92,21 +92,29 @@ class Board:
 
         return possible_steps
 
-    def check_move_backwards(self, vehicle):
-        orientation = vehicle.orientation
+    def check_move_backwards(self, vehicle: object) -> int:
+        """
+        Counts the number of possible steps a Vehicle can make backward until 
+        collision with another Vehicle happens or the boundary is detected, 
+        and returns the number of possible steps.
+        """
+        unoccupied: int = 0
+        orientation: object = vehicle.orientation
         row_vehicle_back, col_vehicle_back = vehicle.location[0]
 
         if orientation == Orientation.HORIZONTAL:
-            possible_steps = col_vehicle_back
+            possible_steps: int = col_vehicle_back
 
+            # calculate the possible steps until a barrier occurs
             for step in range(1, possible_steps + 1):
-                if self.locations[row_vehicle_back, col_vehicle_back - step] != 0:
+                if self.locations[row_vehicle_back, col_vehicle_back - step] != unoccupied:
                     return step - 1
         else:
-            possible_steps = row_vehicle_back
+            possible_steps: int = row_vehicle_back
 
+            # calculate the possible steps until a barrier occurs
             for step in range(1, possible_steps + 1):
-                if self.locations[row_vehicle_back - step, col_vehicle_back] != 0:
+                if self.locations[row_vehicle_back - step, col_vehicle_back] != unoccupied:
                     return step - 1
 
         return possible_steps
