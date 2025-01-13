@@ -234,13 +234,17 @@ class Board:
 
         plt.show()
 
-    def export_steps(self, dest_file):
+    def export_steps(self, dest_file: str) -> None:
+        """
+        Exports all the moves of all the Vehicles to a destinated csv file.
+        """
         with open(dest_file, 'w', newline='') as f:
+
             fieldnames = ['car', 'move']
             writer = csv.DictWriter(f, fieldnames=fieldnames)
-
             writer.writeheader()
 
+            # add the name of the vehicle and its step size as a row
             for step in self.steps:
                 writer.writerow({
                     'car': step[0],
