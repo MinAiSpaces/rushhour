@@ -7,7 +7,13 @@ class Orientation(Enum):
 
 
 class Vehicle:
-    def __init__(self, name, orientation, start_col, start_row, length):
+    def __init__(self, name: str, orientation: object, start_col: int, start_row: int, length: int):
+        """
+        Uses start_col and start_row only to calculate the start location of the vehicle.
+        Saves the location of the vehicle in a list of tuples containing all the
+        coordinates the vehicle occupies.
+        Is_carter keeps track of the red car.
+        """
         self.name = name
         self.orientation = orientation
         self.start_col = start_col
@@ -15,7 +21,7 @@ class Vehicle:
         self.length = length
         self.is_carter = name == 'X'
         self.location = []
-
+        
         self.update_location(start_col, start_row)
 
     def update_location(self, col, row):
