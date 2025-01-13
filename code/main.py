@@ -41,7 +41,7 @@ def setup_board(board_size: int, data: list[dict[str, str | int]]) -> Board:
 
 def load_board_from_csv(filename_path: str) -> list[dict[str, str | int]]:
     """
-    Read csv file and return as list of dictionaries.
+    Read csv file and return a list of dictionaries.
     Every dictionary represents 1 vehicle.
     """
     data = None
