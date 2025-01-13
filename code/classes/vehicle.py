@@ -23,7 +23,7 @@ class Vehicle:
         self.start_row = start_row
         self.length = length
         self.is_carter: bool = name == 'X'
-        self.location: list[tuple] = []
+        self.location: list[tuple[int, int]] = []
 
         self.update_location(start_col, start_row)
 
