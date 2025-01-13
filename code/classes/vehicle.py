@@ -7,6 +7,9 @@ class Orientation(Enum):
 
 
 class Vehicle:
+    """
+    Vehicle represents the cars(lenght 2) and trucks(lenght 3) on the board.
+    """
     def __init__(self, name: str, orientation: object, start_col: int, start_row: int, length: int):
         """
         Uses start_col and start_row only to calculate the start location of the vehicle.
