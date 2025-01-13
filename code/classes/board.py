@@ -65,9 +65,9 @@ class Board:
 
     def check_move_forwards(self, vehicle: object) -> int:
         """
-        Counts the number of possible steps a Vehicle can make until collision 
-        with another Vehicle happens or the boundary is detected, and returns 
-        the number of possible steps.
+        Counts the number of possible steps a Vehicle can make forward until 
+        collision with another Vehicle happens or the boundary is detected, 
+        and returns the number of possible steps.
         """
         board_boundary: int = self.size - 1
         unoccupied: int = 0
