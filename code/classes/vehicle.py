@@ -21,16 +21,21 @@ class Vehicle:
         self.length = length
         self.is_carter = name == 'X'
         self.location = []
-        
+
         self.update_location(start_col, start_row)
 
-    def update_location(self, col, row):
+    def update_location(self, col: int, row: int):
+        """
+        Updates the location of the Vehicle starting at row,col.
+        Col and row represent the coordinates of the back of the car.
+        """
         location = []
 
+        # save all coordinates of the vehicle
         for i in range(self.length):
             if self.orientation == Orientation.HORIZONTAL:
                 location.append((row, col + i))
             else:
                 location.append((row + i, col))
 
-        self.location = location
+        self.location: list[tuple] = location
