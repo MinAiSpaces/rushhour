@@ -22,8 +22,8 @@ class Board:
         represent the Board's layout.
         """
         self.size = size
-        self.vehicles = {}
-        self.steps = []
+        self.vehicles: dict[str: Vehicle] = {}
+        self.steps: list[tuple[str, int]] = []
         self.locations = np.zeros((self.size, self.size), dtype='object')
 
     def add_vehicle(self, vehicle: Vehicle) -> None:
@@ -35,10 +35,10 @@ class Board:
         self.vehicles[name] = vehicle
 
         # save the rows and columns occupied by the vehicle
-        coords: list[tuple] = vehicle.location
+        coords: list[tuple[int, int]] = vehicle.location
         self.update_locations(coords, name)
 
-    def update_locations(self, coords: list[tuple], name: str) -> None:
+    def update_locations(self, coords: list[tuple[int, int]], name: str) -> None:
         """
         Updates the Board's layout by placing the name of the Vehicle on the 
         position.
@@ -125,7 +125,7 @@ class Board:
             if -steps > self.check_move_backwards(vehicle):
                 raise ValueError
 
-        old_coords: list[tuple] = vehicle.location
+        old_coords: list[tuple[int, int]] = vehicle.location
         row_vehicle_back, col_vehicle_back = old_coords[0]
 
         # save the new location of the vehicle for forward steps   
