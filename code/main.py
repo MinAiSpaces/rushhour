@@ -12,7 +12,7 @@ def get_board_size_from_filename(filename: str) -> int:
     """
     name_first_part = filename.split('_')[0]
 
-    return int(name_first_part.split('x')[1])
+    return int(name_first_part.lower().split('x')[1])
 
 
 def setup_board(board_size: int, data: list[dict[str, str | int]]) -> Board:
