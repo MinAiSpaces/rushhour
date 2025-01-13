@@ -6,6 +6,10 @@ from helpers import get_input_path, get_output_path, check_or_create_dir
 
 
 def get_board_size_from_filename(filename):
+    """
+    Get the size of the board from the filename.
+    Filename example Rushhour6x6_1.csv
+    """
     name_first_part = filename.split('_')[0]
 
     return int(name_first_part.split('x')[1])
