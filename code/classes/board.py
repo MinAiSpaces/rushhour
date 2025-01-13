@@ -119,33 +119,48 @@ class Board:
 
         return possible_steps
 
-    def move_vehicle(self, vehicle, steps):
+    def move_vehicle(self, vehicle: object, steps: int) -> None:
+        """
+        Checks if the Vehicle can be moved to the new location. If so, the 
+        move of the Vehicle with its steps is saved and the Board's layout 
+        is updated with the new location. Steps can be negative.
+        """
+        
+        # check if a move is specified
         if steps == 0:
             raise ValueError
 
+        # check if the desirable forward steps does not encounter a barrier
         if steps > 0:
             if steps > self.check_move_forwards(vehicle):
                 raise ValueError
+        
+        # check if the desirable backward steps does not encounter a barrier
         else:
             if -steps > self.check_move_backwards(vehicle):
                 raise ValueError
 
-        old_coords = vehicle.location
+        old_coords: list[tuple] = vehicle.location
         row_vehicle_back, col_vehicle_back = old_coords[0]
 
+        # save the new location of the vehicle for forward steps   
         if steps > 0:
             if vehicle.orientation == Orientation.HORIZONTAL:
                 vehicle.update_location(col_vehicle_back + steps, row_vehicle_back)
             else:
                 vehicle.update_location(col_vehicle_back, row_vehicle_back + steps)
+        
+        # save the new location of the vehicle for backward steps
         else:
             if vehicle.orientation == Orientation.HORIZONTAL:
                 vehicle.update_location(col_vehicle_back + steps, row_vehicle_back)
             else:
                 vehicle.update_location(col_vehicle_back, row_vehicle_back + steps)
 
+        # save the move of the vehicle
         self.steps.append((vehicle.name, steps))
 
+        # save the new rows and columns occupied by the vehicle
         self.update_locations(old_coords, 0)
         self.update_locations(vehicle.location, vehicle.name)
 
