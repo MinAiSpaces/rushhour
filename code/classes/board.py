@@ -63,22 +63,31 @@ class Board:
 
             self.locations[row, col] = name
 
-    def check_move_forwards(self, vehicle):
-        board_boundary = self.size - 1
-        orientation = vehicle.orientation
+    def check_move_forwards(self, vehicle: object) -> int:
+        """
+        Counts the number of possible steps a Vehicle can make until collision 
+        with another Vehicle happens or the boundary is detected, and returns 
+        the number of possible steps.
+        """
+        board_boundary: int = self.size - 1
+        unoccupied: int = 0
+        orientation: object = vehicle.orientation
         row_vehicle_front, col_vehicle_front = vehicle.location[-1]
 
         if orientation == Orientation.HORIZONTAL:
-            possible_steps = board_boundary - col_vehicle_front
+            possible_steps: int = board_boundary - col_vehicle_front
 
+            # calculate the possible steps until a barrier occurs
             for step in range(1, possible_steps + 1):
-                if self.locations[row_vehicle_front, col_vehicle_front + step] != 0:
+                if self.locations[row_vehicle_front, col_vehicle_front + step] != unoccupied:
                     return step - 1
-        else:
-            possible_steps = board_boundary - row_vehicle_front
 
+        else:
+            possible_steps: int = board_boundary - row_vehicle_front
+
+            # calculate the possible steps until a barrier occurs
             for step in range(1, possible_steps + 1):
-                if self.locations[row_vehicle_front + step, col_vehicle_front] != 0:
+                if self.locations[row_vehicle_front + step, col_vehicle_front] != unoccupied:
                     return step - 1
 
         return possible_steps
