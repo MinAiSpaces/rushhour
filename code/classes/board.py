@@ -234,3 +234,15 @@ class Board:
                     'car': step[0],
                     'move': step[1]
                 })
+
+    def check_game_finished(self) -> bool:
+        """
+        Returns True if carter stands in front of the exit.
+        """
+        carter: Vehicle = self.vehicles['X']
+        board_boundary: int = self.size - 1
+
+        if self.locations[carter.start_row, board_boundary] == 'X':
+            return True
+
+        return False
