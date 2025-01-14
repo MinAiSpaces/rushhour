@@ -101,7 +101,10 @@ def main():
 
         steps.append(len(playing_board.steps))
 
+    steps.sort()
     print(len(steps))
+    print('Least amount of steps', steps[0])
+    print('Most steps', steps[-1])
     print('Average number of steps:', sum(steps) / len(steps))
 
 if __name__ == '__main__':
