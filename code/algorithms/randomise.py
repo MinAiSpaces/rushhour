@@ -1,6 +1,7 @@
 import random
 
-from classes import Vehicle, Board
+from code.classes import Vehicle, Board
+
 
 def random_moves(board: Board) -> None:
     """
