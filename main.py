@@ -2,9 +2,9 @@ import csv
 import os
 import copy
 
-from classes import Board, Vehicle, Orientation
-from helpers import get_input_path, get_output_path, check_or_create_dir
-from algorithms import random_moves
+from code.classes import Board, Vehicle, Orientation
+from code.helpers import get_input_path, get_output_path, check_or_create_dir
+from code.algorithms import random_moves
 
 
 def get_board_size_from_filename(filename: str) -> int:
@@ -92,7 +92,6 @@ def main():
 
     print(board.locations)
 
-
     steps = []
     for i in range(100):
         playing_board = copy.deepcopy(board)
@@ -106,6 +105,7 @@ def main():
     print('Least amount of steps', steps[0])
     print('Most steps', steps[-1])
     print('Average number of steps:', sum(steps) / len(steps))
+
 
 if __name__ == '__main__':
     main()
