@@ -252,3 +252,19 @@ class Board:
             return True
 
         return False
+
+    def check_available_moves(self) -> list[tuple[Vehicle, int]]:
+        """
+        Checks all possible moves for the Board and returns them.
+        """
+        possible_states = []
+
+        for vehicle in self.vehicles.values():
+
+            for possible_step in range(1, self.check_move_forwards(vehicle) + 1):
+                possible_states.append((vehicle, possible_step))
+
+            for possible_step in range(1, self.check_move_backwards(vehicle) + 1):
+                possible_states.append((vehicle, -possible_step))
+
+        return possible_states
