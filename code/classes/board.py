@@ -9,16 +9,16 @@ from .vehicle import Vehicle, Orientation
 
 class Board:
     """
-    This class creates a new Board object when it is called and keeps track of all the 
-    moves of the Vehicles in an internal representation, with the names of all the Vehicle 
-    objects displayed at their corresponding locations. 
+    This class creates a new Board object when it is called and keeps track of all the
+    moves of the Vehicles in an internal representation, with the names of all the Vehicle
+    objects displayed at their corresponding locations.
     """
     def __init__(self, size: int) -> None:
         """
-        Initializes the Board with a size, applicable to both its width and length. 
-        Also sets up a dictionary to store vehicles (vehicle names as keys and 
-        vehicle objects as values), a list to track the movement steps of vehicles 
-        (vehicle names and step sizes as tuples), and an empty 2-D array to 
+        Initializes the Board with a size, applicable to both its width and length.
+        Also sets up a dictionary to store vehicles (vehicle names as keys and
+        vehicle objects as values), a list to track the movement steps of vehicles
+        (vehicle names and step sizes as tuples), and an empty 2-D array to
         represent the Board's layout.
         """
         self.size = size
@@ -28,7 +28,7 @@ class Board:
 
     def add_vehicle(self, vehicle: Vehicle) -> None:
         """
-        Adds a Vehicle to the Board by storing it in the vehicles dictionary and 
+        Adds a Vehicle to the Board by storing it in the vehicles dictionary and
         updating the Board's layout to include the Vehicle's position.
         """
         name: str = vehicle.name
@@ -40,7 +40,7 @@ class Board:
 
     def update_locations(self, coords: list[tuple[int, int]], name: str) -> None:
         """
-        Updates the Board's layout by storing the name of the Vehicle on the 
+        Updates the Board's layout by storing the name of the Vehicle on the
         coordinates.
         """
         for i in range(len(coords)):
@@ -50,8 +50,8 @@ class Board:
 
     def check_move_forwards(self, vehicle: Vehicle) -> int:
         """
-        Counts the number of possible steps a Vehicle can make forward until 
-        collision with another Vehicle happens or the boundary is detected, 
+        Counts the number of possible steps a Vehicle can make forward until
+        collision with another Vehicle happens or the boundary is detected,
         and returns the number of possible steps.
         """
         board_boundary: int = self.size - 1
@@ -79,8 +79,8 @@ class Board:
 
     def check_move_backwards(self, vehicle: Vehicle) -> int:
         """
-        Counts the number of possible steps a Vehicle can make backward until 
-        collision with another Vehicle happens or the boundary is detected, 
+        Counts the number of possible steps a Vehicle can make backward until
+        collision with another Vehicle happens or the boundary is detected,
         and returns the number of possible steps.
         """
         unoccupied: int = 0
@@ -106,12 +106,12 @@ class Board:
 
     def move_vehicle(self, vehicle: Vehicle, steps: int) -> bool:
         """
-        Checks if the Vehicle can be moved to the new location. If so, the 
-        move of the Vehicle with its steps is saved and the Board's layout 
+        Checks if the Vehicle can be moved to the new location. If so, the
+        move of the Vehicle with its steps is saved and the Board's layout
         is updated with the new location. Steps can be negative.
         Returns True if carter is in front of the exit.
         """
-        
+
         # check if a move is specified
         if steps == 0:
             raise ValueError
@@ -120,7 +120,7 @@ class Board:
         if steps > 0:
             if steps > self.check_move_forwards(vehicle):
                 raise ValueError
-        
+
         # check if the desirable backward steps does not encounter a barrier
         else:
             if -steps > self.check_move_backwards(vehicle):
@@ -129,13 +129,13 @@ class Board:
         old_coords: list[tuple[int, int]] = vehicle.location
         row_vehicle_back, col_vehicle_back = old_coords[0]
 
-        # save the new location of the vehicle for forward steps   
+        # save the new location of the vehicle for forward steps
         if steps > 0:
             if vehicle.orientation == Orientation.HORIZONTAL:
                 vehicle.update_location(col_vehicle_back + steps, row_vehicle_back)
             else:
                 vehicle.update_location(col_vehicle_back, row_vehicle_back + steps)
-        
+
         # save the new location of the vehicle for backward steps
         else:
             if vehicle.orientation == Orientation.HORIZONTAL:
@@ -157,8 +157,8 @@ class Board:
 
     def plot_board(self) -> None:
         """
-        Draws the Board with its size and the gridlines, and colors the 
-        locations of the Vehicles on the Board's layout with distinctive 
+        Draws the Board with its size and the gridlines, and colors the
+        locations of the Vehicles on the Board's layout with distinctive
         colors.
         """
         available_colors = [
