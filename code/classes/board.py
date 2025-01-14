@@ -104,11 +104,12 @@ class Board:
 
         return possible_steps
 
-    def move_vehicle(self, vehicle: Vehicle, steps: int) -> None:
+    def move_vehicle(self, vehicle: Vehicle, steps: int) -> bool:
         """
         Checks if the Vehicle can be moved to the new location. If so, the 
         move of the Vehicle with its steps is saved and the Board's layout 
         is updated with the new location. Steps can be negative.
+        Returns True if carter is in front of the exit.
         """
         
         # check if a move is specified
@@ -148,6 +149,11 @@ class Board:
         # save the new rows and columns occupied by the vehicle
         self.update_locations(old_coords, 0)
         self.update_locations(vehicle.location, vehicle.name)
+
+        if vehicle.is_carter:
+            return self.check_game_finished()
+
+        return False
 
     def plot_board(self) -> None:
         """
@@ -234,3 +240,15 @@ class Board:
                     'car': step[0],
                     'move': step[1]
                 })
+
+    def check_game_finished(self) -> bool:
+        """
+        Returns True if carter stands in front of the exit.
+        """
+        carter: Vehicle = self.vehicles['X']
+        board_boundary: int = self.size - 1
+
+        if self.locations[carter.start_row, board_boundary] == 'X':
+            return True
+
+        return False
