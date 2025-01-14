@@ -1,8 +1,10 @@
 import csv
 import os
+import copy
 
 from classes import Board, Vehicle, Orientation
 from helpers import get_input_path, get_output_path, check_or_create_dir
+from algorithms import random_moves
 
 
 def get_board_size_from_filename(filename: str) -> int:
@@ -54,8 +56,8 @@ def load_board_from_csv(filename_path: str) -> list[dict[str, str | int]]:
 
 
 def main():
-    filename = 'RushHour6x6_test.csv'
-    filename_path = os.path.join(get_input_path(), 'test_boards', filename)
+    filename = 'RushHour6x6_1.csv'
+    filename_path = os.path.join(get_input_path(), 'gameboards', filename)
 
     data = load_board_from_csv(filename_path)
 
@@ -63,33 +65,47 @@ def main():
 
     board = setup_board(board_size, data)
 
-    print(board.locations)
-    board.plot_board()
+    # print(board.locations)
+    # board.plot_board()
 
-    check_or_create_dir(get_output_path())
+    # check_or_create_dir(get_output_path())
     export_file_path = os.path.join(get_output_path(), f'Steps_{filename}')
-    board.export_steps(export_file_path)
+    # board.export_steps(export_file_path)
 
-    vehicle_x = board.vehicles['X']
-    vehicle_a = board.vehicles['A']
-    vehicle_b = board.vehicles['B']
+    # vehicle_x = board.vehicles['X']
+    # vehicle_a = board.vehicles['A']
+    # vehicle_b = board.vehicles['B']
 
-    print(vehicle_b.location)
-    print(board.check_move_forwards(vehicle_b))
-    board.move_vehicle(vehicle_b, 2)
-    print(board.check_move_backwards(vehicle_b))
+    # print(vehicle_b.location)
+    # print(board.check_move_forwards(vehicle_b))
+    # board.move_vehicle(vehicle_b, 2)
+    # print(board.check_move_backwards(vehicle_b))
 
-    print(vehicle_a.location)
-    board.move_vehicle(vehicle_a, 3)
-    board.move_vehicle(vehicle_a, -1)
-    print(vehicle_a.location)
+    # print(vehicle_a.location)
+    # board.move_vehicle(vehicle_a, 3)
+    # board.move_vehicle(vehicle_a, -1)
+    # print(vehicle_a.location)
 
-    print(board.steps)
-    board.plot_board()
-    board.export_steps(export_file_path)
+    # print(board.steps)
+    # board.plot_board()
+    # board.export_steps(export_file_path)
 
     print(board.locations)
 
+
+    steps = []
+    for i in range(100):
+        playing_board = copy.deepcopy(board)
+
+        random_moves(playing_board)
+
+        steps.append(len(playing_board.steps))
+
+    steps.sort()
+    print(len(steps))
+    print('Least amount of steps', steps[0])
+    print('Most steps', steps[-1])
+    print('Average number of steps:', sum(steps) / len(steps))
 
 if __name__ == '__main__':
     main()
