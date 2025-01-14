@@ -33,7 +33,7 @@ def get_output_path() -> str:
 
 def check_or_create_dir(path_name: str) -> None:
     """
-    Helper function for checking if a folder exists and if it doesn't' to create it
+    Helper function for checking if a folder exists and if it doesn't to create it
     """
     if not os.path.exists(path_name):
         os.makedirs(path_name)
