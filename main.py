@@ -1,6 +1,7 @@
 import concurrent.futures
 import csv
 import os
+import statistics
 import time
 
 import matplotlib.pyplot as plt
@@ -152,8 +153,11 @@ def main():
     print(f'Ran {iterations} iterations in {elapsed} seconds')
     print('Least amount of steps:', steps[0])
     print('Most steps:', steps[-1])
-    print('Median:', (steps[(len(steps) - 1) // 2] + steps[len(steps) // 2]) / 2)
-    print('Average number of steps:', sum(steps) / iterations)
+    print('Average number of steps:', statistics.mean(steps))
+    print('Median:', statistics.median(steps))
+    print('Mode:', statistics.mode(steps))
+    print('Std:', statistics.stdev(steps))
+    print('Qrts:', statistics.quantiles(steps))
 
     create_plots(steps, f"{filename.split('.')[0]}_baseline.png", 50)
 
