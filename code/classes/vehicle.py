@@ -2,8 +2,8 @@ from enum import Enum
 
 
 class Orientation(Enum):
-    HORIZONTAL = 1
-    VERTICAL = 2
+    HORIZONTAL = 'H'
+    VERTICAL = 'V'
 
 
 class VehicleMoveViolationError(Exception):
@@ -34,16 +34,18 @@ class Vehicle:
 
     def update_location(self, col: int, row: int) -> None:
         """
-        Updates the location of the Vehicle starting at row, col.
-        Col and row represent the coordinates of the back of the car.
+        Updates the location of the Vehicle starting at col, row
+        Col and row represent the coordinates of the back of the car
         """
-        location = []
+        if self.orientation == Orientation.HORIZONTAL:
+            if row != self.start_row:
+                raise VehicleMoveViolationError()
+        else:
+            if col != self.start_col:
+                raise VehicleMoveViolationError()
 
-        # save all coordinates of the vehicle
-        for i in range(self.length):
-            if self.orientation == Orientation.HORIZONTAL:
-                location.append((row, col + i))
-            else:
-                location.append((row + i, col))
-
-        self.location = location
+        # Save all coordinates of the vehicle
+        if self.orientation == Orientation.HORIZONTAL:
+            self.location = [(col + i, row) for i in range(self.length)]
+        else:
+            self.location = [(col, row + i) for i in range(self.length)]
