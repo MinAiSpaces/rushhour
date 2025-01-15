@@ -7,7 +7,7 @@ import numpy as np
 
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, check_or_create_dir
-from code.algorithms import random_from_all_available_valid
+from code.algorithms import random_from_all_available_valid, random_vehicle_first
 
 
 def get_board_size_from_filename(filename: str) -> int:
