@@ -1,6 +1,7 @@
+import concurrent.futures
 import csv
 import os
-import copy
+import time
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -73,7 +74,9 @@ def create_plots(steps: list[int], filename: str,  bins: int = 25) -> None:
 
     check_or_create_dir(os.path.join(get_output_path(), 'images'))
     fname = os.path.join(get_output_path(), 'images', filename)
-    plt.savefig(fname=fname)
+
+    plt.savefig(fname=fname, dpi=300)
+
     plt.show()
 
 
@@ -114,21 +117,46 @@ def main():
 
     print(board.locations)
 
+    cpu_count = os.cpu_count()
+    max_workers = cpu_count * 10
+
+    playing_boards = {}
     steps = []
-    for i in range(100):
-        playing_board = copy.deepcopy(board)
+    iterations = 10_000
+    start = time.time()
 
-        random_from_all_available_valid(playing_board)
+    with concurrent.futures.ProcessPoolExecutor(max_workers=max_workers) as executor:
+        for i in range(iterations):
+            print(f'Adding task {i} to pool')
+            playing_boards[executor.submit(random_from_all_available_valid, board)] = i
+            # playing_boards[executor.submit(random_vehicle_first, board)] = i
 
-        steps.append(len(playing_board.steps))
+        print(f'Tasks running...')
+
+        for future in concurrent.futures.as_completed(playing_boards):
+            try:
+                solved_board = future.result()
+                num_steps = len(solved_board.steps)
+                steps.append(num_steps)
+
+                if (len(steps) % 100) == 0:
+                    print(f'Successfully solved {len(steps)} boards')
+            except Exception as exc:
+                print('Encountered error in solving boards concurrently')
+
+    elapsed = time.time() - start
 
     steps.sort()
-    print(len(steps))
-    print('Least amount of steps', steps[0])
-    print('Most steps', steps[-1])
-    print('Average number of steps:', sum(steps) / len(steps))
 
-    create_plots(steps, 'RushHour6x6_1_baseline.png')
+    print(len(steps))
+    print(f'Ran {iterations} iterations in {elapsed} seconds')
+    print('Least amount of steps:', steps[0])
+    print('Most steps:', steps[-1])
+    print('Median:', (steps[(len(steps) - 1) // 2] + steps[len(steps) // 2]) / 2)
+    print('Average number of steps:', sum(steps) / iterations)
+
+    create_plots(steps, f"{filename.split('.')[0]}_baseline.png", 50)
+
 
 if __name__ == '__main__':
     main()
