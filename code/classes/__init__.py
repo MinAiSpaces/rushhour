@@ -1,9 +1,10 @@
-from .vehicle import Vehicle, Orientation
+from .vehicle import Vehicle, VehicleMoveViolationError, Orientation
 from .board import Board
 
 
 __all__ = [
     'Vehicle',
+    'VehicleMoveViolationError',
     'Orientation',
     'Board'
 ]

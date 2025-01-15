@@ -6,6 +6,11 @@ class Orientation(Enum):
     VERTICAL = 2
 
 
+class VehicleMoveViolationError(Exception):
+    def __init__(self):
+        super().__init__('Vehicle move violation. Vehicle cannot change row or column.')
+
+
 class Vehicle:
     """
     Vehicle represents the cars (length 2) and trucks (length 3) on the board.
