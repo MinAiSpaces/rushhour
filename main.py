@@ -2,6 +2,9 @@ import csv
 import os
 import copy
 
+import matplotlib.pyplot as plt
+import numpy as np
+
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, check_or_create_dir
 from code.algorithms import random_moves
@@ -55,6 +58,25 @@ def load_board_from_csv(filename_path: str) -> list[dict[str, str | int]]:
     return data
 
 
+def create_plots(steps: list[int], filename: str,  bins: int = 25) -> None:
+    fig, axs = plt.subplots(1, 2, tight_layout=True)
+
+    axs[0].hist(steps, bins=bins)
+    axs[0].set_title('Distribution of steps')
+    axs[0].set_xlabel('Number of steps')
+    axs[0].set_ylabel('Count')
+
+    axs[1].bar(np.arange(1, len(steps)+1), steps)
+    axs[1].set_title('Sorted steps per game')
+    axs[1].set_xlabel('Sorted game index')
+    axs[1].set_ylabel('Number of steps')
+
+    check_or_create_dir(os.path.join(get_output_path(), 'images'))
+    fname = os.path.join(get_output_path(), 'images', filename)
+    plt.savefig(fname=fname)
+    plt.show()
+
+
 def main():
     filename = 'RushHour6x6_1.csv'
     filename_path = os.path.join(get_input_path(), 'gameboards', filename)
@@ -106,6 +128,7 @@ def main():
     print('Most steps', steps[-1])
     print('Average number of steps:', sum(steps) / len(steps))
 
+    create_plots(steps, 'RushHour6x6_1_baseline.png')
 
 if __name__ == '__main__':
     main()
