@@ -38,13 +38,13 @@ class Board:
         coords: list[tuple[int, int]] = vehicle.location
         self.update_locations(coords, name)
 
-    def update_locations(self, coords: list[tuple[int, int]], name: str) -> None:
+    def update_locations(self, coords: list[tuple[int, int]], name: str | int) -> None:
         """
         Updates the Board's layout by storing the name of the Vehicle on the
         coordinates.
         """
         for i in range(len(coords)):
-            row, col = coords[i]
+            col, row = coords[i]
 
             self.locations[row, col] = name
 
@@ -57,7 +57,7 @@ class Board:
         board_boundary: int = self.size - 1
         unoccupied: int = 0
         orientation: Orientation = vehicle.orientation
-        row_vehicle_front, col_vehicle_front = vehicle.location[-1]
+        col_vehicle_front, row_vehicle_front = vehicle.location[-1]
 
         if orientation == Orientation.HORIZONTAL:
             possible_steps: int = board_boundary - col_vehicle_front
@@ -85,7 +85,7 @@ class Board:
         """
         unoccupied: int = 0
         orientation: Orientation = vehicle.orientation
-        row_vehicle_back, col_vehicle_back = vehicle.location[0]
+        col_vehicle_back, row_vehicle_back = vehicle.location[0]
 
         if orientation == Orientation.HORIZONTAL:
             possible_steps: int = col_vehicle_back
@@ -127,7 +127,7 @@ class Board:
                 raise ValueError
 
         old_coords: list[tuple[int, int]] = vehicle.location
-        row_vehicle_back, col_vehicle_back = old_coords[0]
+        col_vehicle_back, row_vehicle_back = old_coords[0]
 
         # save the new location of the vehicle for forward steps
         if steps > 0:
@@ -200,7 +200,7 @@ class Board:
 
             # create the vehicle's patch over the grid
             rectangle = Rectangle(
-                (vehicle.location[0][1], vehicle.location[0][0]),
+                (vehicle.location[0][0], vehicle.location[0][1]),
                 vehicle.length if vehicle.orientation == Orientation.HORIZONTAL else 1,
                 vehicle.length if vehicle.orientation == Orientation.VERTICAL else 1,
                 edgecolor='k',
@@ -260,7 +260,6 @@ class Board:
         possible_states = []
 
         for vehicle in self.vehicles.values():
-
             for possible_step in range(1, self.check_move_forwards(vehicle) + 1):
                 possible_states.append((vehicle, possible_step))
 
