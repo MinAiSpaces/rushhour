@@ -4,7 +4,7 @@ import copy
 
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, check_or_create_dir
-from code.algorithms import random_moves
+from code.algorithms import random_from_all_available_valid
 
 
 def get_board_size_from_filename(filename: str) -> int:
@@ -96,7 +96,7 @@ def main():
     for i in range(100):
         playing_board = copy.deepcopy(board)
 
-        random_moves(playing_board)
+        random_from_all_available_valid(playing_board)
 
         steps.append(len(playing_board.steps))
 
