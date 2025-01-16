@@ -82,7 +82,7 @@ def create_plots(steps: list[int], filename: str,  bins: int = 25) -> None:
 
 
 def main():
-    filename = 'RushHour6x6_1.csv'
+    filename = 'RushHour9x9_6.csv'
     filename_path = os.path.join(get_input_path(), 'gameboards', filename)
 
     data = load_board_from_csv(filename_path)
@@ -129,8 +129,8 @@ def main():
     with concurrent.futures.ProcessPoolExecutor(max_workers=max_workers) as executor:
         for i in range(iterations):
             print(f'Adding task {i} to pool')
-            playing_boards[executor.submit(random_from_all_available_valid, board)] = i
-            # playing_boards[executor.submit(random_vehicle_first, board)] = i
+            # playing_boards[executor.submit(random_from_all_available_valid, board)] = i
+            playing_boards[executor.submit(random_vehicle_first, board)] = i
 
         print(f'Tasks running...')
 
