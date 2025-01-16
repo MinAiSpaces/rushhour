@@ -13,10 +13,10 @@
 
 - #### Implementation
 
-```python
-while not board.check_game_finished():
-    vehicle, steps = random.choice(board.check_available_moves())
-    board.move_vehicle(vehicle, steps)
+```pseudocode
+while no solution found:
+    pick a random move from all available moves for current state
+    perform the selected move
 ```
 
 ## Algorithm 2: Randomization vehicle first
@@ -32,15 +32,11 @@ while not board.check_game_finished():
 
 - ### Implementation
 
-```python
-while not board.check_game_finished():
-    vehicle_moves = {}
-
-    for vehicle, steps in board.check_available_moves():
-        vehicle_moves.setdefault(vehicle, []).append(steps)
-
-    random_vehicle = random.choice(list(vehicle_moves.keys()))
-    steps = random.choice(vehicle_moves[random_vehicle])
-
-    board.move_vehicle(random_vehicle, steps)
+```pseudocode
+while no solution found:
+    find all available moves for current state
+    collect all unique vehicles from the available moves
+    randomly select a vehicle from these unique vehicles
+    pick a random move for selected vehicle
+    perform the selected move
 ```

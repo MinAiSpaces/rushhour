@@ -11,7 +11,7 @@ The objective of the game is to move Carter forward until it reaches the border 
 
 We're implementing this game and its solvers using Python, following the object-oriented programming (OOP) paradigm.
 
-Our current setup includes two primary classes: the `Board` class and the `Vehicle` class. The `Board` class represents the game board, which is initialized with a specific size and is currently responsible for managing the placement and movement of vehicles.
+Our initial setup includes two primary classes: the `Board` class and the `Vehicle` class. The `Board` class represents the game board, which is initialized with a specific size and is responsible for managing the placement and movement of vehicles.
 The `Vehicle` class defines individual vehicle objects, tracking attributes such as their name, length, orientation, and current position on the board. This separation will hopefully allow us to handle the game mechanics in a modular way, making it easier to implement solvers and quickly test different configurations.
 
 
@@ -64,3 +64,21 @@ The `Vehicle` class defines individual vehicle objects, tracking attributes such
 
 - The game ends when Carter reaches or is placed on the outermost grid square in front of it.
 - This last move counts towards the number of moves.
+
+---
+
+## Week 1
+
+![Classes - UML Diagram - Week 1](images/Rush_Hour-UML_classes-week_1.png)
+
+---
+
+## Week 2
+
+![Classes - UML Diagram - Week 2](images/Rush_Hour-UML_classes-week_2.png)
+
+### Changes
+
+#### Additions:
+- **check_game_finished()**: Check to see if **Carter** is in the end game position
+- **check_available_moves()**: Check all available moves by iterating over vehicles and seeing which ones could make valid moves
