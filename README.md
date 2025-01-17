@@ -32,6 +32,25 @@ The project follows a modular structure for scalability and clarity:
             vehicle.py
         __init__.py
         helpers.py
+    data/
+        input/
+            gameboards/
+                Rushhour6x6_1.csv
+                Rushhour6x6_2.csv
+                Rushhour6x6_3.csv
+                Rushhour9x9_4.csv
+                Rushhour9x9_5.csv
+                Rushhour9x9_6.csv
+                Rushhour12x12_7.csv
+            test_boards/
+                Rushhour6x6_advanced_1.csv
+                Rushhour6x6_advanced_2.csv
+                Rushhour6x6_advanced_3.csv
+                Rushhour6x6_expert_1.csv
+                Rushhour6x6_expert_2.csv
+                Rushhour6x6_expert_3.csv
+                Rushhour6x6_test.csv
+        output/
     docs/
         Baseline/
             images/
@@ -51,8 +70,7 @@ The project follows a modular structure for scalability and clarity:
     README.md
 ```
 
-### Directory Breakdown
-
+### Folder and files breakdown
 
 - <rush_hour_root_folder>/
     - **`code/`**: Contains the core implementation of the game
@@ -65,7 +83,12 @@ The project follows a modular structure for scalability and clarity:
             - `vehicle.py`: Represents vehicles, tracking their attributes and movements
         - `__init__.py`
         - `helpers.py`: Utility functions to support game logic
-    - **`docs/`**: Documentation for the project’s design, planning and results
+      - **`data/`**: Data folder for ingesting game boards and storing solutions
+        - **`input/`**: Contains game boards to ingest
+            - **`gameboards/`**: Contains 7 game boards to solve.
+            - **`test_boards/`**: Contains game boards used for testing our algorithms and representation
+        - **`output/`**: Folder for storing game solutions and exporting game state visualization
+    - **`docs/`**: Documentation for the project's design, planning and results
         - **`Baseline/`**: Contains data and images related to the results of randomization algorithms
             - `images/`: Visualizations of baseline measurement results
             - `Baseline.md`: Documents the baseline results and statistical insights
