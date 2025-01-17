@@ -33,27 +33,65 @@ The project follows a modular structure for scalability and clarity:
         __init__.py
         helpers.py
     docs/
+        Baseline/
+            images/
+            Baseline.md
         images/
+        Algorithms.md
+        Representation.md
+        README.md
     tests/
+        __init__.py
         board_test.py
         vehicle_test.py
+    .editorconfig
+    .gitignore
     main.py
-    requirement.txt
+    requirements.txt
     README.md
 ```
 
 ### Directory Breakdown
-- **`code/`**: Contains the core implementation of the game
-    - **`algorithms/`**: Houses heuristic and randomization algorithms
-    - **`classes/`**: Defines the `Board` and `Vehicle` classes and their interactions
-    - `helpers.py`: Utility functions to support game logic
-- **`docs/`**: Documentation for project planning and algorithmic approaches
-- **`tests/`**: Unit tests for core functionality
-    - `board_test.py`: Tests for the `Board` class
-    - `vehicle_test.py`: Tests for the `Vehicle` class
-- **`main.py`**: Entry point for running the game
-- **`requirement.txt`**: Python package dependencies
-- **`README.md`**: This documentation file
+
+
+- <rush_hour_root_folder>/
+    - **`code/`**: Contains the core implementation of the game
+        - **`algorithms/`**: Heuristic and randomization algorithms
+            - `__init__.py`
+            - `randomize.py`: Implements randomization algorithms for solving the game
+        - **`classes/`**: Representations of the core objects
+            - `__init__.py`
+            - `board.py`: Represents the game board and manages vehicle placements and moves
+            - `vehicle.py`: Represents vehicles, tracking their attributes and movements
+        - `__init__.py`
+        - `helpers.py`: Utility functions to support game logic
+    - **`docs/`**: Documentation for the project’s design, planning and results
+        - **`Baseline/`**: Contains data and images related to the results of randomization algorithms
+            - `images/`: Visualizations of baseline measurement results
+            - `Baseline.md`: Documents the baseline results and statistical insights
+        - **`images/`**: Images used in the various documents
+        - `Algorithms.md`: Explains the solving algorithms implemented in the project
+        - `Representation.md`: Details the representation choices for modeling the game
+        - `README.md`: Overview of the documentation folder and its purpose
+    - **`tests/`**: Unit tests for ensuring the correctness of core functionality
+        - `__init__.py`
+        - `board_test.py`: Tests for the `Board` class
+        - `vehicle_test.py`: Tests for the `Vehicle` class
+    - `.editorconfig`: Defines consistent coding styles across different editors
+    - `.gitignore`: Specifies files and directories to intentionally ignore by `git`
+    - `main.py`: Entry point for running the code
+    - `requirements.txt`: Lists Python package dependencies
+    - `README.md`: This documentation file
+
+---
+
+## Additional documentation:
+- [Docs](docs)
+  - [Representation](docs/Representation.md)
+  - [Algorithms](docs/Algorithms.md)
+  - [Baseline measurements](docs/Baseline/Baseline.md)
+
+---
 
 ## Setup and Installation
 
