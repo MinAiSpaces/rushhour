@@ -31,10 +31,11 @@ def get_output_path() -> str:
     return get_path('..', 'data', 'output')
 
 
-def check_or_create_dir(path_name: str) -> None:
+def get_board_size_from_filename(filename: str) -> int:
     """
-    Helper function for checking if a folder exists and if it doesn't to create it
+    Get the size of the board from the filename.
+    Filename example: 'Rushhour6x6_1.csv'.
     """
-    if not os.path.exists(path_name):
-        os.makedirs(path_name)
+    name_first_part = filename.split('_')[0]
 
+    return int(name_first_part.lower().split('x')[1])
