@@ -1,7 +1,7 @@
 import random
 
 from code.classes import Vehicle, Board
-from randomise import free_carter
+from .heuristieken import free_carter
 
 
 def random_from_all_available_valid(board: Board) -> None:
@@ -33,7 +33,7 @@ def random_vehicle_first(board: Board) -> None:
 
         board.move_vehicle(random_vehicle, steps)
 
-def all_available_valid_finish_check(board: Board) -> None:
+def all_available_valid_finish_check(board: Board) -> Board:
     """
     Makes random moves until carter can finish the game.
     Picks a move at random from all available valid moves unless moving carter finishes the game.
@@ -45,3 +45,4 @@ def all_available_valid_finish_check(board: Board) -> None:
         else:
             vehicle, steps = random.choice(board.check_available_moves())
             board.move_vehicle(vehicle, steps)
+    return board
