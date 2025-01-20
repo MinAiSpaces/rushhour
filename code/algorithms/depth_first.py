@@ -1,4 +1,5 @@
 import copy
+import random
 
 from code.classes import Board, Vehicle
 
@@ -33,6 +34,9 @@ class DepthFirst:
         after a valid move by a Vehicle.
         """
         possible_moves: list[tuple[Vehicle, int]] = board.check_available_moves()
+
+        # avoid the same vehicle always moving forward and backward
+        random.shuffle(possible_moves)
 
         # add a new board instance to the stack for each valid move
         for vehicle, steps in possible_moves:
