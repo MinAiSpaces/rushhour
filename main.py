@@ -6,6 +6,7 @@ from code.helpers import get_input_path, get_output_path, get_board_size_from_fi
 
 from code.algorithms import random_from_all_available_valid
 from code.algorithms import DepthFirst
+from code.algorithms import BreadthFirst
 
 
 def setup_board(board_size: int, data: list[dict[str, str | int]]) -> Board:
@@ -63,11 +64,16 @@ def main():
     # board.export_steps(export_file_path)
 
     # --------------------------- Depth First ----------------------------------
-    depth = DepthFirst(board)
-    depth.run()
+    # depth = DepthFirst(board)
+    # depth.run()
 
-    print(depth.solution.locations)
+    # print(depth.solution.locations)
 
+    # --------------------------- Breadth First --------------------------------
+    breadth = BreadthFirst(board)
+    breadth.run()
+
+    print(breadth.solution.locations)
 
 if __name__ == '__main__':
     main()
