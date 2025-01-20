@@ -1,9 +1,11 @@
 import csv
 import os
 
-from code.algorithms import random_from_all_available_valid
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, get_board_size_from_filename
+
+from code.algorithms import random_from_all_available_valid
+from code.algorithms import DepthFirst
 
 
 def setup_board(board_size: int, data: list[dict[str, str | int]]) -> Board:
@@ -55,10 +57,16 @@ def main():
 
     board = setup_board(get_board_size_from_filename(filename), data)
 
-    # Run random algorithm
-    random_from_all_available_valid(board)
+    # --------------------------- Random ---------------------------------------
+    # random_from_all_available_valid(board)
 
-    board.export_steps(export_file_path)
+    # board.export_steps(export_file_path)
+
+    # --------------------------- Depth First ----------------------------------
+    depth = DepthFirst(board)
+    depth.run()
+
+    print(depth.solution.locations)
 
 
 if __name__ == '__main__':
