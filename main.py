@@ -64,16 +64,16 @@ def main():
     # board.export_steps(export_file_path)
 
     # --------------------------- Depth First ----------------------------------
-    # depth = DepthFirst(board)
-    # depth.run()
+    depth = DepthFirst(board)
+    depth.run()
 
-    # print(depth.solution.locations)
+    print(depth.solution.locations)
 
     # --------------------------- Breadth First --------------------------------
-    breadth = BreadthFirst(board)
-    breadth.run()
+    # breadth = BreadthFirst(board)
+    # breadth.run()
 
-    print(breadth.solution.locations)
+    # print(breadth.solution.locations)
 
 if __name__ == '__main__':
     main()
