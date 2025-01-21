@@ -39,6 +39,7 @@ class BreadthFirst:
             vehicle = child_state.vehicles[vehicle.name]
             child_state.move_vehicle(vehicle, steps)
 
+            # https://www.geeksforgeeks.org/how-to-fix-the-typeerror-unhashable-type-numpy-ndarray/
             if tuple(map(tuple, child_state.locations)) not in self.seen_states:
                 self.seen_states.add(tuple(map(tuple, child_state.locations)))
                 self.queue.put(child_state)
