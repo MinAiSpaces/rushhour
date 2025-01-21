@@ -18,12 +18,13 @@ def all_max_moves(board: Board) -> list[tuple[Vehicle, int]]:
     for vehicle in board.vehicles.values():
 
             # check forward movement
-            move_forwards = check_move_forwards(vehicle)
-            if board.move_forwards > 0:
+            move_forwards = board.check_move_forwards(vehicle)
+            if move_forwards > 0:
                  max_moves.append((vehicle, move_forwards))
 
+            # check backward movement
             move_backwards = board.check_move_backwards(vehicle)
-            if board.move_backwards > 0:
+            if move_backwards > 0:
                  max_moves.append((vehicle, -move_backwards))
-    print(max_moves)
+
     return max_moves
