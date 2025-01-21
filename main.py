@@ -52,7 +52,6 @@ def main():
     filename_path = os.path.join(get_input_path(), 'gameboards', filename)
     output_path = get_output_path()
     os.makedirs(output_path, exist_ok=True)
-    export_file_path = os.path.join(output_path, f'Steps_{filename}')
 
     data = load_board_from_csv(filename_path)
 
@@ -66,14 +65,14 @@ def main():
     # --------------------------- Depth First ----------------------------------
     depth = DepthFirst(board)
     depth.run()
-
-    print(depth.solution.locations)
+    export_file_path = os.path.join(output_path, f'DepthFirst_{filename}')
+    depth.solution.export_steps(export_file_path)
 
     # --------------------------- Breadth First --------------------------------
-    # breadth = BreadthFirst(board)
-    # breadth.run()
-
-    # print(breadth.solution.locations)
+    breadth = BreadthFirst(board)
+    breadth.run()
+    export_file_path = os.path.join(output_path, f'BreadthFirst_{filename}')
+    breadth.solution.export_steps(export_file_path)
 
 if __name__ == '__main__':
     main()
