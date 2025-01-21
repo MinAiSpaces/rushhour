@@ -1,7 +1,7 @@
 import random
 
 from code.classes import Vehicle, Board
-from .heuristieken import free_carter
+from .heuristieken import free_carter, all_max_moves
 
 
 def random_from_all_available_valid(board: Board) -> None:
