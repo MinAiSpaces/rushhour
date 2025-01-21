@@ -48,8 +48,8 @@ def load_board_from_csv(filename_path: str) -> list[dict[str, str | int]]:
 
 
 def main():
-    filename = 'RushHour6x6_1.csv'
-    filename_path = os.path.join(get_input_path(), 'gameboards', filename)
+    filename = 'RushHour6x6_advanced_2.csv'
+    filename_path = os.path.join(get_input_path(), 'test_boards', filename)
     output_path = get_output_path()
     os.makedirs(output_path, exist_ok=True)
 
