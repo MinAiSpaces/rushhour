@@ -1,3 +1,5 @@
+import copy
+
 from code.classes import Vehicle, Board
 
 def free_carter(board: Board) -> int | None:
@@ -32,12 +34,17 @@ def all_max_moves(board: Board) -> list[tuple[Vehicle, int]]:
 
 
 def check_useful_move(board: Board, move: tuple[Vehicle, int]):
+    new_moves: list[tuple[Vehicle, int]] = []
+    check_board = copy.deepcopy(board)
+    vehicle = check_board.vehicles[move[0].name]
 
-    moves_before = board.check_available_moves()
-    board.move_vehicle(move[0], move[1])
-    moves_after = board.check_available_moves()
+    moves_before = check_board.check_available_moves()
+    check_board.move_vehicle(vehicle, move[1])
+    moves_after = check_board.check_available_moves()
 
-    new_moves = list(set(moves_after) - set(moves_before))
-
+    differences = list(set(moves_after) - set(moves_before))
+    for move in differences:
+         if move[0] != vehicle:
+              new_moves.append(move)
 
     return new_moves
