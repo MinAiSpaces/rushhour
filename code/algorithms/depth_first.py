@@ -50,7 +50,8 @@ class DepthFirst:
 
     def run(self) -> None:
         """
-        Runs the algorithm until all possible Board states are visited.
+        Runs the algorithm until all possible Board states are visited or a solution
+        is found.
         """
         while self.states:
             current_board = self.get_next_state()
