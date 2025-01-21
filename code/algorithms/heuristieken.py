@@ -12,6 +12,7 @@ def free_carter(board: Board) -> int | None:
     if (carter.location[1][0] + available_moves) == (board.size - 1):
         return available_moves
 
+
 def all_max_moves(board: Board) -> list[tuple[Vehicle, int]]:
     max_moves = []
 
@@ -28,3 +29,15 @@ def all_max_moves(board: Board) -> list[tuple[Vehicle, int]]:
                  max_moves.append((vehicle, -move_backwards))
 
     return max_moves
+
+
+def check_useful_move(board: Board, move: tuple[Vehicle, int]):
+
+    moves_before = board.check_available_moves()
+    board.move_vehicle(move[0], move[1])
+    moves_after = board.check_available_moves()
+
+    new_moves = list(set(moves_after) - set(moves_before))
+
+
+    return new_moves
