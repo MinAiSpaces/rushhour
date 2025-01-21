@@ -8,7 +8,7 @@ import copy
 import matplotlib.pyplot as plt
 import numpy as np
 
-from code.algorithms import all_available_valid_finish_check
+from code.algorithms import all_available_valid_finish_check, all_max_moves_finish_check
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, get_board_size_from_filename
 
