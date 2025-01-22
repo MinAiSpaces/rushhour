@@ -1,5 +1,6 @@
 import csv
 import os
+import time
 
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, get_board_size_from_filename
@@ -48,8 +49,8 @@ def load_board_from_csv(filename_path: str) -> list[dict[str, str | int]]:
 
 
 def main():
-    filename = 'RushHour6x6_advanced_2.csv'
-    filename_path = os.path.join(get_input_path(), 'test_boards', filename)
+    filename = 'RushHour9x9_4.csv'
+    filename_path = os.path.join(get_input_path(), 'gameboards', filename)
     output_path = get_output_path()
     os.makedirs(output_path, exist_ok=True)
 
@@ -64,15 +65,27 @@ def main():
 
     # --------------------------- Depth First ----------------------------------
     depth = DepthFirst(board)
+
+    start_time = time.time()
+
     depth.run()
     export_file_path = os.path.join(output_path, f'DepthFirst_{filename}')
     depth.solution.export_steps(export_file_path)
 
+    end_time = time.time() - start_time
+    print(end_time)
+
     # --------------------------- Breadth First --------------------------------
     breadth = BreadthFirst(board)
+
+    start_time = time.time()
+
     breadth.run()
     export_file_path = os.path.join(output_path, f'BreadthFirst_{filename}')
     breadth.solution.export_steps(export_file_path)
+
+    end_time = time.time() - start_time
+    print(end_time)
 
 if __name__ == '__main__':
     main()
