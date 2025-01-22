@@ -8,6 +8,7 @@ from code.helpers import get_input_path, get_output_path, get_board_size_from_fi
 from code.algorithms import random_from_all_available_valid
 from code.algorithms import DepthFirst
 from code.algorithms import BreadthFirst
+from code.algorithms import AStar
 
 
 def setup_board(board_size: int, data: list[dict[str, str | int]]) -> Board:
@@ -63,26 +64,38 @@ def main():
 
     # board.export_steps(export_file_path)
 
-    # --------------------------- Depth First ----------------------------------
-    depth = DepthFirst(board)
+    # # --------------------------- Depth First ----------------------------------
+    # depth = DepthFirst(board)
+
+    # start_time = time.time()
+
+    # depth.run()
+    # export_file_path = os.path.join(output_path, f'DepthFirst_{filename}')
+    # depth.solution.export_steps(export_file_path)
+
+    # end_time = time.time() - start_time
+    # print(end_time)
+
+    # # --------------------------- Breadth First --------------------------------
+    # breadth = BreadthFirst(board)
+
+    # start_time = time.time()
+
+    # breadth.run()
+    # export_file_path = os.path.join(output_path, f'BreadthFirst_{filename}')
+    # breadth.solution.export_steps(export_file_path)
+
+    # end_time = time.time() - start_time
+    # print(end_time)
+
+    # --------------------------- A-Star ---------------------------------------
+    astar = AStar(board)
 
     start_time = time.time()
 
-    depth.run()
-    export_file_path = os.path.join(output_path, f'DepthFirst_{filename}')
-    depth.solution.export_steps(export_file_path)
-
-    end_time = time.time() - start_time
-    print(end_time)
-
-    # --------------------------- Breadth First --------------------------------
-    breadth = BreadthFirst(board)
-
-    start_time = time.time()
-
-    breadth.run()
-    export_file_path = os.path.join(output_path, f'BreadthFirst_{filename}')
-    breadth.solution.export_steps(export_file_path)
+    astar.run()
+    export_file_path = os.path.join(output_path, f'AStar_{filename}')
+    astar.solution.export_steps(export_file_path)
 
     end_time = time.time() - start_time
     print(end_time)
