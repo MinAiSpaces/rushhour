@@ -1,9 +1,13 @@
 import csv
 import os
+import time
 
-from code.algorithms import random_from_all_available_valid
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, get_board_size_from_filename
+
+from code.algorithms import random_from_all_available_valid
+from code.algorithms import DepthFirst
+from code.algorithms import BreadthFirst
 
 
 def setup_board(board_size: int, data: list[dict[str, str | int]]) -> Board:
@@ -45,21 +49,43 @@ def load_board_from_csv(filename_path: str) -> list[dict[str, str | int]]:
 
 
 def main():
-    filename = 'RushHour6x6_1.csv'
+    filename = 'RushHour9x9_4.csv'
     filename_path = os.path.join(get_input_path(), 'gameboards', filename)
     output_path = get_output_path()
     os.makedirs(output_path, exist_ok=True)
-    export_file_path = os.path.join(output_path, f'Steps_{filename}')
 
     data = load_board_from_csv(filename_path)
 
     board = setup_board(get_board_size_from_filename(filename), data)
 
-    # Run random algorithm
-    random_from_all_available_valid(board)
+    # --------------------------- Random ---------------------------------------
+    # random_from_all_available_valid(board)
 
-    board.export_steps(export_file_path)
+    # board.export_steps(export_file_path)
 
+    # --------------------------- Depth First ----------------------------------
+    depth = DepthFirst(board)
+
+    start_time = time.time()
+
+    depth.run()
+    export_file_path = os.path.join(output_path, f'DepthFirst_{filename}')
+    depth.solution.export_steps(export_file_path)
+
+    end_time = time.time() - start_time
+    print(end_time)
+
+    # --------------------------- Breadth First --------------------------------
+    breadth = BreadthFirst(board)
+
+    start_time = time.time()
+
+    breadth.run()
+    export_file_path = os.path.join(output_path, f'BreadthFirst_{filename}')
+    breadth.solution.export_steps(export_file_path)
+
+    end_time = time.time() - start_time
+    print(end_time)
 
 if __name__ == '__main__':
     main()
