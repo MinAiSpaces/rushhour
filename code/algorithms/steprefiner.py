@@ -7,7 +7,7 @@ from .breadth_first import BreadthFirst
 
 
 class StepRefiner:
-    def __init__(self, board: Board, bin_size: int=10):
+    def __init__(self, board: Board, bin_size: int=20):
         if not board.check_game_finished():
             raise Exception("StepRefiner requires a solved board.")
 
@@ -40,32 +40,31 @@ class StepRefiner:
         """
         Runs the StepRefiner.
         """
+        # list[list[tuple[str, int]]]
+        all_new_steps = []
+        #list[tuple[str, int]]
         new_steps = []
 
         for bin in range(self.bins):
-            self.board.steps = []
-            old_state = self.board.locations
+            old_state = copy.deepcopy(self.board.locations)
             self.rewind_board(self.bin_size)
+            self.board.steps = []
 
-            # BreadthFirst till old_state
             breadth = BreadthFirst(self.board)
             breadth.run(old_state)
+            all_new_steps.append(breadth.solution.steps)
 
-            # save steps
-            for step in breadth.solution.steps:
-                new_steps.append(step)
-
-        self.board.steps = []
-        old_state = self.board.locations
+        old_state = copy.deepcopy(self.board.locations)
         self.rewind_board(self.last_bin_size)
+        self.board.steps = []
 
-        # BreadthFirst till old_state
         breadth = BreadthFirst(self.board)
         breadth.run(old_state)
+        all_new_steps.append(breadth.solution.steps)
 
-        # save steps
-        for step in breadth.solution.steps:
+        # save steps in correct order
+        for list in reversed(all_new_steps):
+            for step in list:
                 new_steps.append(step)
 
-        ### TO DO: make the order of steps correct
         self.board.steps = new_steps
