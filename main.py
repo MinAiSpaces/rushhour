@@ -4,8 +4,7 @@ import time
 
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, get_board_size_from_filename
-
-from code.algorithms import DepthFirst, BreadthFirst
+from code.algorithms import random_from_all_available_valid, DepthFirst, BreadthFirst
 
 
 def setup_board(board_size: int, data: list[dict[str, str | int]]) -> Board:
