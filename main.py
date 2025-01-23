@@ -8,7 +8,7 @@ import copy
 import matplotlib.pyplot as plt
 import numpy as np
 
-from code.algorithms import all_available_valid_finish_check, all_max_moves_finish_check
+from code.algorithms import all_available_valid_finish_check, all_max_moves_finish_check, StepRefiner
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, get_board_size_from_filename
 
@@ -83,6 +83,14 @@ def main():
 
     board = setup_board(get_board_size_from_filename(filename), data)
 
+    print(board.locations)
+    all_max_moves_finish_check(board)
+    print(board.locations)
+    step_refiner = StepRefiner(board)
+    step_refiner.rewind_board(len(board.steps))
+    print(step_refiner.board.locations)
+
+
     # steps = []
     # for i in range(1000):
     #     if i % 50 == 0:
@@ -92,48 +100,48 @@ def main():
     #     steps.append(len(game_board.steps))
 
 
-    cpu_count = os.cpu_count()
-    max_workers = cpu_count * 3
+    # cpu_count = os.cpu_count()
+    # max_workers = cpu_count * 3
 
-    playing_boards = {}
-    steps = []
-    iterations = 10_000
-    start = time.time()
+    # playing_boards = {}
+    # steps = []
+    # iterations = 10_000
+    # start = time.time()
 
-    with concurrent.futures.ProcessPoolExecutor(max_workers=max_workers) as executor:
-        for i in range(iterations):
-            print(f'Adding task {i} to pool')
-            game_board = copy.deepcopy(board)
-            playing_boards[executor.submit(all_available_valid_finish_check, game_board)] = i
+    # with concurrent.futures.ProcessPoolExecutor(max_workers=max_workers) as executor:
+    #     for i in range(iterations):
+    #         print(f'Adding task {i} to pool')
+    #         game_board = copy.deepcopy(board)
+    #         playing_boards[executor.submit(all_available_valid_finish_check, game_board)] = i
 
-        print(f'Tasks running...')
+    #     print(f'Tasks running...')
 
-        for future in concurrent.futures.as_completed(playing_boards):
-            try:
-                solved_board = future.result()
-                num_steps = len(solved_board.steps)
-                steps.append(num_steps)
+    #     for future in concurrent.futures.as_completed(playing_boards):
+    #         try:
+    #             solved_board = future.result()
+    #             num_steps = len(solved_board.steps)
+    #             steps.append(num_steps)
 
-                if (len(steps) % 100) == 0:
-                    print(f'Successfully solved {len(steps)} boards')
-            except Exception as exc:
-                print('Encountered error in solving boards concurrently')
+    #             if (len(steps) % 100) == 0:
+    #                 print(f'Successfully solved {len(steps)} boards')
+    #         except Exception as exc:
+    #             print('Encountered error in solving boards concurrently')
 
-    elapsed = time.time() - start
+    # elapsed = time.time() - start
 
-    steps.sort()
+    # steps.sort()
 
-    print(len(steps))
-    print(f'Ran {iterations} iterations in {elapsed} seconds')
-    print('Least amount of steps:', steps[0])
-    print('Most steps:', steps[-1])
-    print('Average number of steps:', statistics.mean(steps))
-    print('Median:', statistics.median(steps))
-    print('Mode:', statistics.mode(steps))
-    print('Std:', statistics.stdev(steps))
-    print('Qrts:', statistics.quantiles(steps))
+    # print(len(steps))
+    # print(f'Ran {iterations} iterations in {elapsed} seconds')
+    # print('Least amount of steps:', steps[0])
+    # print('Most steps:', steps[-1])
+    # print('Average number of steps:', statistics.mean(steps))
+    # print('Median:', statistics.median(steps))
+    # print('Mode:', statistics.mode(steps))
+    # print('Std:', statistics.stdev(steps))
+    # print('Qrts:', statistics.quantiles(steps))
 
-    create_plots(steps, f"{filename.split('.')[0]}_baseline.png", 50)
+    # create_plots(steps, f"{filename.split('.')[0]}_baseline.png", 50)
 
 
 if __name__ == '__main__':
