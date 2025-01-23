@@ -5,11 +5,7 @@ import copy
 
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, get_board_size_from_filename
-
-from code.algorithms import random_from_all_available_valid
-from code.algorithms import DepthFirst
-from code.algorithms import BreadthFirst
-from code.algorithms import StepRefiner
+from code.algorithms import random_from_all_available_valid, DepthFirst, BreadthFirst, StepRefiner
 
 
 def setup_board(board_size: int, data: list[dict[str, str | int]]) -> Board:
@@ -102,6 +98,7 @@ def main():
 
     # end_time = time.time() - start_time
     # print(f'Step refiner used {end_time} seconds')
+
 
 
 if __name__ == '__main__':
