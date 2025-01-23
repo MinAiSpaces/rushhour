@@ -2,6 +2,7 @@ from .randomise import random_from_all_available_valid, random_vehicle_first, al
 from .heuristieken import check_useful_move, free_carter, all_max_moves
 from .depth_first import DepthFirst
 from .breadth_first import BreadthFirst
+from .steprefiner import StepRefiner
 
 
 __all__ = [

@@ -1,6 +1,8 @@
 import queue
 import copy
 
+import numpy as np
+
 from code.classes import Board, Vehicle
 
 
@@ -44,17 +46,24 @@ class BreadthFirst:
                 self.seen_states.add(tuple(map(tuple, child_state.locations)))
                 self.queue.put(child_state)
 
-    def run(self) -> None:
+    def run(self, finish: np.array = None) -> None:
         """
         Runs the algorithm until all possible Board states are visited or a solution
         is found.
+        Solution is check_game_finished method unless a np.array is given.
         """
         while not self.queue.empty():
             next_state = self.queue.get()
 
             # stop if we find a solution
-            if next_state.check_game_finished():
-                break
+            if np.any(finish):
+                if np.array_equal(next_state.locations, finish):
+                    print('state found')
+                    break
+
+            else:
+                if next_state.check_game_finished():
+                    break
 
             self.build_children(next_state)
 
