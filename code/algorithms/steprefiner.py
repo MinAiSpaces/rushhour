@@ -3,10 +3,11 @@ import copy
 import numpy as np
 
 from code.classes import Vehicle, Board
+from .breadth_first import BreadthFirst
 
 
 class StepRefiner:
-    def __init__(self, board: Board, bin_size: int=20):
+    def __init__(self, board: Board, bin_size: int=10):
         if not board.check_game_finished():
             raise Exception("StepRefiner requires a solved board.")
 
@@ -45,11 +46,26 @@ class StepRefiner:
             self.board.steps = []
             old_state = self.board.locations
             self.rewind_board(self.bin_size)
+
             # BreadthFirst till old_state
-            # save steps (think of order)
+            breadth = BreadthFirst(self.board)
+            breadth.run(old_state)
+
+            # save steps
+            for step in breadth.solution.steps:
+                new_steps.append(step)
 
         self.board.steps = []
         old_state = self.board.locations
         self.rewind_board(self.last_bin_size)
+
         # BreadthFirst till old_state
-        # save steps (think of order)
+        breadth = BreadthFirst(self.board)
+        breadth.run(old_state)
+
+        # save steps
+        for step in breadth.solution.steps:
+                new_steps.append(step)
+
+        ### TO DO: make the order of steps correct
+        self.board.steps = new_steps
