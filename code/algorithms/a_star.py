@@ -54,6 +54,7 @@ class AStar:
 
                 # add the state with its cost and heur to the heap queue
                 heapq.heappush(self.queue, (total_score, depth + 1, random.random(), child_state))
+                score = depth + 1 + num_blocking_vehicles(child_state)
 
     def run(self) -> None:
         """
