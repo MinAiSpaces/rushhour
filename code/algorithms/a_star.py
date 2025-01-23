@@ -32,12 +32,6 @@ class AStar:
         self.seen_states = set()
         self.solution = None
 
-    def is_solved(self, state: Board) -> bool:
-        """
-
-        """
-        return num_blocking_vehicles(state) == 0
-
     def build_children(self, next_state: Board, depth: int) -> None:
         """
 
@@ -70,7 +64,7 @@ class AStar:
             # pop the state with the smallest cost and heur
             total_score, depth, random_boundary, current_state = heapq.heappop(self.queue)
 
-            if self.is_solved(current_state):
+            if current_state.check_game_finished():
                 break
 
             self.build_children(current_state, depth)

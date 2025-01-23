@@ -57,7 +57,6 @@ def main():
     board = setup_board(get_board_size_from_filename(filename), data)
 
     # --------------------------- Random ---------------------------------------
-
     # random_from_all_available_valid(board)
 
     # board.export_steps(export_file_path)
