@@ -1,6 +1,7 @@
 import csv
 import os
 import time
+import copy
 
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, get_board_size_from_filename
@@ -50,7 +51,7 @@ def load_board_from_csv(filename_path: str) -> list[dict[str, str | int]]:
 
 
 def main():
-    filename = 'RushHour9x9_4.csv'
+    filename = 'RushHour6x6_2.csv'
     filename_path = os.path.join(get_input_path(), 'gameboards', filename)
     output_path = get_output_path()
     os.makedirs(output_path, exist_ok=True)
@@ -60,33 +61,55 @@ def main():
     board = setup_board(get_board_size_from_filename(filename), data)
 
     # --------------------------- Random ---------------------------------------
-    # random_from_all_available_valid(board)
+    current_steps = 1000
+    while current_steps > 100:
+        game_board = copy.deepcopy(board)
+        random_from_all_available_valid(game_board)
+        current_steps = len(game_board.steps)
+
+    board = game_board
+    print(len(board.steps))
 
     # board.export_steps(export_file_path)
 
     # --------------------------- Depth First ----------------------------------
-    depth = DepthFirst(board)
+    # depth = DepthFirst(board)
 
-    start_time = time.time()
+    # start_time = time.time()
 
-    depth.run()
-    export_file_path = os.path.join(output_path, f'DepthFirst_{filename}')
-    depth.solution.export_steps(export_file_path)
+    # depth.run()
+    # export_file_path = os.path.join(output_path, f'DepthFirst_{filename}')
+    # depth.solution.export_steps(export_file_path)
 
-    end_time = time.time() - start_time
-    print(end_time)
+    # end_time = time.time() - start_time
+    # print(end_time)
 
     # --------------------------- Breadth First --------------------------------
-    breadth = BreadthFirst(board)
+    # breadth = BreadthFirst(board)
 
+    # start_time = time.time()
+
+    # breadth.run()
+    # export_file_path = os.path.join(output_path, f'BreadthFirst_{filename}')
+    # breadth.solution.export_steps(export_file_path)
+
+    # end_time = time.time() - start_time
+    # print(end_time)
+
+    # --------------------------- Step Refiner --------------------------------
+    refiner = StepRefiner(board)
+
+    print('starting step refiner')
     start_time = time.time()
 
-    breadth.run()
-    export_file_path = os.path.join(output_path, f'BreadthFirst_{filename}')
-    breadth.solution.export_steps(export_file_path)
+    refiner.run()
+    print(len(refiner.board.steps))
+
 
     end_time = time.time() - start_time
-    print(end_time)
+    print(f'Step refiner used {end_time} seconds')
+
+
 
 if __name__ == '__main__':
     main()
