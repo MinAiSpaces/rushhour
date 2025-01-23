@@ -15,7 +15,7 @@ def num_blocking_vehicles(state: Board) -> int:
 
     idx_after_carter = state.vehicles['X'].location[-1][0] + 1
 
-    return len({carter_row[i] for i in range(idx_after_carter, len(carter_row)) if carter_row[i] != 0})
+    return len({carter_row[i] for i in range(idx_after_carter, state.size) if carter_row[i] != 0})
 
 
 def num_two_blocking_vehicles(state: Board) -> int:
