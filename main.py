@@ -61,14 +61,8 @@ def main():
     board = setup_board(get_board_size_from_filename(filename), data)
 
     # --------------------------- Random ---------------------------------------
-    current_steps = 1000
-    while current_steps > 100:
-        game_board = copy.deepcopy(board)
-        random_from_all_available_valid(game_board)
-        current_steps = len(game_board.steps)
 
-    board = game_board
-    print(len(board.steps))
+    # random_from_all_available_valid(board)
 
     # board.export_steps(export_file_path)
 
@@ -97,18 +91,17 @@ def main():
     # print(end_time)
 
     # --------------------------- Step Refiner --------------------------------
-    refiner = StepRefiner(board)
+    # refiner = StepRefiner(board)
 
-    print('starting step refiner')
-    start_time = time.time()
+    # print('starting step refiner')
+    # start_time = time.time()
 
-    refiner.run()
-    print(len(refiner.board.steps))
+    # refiner.run()
+    # export_file_path = os.path.join(output_path, f'StepRefiner_{filename}')
+    # refiner.board.export_steps(export_file_path)
 
-
-    end_time = time.time() - start_time
-    print(f'Step refiner used {end_time} seconds')
-
+    # end_time = time.time() - start_time
+    # print(f'Step refiner used {end_time} seconds')
 
 
 if __name__ == '__main__':
