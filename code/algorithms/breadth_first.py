@@ -46,7 +46,7 @@ class BreadthFirst:
                 self.seen_states.add(tuple(map(tuple, child_state.locations)))
                 self.queue.put(child_state)
 
-    def run(self, finish: np.array = np.array([False])) -> None:
+    def run(self, finish: np.array = None) -> None:
         """
         Runs the algorithm until all possible Board states are visited or a solution
         is found.
@@ -56,13 +56,14 @@ class BreadthFirst:
             next_state = self.queue.get()
 
             # stop if we find a solution
-            if np.all(finish):
+            if np.any(finish):
                 if np.array_equal(next_state.locations, finish):
                     print('state found')
                     break
 
-            elif next_state.check_game_finished():
-                break
+            else:
+                if next_state.check_game_finished():
+                    break
 
             self.build_children(next_state)
 
