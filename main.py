@@ -5,7 +5,7 @@ import copy
 
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, get_board_size_from_filename
-from code.algorithms import random_from_all_available_valid, DepthFirst, BreadthFirst, StepRefiner
+from code.algorithms import random_from_all_available_valid, DepthFirst, BreadthFirst, StepRefiner, AStar
 
 
 def setup_board(board_size: int, data: list[dict[str, str | int]]) -> Board:
@@ -99,6 +99,17 @@ def main():
     # end_time = time.time() - start_time
     # print(f'Step refiner used {end_time} seconds')
 
+    # --------------------------- A-Star ---------------------------------------
+    astar = AStar(board)
+
+    start_time = time.time()
+
+    astar.run()
+    export_file_path = os.path.join(output_path, f'AStar_{filename}')
+    astar.solution.export_steps(export_file_path)
+
+    end_time = time.time() - start_time
+    print(end_time)
 
 
 if __name__ == '__main__':
