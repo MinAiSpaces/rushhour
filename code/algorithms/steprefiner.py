@@ -1,8 +1,6 @@
 import copy
 
-import numpy as np
-
-from code.classes import Vehicle, Board
+from code.classes import Board
 from .breadth_first import BreadthFirst
 
 
