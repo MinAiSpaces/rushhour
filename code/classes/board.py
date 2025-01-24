@@ -10,28 +10,39 @@ EMPTY_SPOT = 0
 
 
 class BoardPlacementError(ValueError):
-    def __init__(self, message: str):
-        super().__init__(message)
+    def __init__(self, vehicle_name: str, message: str):
+        super().__init__(f"Vehicle '{vehicle_name}': {message}")
 
 
 class BoardPlacementOutOfBoundsError(BoardPlacementError):
-    def __init__(self):
-        super().__init__('Vehicle placement is out of bounds')
+    def __init__(self, vehicle_name: str):
+        super().__init__(
+            vehicle_name,
+            'placement is out of bounds')
 
 
 class BoardPlacementOccupiedError(BoardPlacementError):
-    def __init__(self):
-        super().__init__('Vehicle placement is on top of another vehicle')
+    def __init__(self, vehicle_name: str):
+        super().__init__(
+            vehicle_name,
+            'placement is on top of another vehicle'
+        )
 
 
 class BoardVehicleNameExistError(BoardPlacementError):
-    def __init__(self):
-        super().__init__('Vehicle with this name already exists')
+    def __init__(self, vehicle_name: str):
+        super().__init__(
+            vehicle_name,
+            'a vehicle with this name already exists'
+        )
 
 
 class BoardVehicleCarterOrientationError(BoardPlacementError):
-    def __init__(self):
-        super().__init__('Carter can only be placed horizontally')
+    def __init__(self, vehicle_name: str):
+        super().__init__(
+            vehicle_name,
+            'Carter can only be placed horizontally'
+        )
 
 
 @dataclass
@@ -44,8 +55,7 @@ class Board:
     represent the Board's layout.
     """
     size: int
-    vehicles: dict[str, 'Vehicle'] = field(default_factory=dict)
-    moves: list[tuple[str, int]] = field(default_factory=list)
+    vehicles: dict[str, 'Vehicle'] = field(default_factory=dict, init=False)
     locations: NDArray[int | str] = field(init=False)  # type: ignore[type-var]
 
     def __post_init__(self):
@@ -61,13 +71,13 @@ class Board:
             - if the vehicle is placed on top of another vehicle
         """
         if vehicle.name in self.vehicles:
-            raise BoardVehicleNameExistError()
+            raise BoardVehicleNameExistError(vehicle.name)
 
         if (
             vehicle.is_carter
             and not vehicle.orientation == Orientation.HORIZONTAL
         ):
-            raise BoardVehicleCarterOrientationError()
+            raise BoardVehicleCarterOrientationError(vehicle.name)
 
         cols, rows = zip(*vehicle.location)
 
@@ -77,10 +87,10 @@ class Board:
             and cols[-1] < self.size
             and rows[-1] < self.size
         ):
-            raise BoardPlacementOutOfBoundsError()
+            raise BoardPlacementOutOfBoundsError(vehicle.name)
 
         if np.any(self.locations[rows, cols]):
-            raise BoardPlacementOccupiedError()
+            raise BoardPlacementOccupiedError(vehicle.name)
 
         self.vehicles[vehicle.name] = vehicle
         self.update_state(vehicle, True)
