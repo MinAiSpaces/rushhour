@@ -4,6 +4,7 @@ import copy
 import numpy as np
 
 from code.classes import Board, Vehicle
+from .heuristics import free_carter, all_max_moves, check_useful_move
 
 
 class BreadthFirst:
@@ -31,7 +32,11 @@ class BreadthFirst:
         to the queue of states if not seen earlier. Each child state represents the
         Board configuration after a valid move by a Vehicle.
         """
-        possible_moves: list[tuple[Vehicle, int]] = next_state.check_available_moves()
+        finish_game = free_carter(next_state)
+        if finish_game:
+            possible_moves: list[tuple[Vehicle, int]] = [(next_state.vehicles['X'], finish_game)]
+        else:
+            possible_moves: list[tuple[Vehicle, int]] = next_state.check_available_moves()
 
         # add a new board instance to the queue for each unseen valid move
         for vehicle, steps in possible_moves:
