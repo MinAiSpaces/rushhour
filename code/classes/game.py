@@ -26,7 +26,7 @@ class Game:
     board: Board = field(init=False)
     mover: Mover = field(init=False)
     plotter: Plotter = field(init=False)
-    moves: list[tuple[str, int]] = field(default_factory=list)
+    moves: list[tuple[str, int]] = field(default_factory=list, init=False)
 
     def __post_init__(self):
         """
