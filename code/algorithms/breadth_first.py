@@ -40,16 +40,17 @@ class BreadthFirst:
 
         # add a new board instance to the queue for each unseen valid move
         for vehicle, steps in possible_moves:
-            child_state = copy.deepcopy(next_state)
+            if check_useful_move(next_state, vehicle, steps) or finish_game:
+                child_state = copy.deepcopy(next_state)
 
-            # make the valid move in the new board instance
-            vehicle = child_state.vehicles[vehicle.name]
-            child_state.move_vehicle(vehicle, steps)
+                # make the valid move in the new board instance
+                vehicle = child_state.vehicles[vehicle.name]
+                child_state.move_vehicle(vehicle, steps)
 
-            # https://www.geeksforgeeks.org/how-to-fix-the-typeerror-unhashable-type-numpy-ndarray/
-            if tuple(map(tuple, child_state.locations)) not in self.seen_states:
-                self.seen_states.add(tuple(map(tuple, child_state.locations)))
-                self.queue.put(child_state)
+                # https://www.geeksforgeeks.org/how-to-fix-the-typeerror-unhashable-type-numpy-ndarray/
+                if tuple(map(tuple, child_state.locations)) not in self.seen_states:
+                    self.seen_states.add(tuple(map(tuple, child_state.locations)))
+                    self.queue.put(child_state)
 
     def run(self, finish: np.array = None) -> None:
         """
