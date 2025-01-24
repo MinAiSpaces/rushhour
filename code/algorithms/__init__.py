@@ -3,6 +3,7 @@ from .heuristieken import check_useful_move, free_carter, all_max_moves
 from .depth_first import DepthFirst
 from .breadth_first import BreadthFirst
 from .steprefiner import StepRefiner
+from .a_star import AStar
 
 
 __all__ = [
@@ -11,7 +12,7 @@ __all__ = [
     'all_available_valid_finish_check',
     'all_max_moves_finish_check',
     'check_useful_move',
-    'free_carter', 
+    'free_carter',
     'all_max_moves',
     'DepthFirst',
     'BreadthFirst',
