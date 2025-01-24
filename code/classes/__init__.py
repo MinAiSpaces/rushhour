@@ -1,10 +1,18 @@
-from .vehicle import Vehicle, VehicleMoveViolationError, Orientation
 from .board import Board
+from .plotter import Plotter
+from .game import Game
+from .mover import Mover
+from .vehicle import (
+    Orientation,
+    Vehicle,
+)
 
 
 __all__ = [
-    'Vehicle',
-    'VehicleMoveViolationError',
+    'Board',
+    'Plotter',
+    'Game',
+    'Mover',
     'Orientation',
-    'Board'
+    'Vehicle',
 ]

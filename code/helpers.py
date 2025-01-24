@@ -3,7 +3,8 @@ import os
 
 def get_path(*args: str) -> str:
     """
-    Helper function for getting the full path of a file or folder in this project
+    Helper function for getting the full path of a file or folder in this
+    project.
     """
     current_dir = os.path.dirname(__file__)
 
@@ -12,28 +13,56 @@ def get_path(*args: str) -> str:
 
 def get_data_path() -> str:
     """
-    Helper function for getting the full path of the 'data' folder in this project
+    Helper function for getting the full path of the 'data' folder in this
+    project.
     """
     return get_path('..', 'data')
 
 
 def get_input_path() -> str:
     """
-    Helper function for getting the full path of the 'input' folder in this project
+    Helper function for getting the full path of the 'input' folder in this
+    project.
     """
-    return get_path('..', 'data', 'input')
+    return get_path(get_data_path(), 'input')
+
+
+def get_gameboards_path() -> str:
+    """
+    Helper function for getting the full path of the 'input/gameboards' folder
+    in this project.
+    """
+    return get_path(get_input_path(), 'gameboards')
+
+
+def get_test_boards_path() -> str:
+    """
+    Helper function for getting the full path of the 'input/test_boards' folder
+    in this project.
+    """
+    return get_path(get_input_path(), 'test_boards')
 
 
 def get_output_path() -> str:
     """
-    Helper function for getting the full path of the 'output' folder in this project
+    Helper function for getting the full path of the 'output' folder in this
+    project.
     """
-    return get_path('..', 'data', 'output')
+    return get_path(get_data_path(), 'output')
+
+
+def get_output_images_path() -> str:
+    """
+    Helper function for getting the full path of the 'output/images' folder in
+    this project.
+    """
+    return get_path(get_output_path(), 'images')
 
 
 def get_board_size_from_filename(filename: str) -> int:
     """
     Get the size of the board from the filename.
+
     Filename example: 'Rushhour6x6_1.csv'.
     """
     name_first_part = filename.split('_')[0]
