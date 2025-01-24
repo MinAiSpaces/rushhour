@@ -33,13 +33,12 @@ def all_max_moves(board: Board) -> list[tuple[Vehicle, int]]:
     return max_moves
 
 
-def check_useful_move(board: Board, move: tuple[Vehicle, int]):
+def check_useful_move(board: Board, vehicle: Vehicle, steps: int) -> bool:
     new_moves: list[tuple[Vehicle, int]] = []
     check_board = copy.deepcopy(board)
-    vehicle = check_board.vehicles[move[0].name]
 
     moves_before = check_board.check_available_moves()
-    check_board.move_vehicle(vehicle, move[1])
+    check_board.move_vehicle(vehicle, steps)
     moves_after = check_board.check_available_moves()
 
     differences = list(set(moves_after) - set(moves_before))
@@ -47,4 +46,7 @@ def check_useful_move(board: Board, move: tuple[Vehicle, int]):
          if move[0] != vehicle:
               new_moves.append(move)
 
-    return new_moves
+    if len(new_moves) > 0:
+         return True
+
+    return False
