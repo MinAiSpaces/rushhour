@@ -4,7 +4,9 @@ from enum import Enum
 from code.classes import Orientation
 
 
-def read_board_state_from_csv(file_path: str) -> list[tuple[str, Enum, int, int, int]]:
+def read_board_state_from_csv(
+    file_path: str
+) -> list[tuple[str, Enum, int, int, int]]:
     """
     Read game board setup from CSV file.
 
