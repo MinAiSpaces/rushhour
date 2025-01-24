@@ -1,5 +1,5 @@
 from .randomise import random_from_all_available_valid, random_vehicle_first, all_available_valid_finish_check, all_max_moves_finish_check
-from .heuristieken import check_useful_move, free_carter, all_max_moves
+from .heuristics import check_useful_move, free_carter, all_max_moves
 from .depth_first import DepthFirst
 from .breadth_first import BreadthFirst
 from .steprefiner import StepRefiner

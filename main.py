@@ -1,7 +1,6 @@
 import csv
 import os
 import time
-import copy
 
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, get_board_size_from_filename
