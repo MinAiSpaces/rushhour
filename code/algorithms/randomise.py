@@ -1,6 +1,6 @@
 import random
 
-from code.classes import Vehicle, Board
+from code.classes import Board
 from .heuristics import free_carter, all_max_moves
 
 
