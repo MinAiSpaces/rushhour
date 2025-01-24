@@ -21,7 +21,7 @@ class Game:
     and checking if the game is finished. The Game class also allows for easy
     visualizing of the current state of the board through the Plotter.
     """
-    data: list[tuple[str, Enum, int, int, int]]
+    data: list[tuple[str, Orientation, int, int, int]]
     board_size: int
     board: Board = field(init=False)
     mover: Mover = field(init=False)
