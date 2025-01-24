@@ -33,7 +33,7 @@ def num_two_blocking_vehicles(state: Board) -> int:
     for first_blocking_vehicle in first_blocking_vehicles:
         if state.check_move_forwards(state.vehicles[first_blocking_vehicle]) == 0:
             second_blocking_vehicles += 1
-        elif state.check_move_backwards(state.vehicles[first_blocking_vehicle]) == 0:
+        if state.check_move_backwards(state.vehicles[first_blocking_vehicle]) == 0:
             second_blocking_vehicles += 1
 
     return len(first_blocking_vehicles) + second_blocking_vehicles
