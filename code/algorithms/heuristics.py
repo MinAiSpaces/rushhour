@@ -3,38 +3,38 @@ import copy
 from code.classes import Vehicle, Board
 
 def free_carter(board: Board) -> int | None:
-    """
-    Checks if the path for carter is free to end the game.
-    Return the steps if carter can reach the finish.
-    """
-    carter: Vehicle = board.vehicles['X']
-    available_moves: int = board.check_move_forwards(carter)
+     """
+     Checks if the path for carter is free to end the game.
+     Return the steps if carter can reach the finish.
+     """
+     carter: Vehicle = board.vehicles['X']
+     available_moves: int = board.check_move_forwards(carter)
 
-    # check if carter can move to finish
-    if (carter.location[1][0] + available_moves) == (board.size - 1):
-        return available_moves
+     # check if carter can move to finish
+     if (carter.location[1][0] + available_moves) == (board.size - 1):
+          return available_moves
 
 
 def all_max_moves(board: Board) -> list[tuple[Vehicle, int]]:
-    """
-    Returns only the largest possible moves of all Vehicles on the board
-    as a list of moves.
-    """
-    max_moves: list[tuple[Vehicle, int]] = []
+     """
+     Returns only the largest possible moves of all Vehicles on the board
+     as a list of moves.
+     """
+     max_moves: list[tuple[Vehicle, int]] = []
 
-    for vehicle in board.vehicles.values():
+     for vehicle in board.vehicles.values():
 
-            # check maximal forward movement
-            move_forwards = board.check_move_forwards(vehicle)
-            if move_forwards > 0:
-                 max_moves.append((vehicle, move_forwards))
+               # check maximal forward movement
+               move_forwards = board.check_move_forwards(vehicle)
+               if move_forwards > 0:
+                    max_moves.append((vehicle, move_forwards))
 
-            # check maximal backward movement
-            move_backwards = board.check_move_backwards(vehicle)
-            if move_backwards > 0:
-                 max_moves.append((vehicle, -move_backwards))
+               # check maximal backward movement
+               move_backwards = board.check_move_backwards(vehicle)
+               if move_backwards > 0:
+                    max_moves.append((vehicle, -move_backwards))
 
-    return max_moves
+     return max_moves
 
 
 def check_useful_move(board: Board, vehicle: Vehicle, steps: int) -> bool:
