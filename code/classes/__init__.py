@@ -5,9 +5,16 @@ from .board import (
     BoardVehicleCarterOrientationError,
     BoardVehicleNameExistError,
 )
-from .plotter import Plotter
 from .game import Game, SetupBoardNoCarterError, SetupBoardNoVehicleDataError
-from .mover import Mover
+from .mover import (
+    Direction,
+    Mover,
+    MoveOutOfBoundsError,
+    MoveStepIsZeroError,
+    MoveVehicleBlockedError,
+    MoveVehicleNotExistError,
+)
+from .plotter import Plotter
 from .vehicle import (
     CARTER_NAME,
     Orientation,
@@ -22,9 +29,14 @@ __all__ = [
     'BoardVehicleCarterOrientationError',
     'BoardVehicleNameExistError',
     'CARTER_NAME',
+    'Direction',
     'Plotter',
     'Game',
     'Mover',
+    'MoveOutOfBoundsError',
+    'MoveStepIsZeroError',
+    'MoveVehicleBlockedError',
+    'MoveVehicleNotExistError',
     'Orientation',
     'SetupBoardNoCarterError',
     'SetupBoardNoVehicleDataError',
