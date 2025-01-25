@@ -104,6 +104,8 @@ class Board:
             - First 'removes' vehicle from the board by replacing its location
               on the board with zeros,
             - then storing the vehicle name at the new coordinates
+        else:
+            - not going to remove the vehicle from the board first
         """
         if not new:
             self.locations[self.locations == vehicle.name] = 0
