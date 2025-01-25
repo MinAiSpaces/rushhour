@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from enum import Enum
 
 import numpy as np
@@ -37,19 +36,19 @@ class MoveVehicleBlockedError(MoveError):
         super().__init__('Move is blocked by another vehicle')
 
 
-@dataclass
 class Mover:
-    """
-    Mover handles everything regarding moves. It is responsible for move
-    validation and execution according to the rules of the game.
+    def __init__(self, board: Board):
+        """
+        Mover handles everything regarding moves. It is responsible for move
+        validation and execution according to the rules of the game.
 
-    Responsible for:
-        - making sure moves are within bounds
-        - vehicles not collide with other vehicles
-        - updating the board state after a valid move
-        - calculating all the available valid moves for the current board state
-    """
-    board: Board
+        Responsible for:
+            - making sure moves are within bounds
+            - vehicles not collide with other vehicles
+            - updating the board state after a valid move
+            - calculating all the available valid moves for the current board state
+        """
+        self.board = board
 
     def _get_all_moves_vehicle(
         self,
