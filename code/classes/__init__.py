@@ -6,7 +6,7 @@ from .board import (
     BoardVehicleNameExistError,
 )
 from .plotter import Plotter
-from .game import CarterNotOnBoardError, Game
+from .game import Game, SetupBoardNoCarterError, SetupBoardNoVehicleDataError
 from .mover import Mover
 from .vehicle import (
     CARTER_NAME,
@@ -22,10 +22,11 @@ __all__ = [
     'BoardVehicleCarterOrientationError',
     'BoardVehicleNameExistError',
     'CARTER_NAME',
-    'CarterNotOnBoardError',
     'Plotter',
     'Game',
     'Mover',
     'Orientation',
+    'SetupBoardNoCarterError',
+    'SetupBoardNoVehicleDataError',
     'Vehicle',
 ]

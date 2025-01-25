@@ -6,9 +6,19 @@ from .plotter import Plotter
 from .vehicle import CARTER_NAME, Orientation, Vehicle
 
 
-class CarterNotOnBoardError(ValueError):
+class GameError(ValueError):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+class SetupBoardNoCarterError(GameError):
     def __init__(self):
-        super().__init__('Carter appears to not be on the board')
+        super().__init__('Carter appears to be missing on the board')
+
+
+class SetupBoardNoVehicleDataError(GameError):
+    def __init__(self):
+        super().__init__('No vehicle data provided')
 
 
 @dataclass
@@ -61,11 +71,7 @@ class Game:
 
         Checks if the front of Carter occupies the last column on the right.
         """
-        carter = self.board.vehicles.get(CARTER_NAME)
-
-        if carter is None:
-            raise CarterNotOnBoardError()
-
+        carter = self.board.vehicles[CARTER_NAME]
         col_carter_front = carter.location[-1][0]
 
         return col_carter_front == self.board.size - 1
@@ -91,10 +97,16 @@ class Game:
         This function is static so that it can also be used to set up a board
         without using the rest of the Game class.
         """
+        if not len(data):
+            raise SetupBoardNoVehicleDataError()
+
         for vehicle_data in data:
             board.add_vehicle(
                 Vehicle(*vehicle_data)
             )
+
+        if board.vehicles.get(CARTER_NAME) is None:
+            raise SetupBoardNoCarterError()
 
         return board
 
