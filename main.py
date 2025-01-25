@@ -67,7 +67,7 @@ def main():
 
     # depth.run()
     # export_file_path = os.path.join(output_path, f'DepthFirst_{filename}')
-    # depth.solution.export_steps(export_file_path)
+    # depth.best_solution.export_steps(export_file_path)
 
     # end_time = time.time() - start_time
     # print(end_time)
