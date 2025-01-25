@@ -1,5 +1,6 @@
 from .board import (
     Board,
+    BoardPlacementError,
     BoardPlacementOccupiedError,
     BoardPlacementOutOfBoundsError,
     BoardVehicleCarterOrientationError,
@@ -24,6 +25,7 @@ from .vehicle import (
 
 __all__ = [
     'Board',
+    'BoardPlacementError',
     'BoardPlacementOccupiedError',
     'BoardPlacementOutOfBoundsError',
     'BoardVehicleCarterOrientationError',
