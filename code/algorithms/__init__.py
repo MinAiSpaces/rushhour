@@ -3,7 +3,7 @@ from .heuristics import check_useful_move, free_carter, all_max_moves
 from .depth_first import DepthFirst
 from .breadth_first import BreadthFirst
 from .steprefiner import StepRefiner
-from .a_star import AStar
+from .a_star import AStar, num_blocking_vehicles, num_two_blocking_vehicles
 
 
 __all__ = [

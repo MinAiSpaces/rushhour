@@ -2,6 +2,7 @@ import numpy as np
 import heapq
 import copy
 import random
+from typing import Callable
 
 from code.classes import Board, Vehicle
 
@@ -47,15 +48,16 @@ class AStar:
     valid moves and continues the search by selecting states with the lowest score
     based on depth and heuristics until a solution is found.
     """
-    def __init__(self, initial_state: Board) -> None:
+    def __init__(self, initial_state: Board, heuristic: Callable[[Board], int]) -> None:
         """
         Initializes the A* algorithm with a specified Board state, setting up a
         queue of Board states where the input Board serves as the initial state.
         """
         self.queue = []
+        self.heuristic = heuristic
 
         # add the input board with its score and depth to the heap queue
-        heapq.heappush(self.queue, (num_two_blocking_vehicles(initial_state), 0, random.random(), initial_state))
+        heapq.heappush(self.queue, (heuristic(initial_state), 0, random.random(), initial_state))
 
         self.seen_states: set[tuple[tuple[object]]] = set()
         self.solution = None
@@ -81,7 +83,7 @@ class AStar:
                 self.seen_states.add(tuple(map(tuple, child_state.locations)))
 
                 # add the state with its score to the heap queue
-                score = depth + 1 + num_two_blocking_vehicles(child_state)
+                score = depth + 1 + self.heuristic(child_state)
                 heapq.heappush(self.queue, (score, depth + 1, random.random(), child_state))
 
     def run(self) -> None:

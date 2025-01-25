@@ -4,7 +4,7 @@ import time
 
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, get_board_size_from_filename
-from code.algorithms import random_from_all_available_valid, DepthFirst, BreadthFirst, StepRefiner, AStar
+from code.algorithms import random_from_all_available_valid, DepthFirst, BreadthFirst, StepRefiner, AStar, num_blocking_vehicles, num_two_blocking_vehicles
 
 
 def setup_board(board_size: int, data: list[dict[str, str | int]]) -> Board:
@@ -98,7 +98,7 @@ def main():
     # print(f'Step refiner used {end_time} seconds')
 
     # --------------------------- A-Star ---------------------------------------
-    astar = AStar(board)
+    astar = AStar(board, num_two_blocking_vehicles)
 
     start_time = time.time()
 
