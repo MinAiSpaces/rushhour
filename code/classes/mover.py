@@ -241,7 +241,7 @@ class Mover:
 
         col_vehicle_front, row_vehicle_front = vehicle.location[-1]
         col_vehicle_back, row_vehicle_back = vehicle.location[0]
-        first_board_col = first_board_row= 0
+        first_board_col = first_board_row = 0
         last_board_col = last_board_row = self.board.size - 1
 
         if max_steps == 0:
@@ -260,7 +260,7 @@ class Mover:
                     and col_vehicle_back == first_board_col
                 ) or (
                     vehicle.orientation == Orientation.VERTICAL
-                    and row_vehicle_back == last_board_row
+                    and row_vehicle_back == first_board_row
                 ):
                     raise MoveOutOfBoundsError()
 
