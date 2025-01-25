@@ -20,8 +20,8 @@ class Vehicle:
     start_col: int
     start_row: int
     length: int
-    is_carter: bool = field(default=False)
-    location: list[tuple[int, int]] = field(default_factory=list)
+    is_carter: bool = field(default=False, init=False)
+    location: list[tuple[int, int]] = field(default_factory=list, init=False)
 
     def __post_init__(self):
         self.is_carter = self.name == CARTER_NAME
