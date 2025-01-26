@@ -65,16 +65,17 @@ class Game:
         self.mover.move_vehicle(move)
         self.moves.append(move)
 
-    def is_finished(self) -> bool:
+    @staticmethod
+    def is_finished(board: Board) -> bool:
         """
         Checks if Carter (the red car) has reach the right side of the board.
 
         Checks if the front of Carter occupies the last column on the right.
         """
-        carter = self.board.vehicles[CARTER_NAME]
+        carter = board.vehicles[CARTER_NAME]
         col_carter_front = carter.location[-1][0]
 
-        return col_carter_front == self.board.size - 1
+        return col_carter_front == board.size - 1
 
     def plot_board(self, file_path: str | None = None, dpi: int = 300) -> None:
         """
