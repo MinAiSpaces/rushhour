@@ -153,6 +153,9 @@ The project follows a modular structure for scalability and clarity:
    pip install -r requirement.txt
    ```
 
+#### NB
+Generating animations of the moves using `ffmpeg` as `writer` will only work if ffmpeg is installed on the machine. `Pillow` should work as long as `Matplotlib` gets installed (which should be installed if you follow the steps above)
+
 ## Running the Project
 1. Navigate to the `<rush_hour_folder_name>`:
    ```bash
