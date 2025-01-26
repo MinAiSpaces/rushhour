@@ -5,7 +5,7 @@ import time
 from code.classes import Board, Vehicle, Orientation
 from code.helpers import get_input_path, get_output_path, get_board_size_from_filename
 from code.algorithms import random_from_all_available_valid, DepthFirst, BreadthFirst, StepRefiner, AStar, num_blocking_vehicles, num_two_blocking_vehicles
-
+from code.scripts import breadth_first
 
 def setup_board(board_size: int, data: list[dict[str, str | int]]) -> Board:
     """
@@ -84,6 +84,8 @@ def main():
     # end_time = time.time() - start_time
     # print(end_time)
 
+    breadth_first('RushHour6x6_2.csv')
+
     # --------------------------- Step Refiner --------------------------------
     # refiner = StepRefiner(board)
 
@@ -98,16 +100,16 @@ def main():
     # print(f'Step refiner used {end_time} seconds')
 
     # --------------------------- A-Star ---------------------------------------
-    astar = AStar(board, num_blocking_vehicles)
+    # astar = AStar(board, num_blocking_vehicles)
 
-    start_time = time.time()
+    # start_time = time.time()
 
-    astar.run()
-    export_file_path = os.path.join(output_path, f'AStar_{filename}')
-    astar.solution.export_steps(export_file_path)
+    # astar.run()
+    # export_file_path = os.path.join(output_path, f'AStar_{filename}')
+    # astar.solution.export_steps(export_file_path)
 
-    end_time = time.time() - start_time
-    print(end_time)
+    # end_time = time.time() - start_time
+    # print(end_time)
 
 
 if __name__ == '__main__':

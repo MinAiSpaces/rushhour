@@ -27,6 +27,13 @@ def get_input_path() -> str:
     return get_path(get_data_path(), 'input')
 
 
+def get_experiment_path() -> str:
+    """
+    Helper function for getting the full path of the 'experiment' folder in this project
+    """
+    return get_path(get_data_path(), 'experiment')
+
+
 def get_gameboards_path() -> str:
     """
     Helper function for getting the full path of the 'input/gameboards' folder
