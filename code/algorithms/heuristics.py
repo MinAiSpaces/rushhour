@@ -1,18 +1,21 @@
 import copy
 
-from code.classes import Vehicle, Board
+from code.classes import Vehicle, Board, Mover, Direction, CARTER_NAME
+
 
 def free_carter(board: Board) -> int | None:
      """
      Checks if the path for carter is free to end the game.
      Return the steps if carter can reach the finish.
      """
-     carter: Vehicle = board.vehicles['X']
-     available_moves: int = board.check_move_forwards(carter)
+     mover = Mover(board)
+
+     carter: Vehicle = board.vehicles[CARTER_NAME]
+     carter_max_steps_forward: int = mover.get_vehicle_max_steps(CARTER_NAME, Direction.FORWARDS)
 
      # check if carter can move to finish
-     if (carter.location[1][0] + available_moves) == (board.size - 1):
-          return available_moves
+     if (carter.location[1][0] + carter_max_steps_forward) == (board.size - 1):
+          return carter_max_steps_forward
 
 
 def all_max_moves(board: Board) -> list[tuple[Vehicle, int]]:
@@ -20,19 +23,21 @@ def all_max_moves(board: Board) -> list[tuple[Vehicle, int]]:
      Returns only the largest possible moves of all Vehicles on the board
      as a list of moves.
      """
+     mover = Mover(board)
+
      max_moves: list[tuple[Vehicle, int]] = []
 
-     for vehicle in board.vehicles.values():
+     for vehicle_name in board.vehicles:
 
                # check maximal forward movement
-               move_forwards = board.check_move_forwards(vehicle)
+               move_forwards = mover.get_vehicle_max_steps(vehicle_name, Direction.FORWARDS)
                if move_forwards > 0:
-                    max_moves.append((vehicle, move_forwards))
+                    max_moves.append((vehicle_name, move_forwards))
 
                # check maximal backward movement
-               move_backwards = board.check_move_backwards(vehicle)
+               move_backwards = mover.get_vehicle_max_steps(vehicle_name, Direction.BACKWARDS)
                if move_backwards > 0:
-                    max_moves.append((vehicle, -move_backwards))
+                    max_moves.append((vehicle_name, -move_backwards))
 
      return max_moves
 
