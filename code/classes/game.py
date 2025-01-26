@@ -85,6 +85,37 @@ class Game:
         """
         self.plotter.plot_board(self.board, file_path)
 
+    def animate_moves(
+        self,
+        moves: list[tuple[str, int]] | None = None,
+        interval: int = 500,
+        file_path: str | None = None,
+        writer_type: str = 'pillow',
+        verbose: bool = True,
+    ):
+        """
+        Animates the moves.
+
+        The writer_type is used for saving the animation ('pillow', 'ffmpeg').
+            - Use Pillow to generate gifs
+            - Use ffmpeg to generate mp4 (videos)
+
+        NB.
+        Replays all moves using the Game class so board needs to be in
+        correct 'start state' or we'll run into move conflicts.
+        """
+        if moves is None:
+            moves = self.moves
+
+        self.plotter.animate_moves(
+            self,
+            moves,
+            interval,
+            file_path,
+            writer_type,
+            verbose,
+        )
+
     @staticmethod
     def setup_board(
         board: Board,
