@@ -16,4 +16,6 @@ __all__ = [
     'all_max_moves',
     'DepthFirst',
     'BreadthFirst',
+    'StepRefiner',
+    'AStar'
 ]
