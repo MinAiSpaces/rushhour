@@ -10,6 +10,7 @@ from .game import Game, SetupBoardNoCarterError, SetupBoardNoVehicleDataError
 from .mover import (
     Direction,
     Mover,
+    MoveError,
     MoveOutOfBoundsError,
     MoveStepIsZeroError,
     MoveVehicleBlockedError,
