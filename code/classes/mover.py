@@ -127,7 +127,7 @@ class Mover:
     ) -> int:
         """
         Gets the maximum number of steps a vehicle can move in the given
-        direction
+        direction. Returns a positive int or 0.
 
         Rules:
             - can only move to empty spots immediately in front of
