@@ -71,6 +71,8 @@ The project follows a modular structure for scalability and clarity:
     tests/
         __init__.py
         test_board.py
+        test_game.py
+        test_plotter.py
         test_vehicle.py
     .editorconfig
     .gitignore
@@ -114,6 +116,8 @@ The project follows a modular structure for scalability and clarity:
     - **`tests/`**: Unit tests for ensuring the correctness of core functionality
         - `__init__.py`
         - `test_board.py`: Tests for the `Board` class
+        - `test_game.py`: Tests for the `Game` class
+        - `test_plotter.py`: Tests for the `Plotter` class
         - `test_vehicle.py`: Tests for the `Vehicle` class
     - `.editorconfig`: Defines consistent coding styles across different editors
     - `.gitignore`: Specifies files and directories to intentionally ignore by `git`
