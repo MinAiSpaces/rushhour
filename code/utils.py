@@ -58,3 +58,20 @@ def write_moves_to_csv(file_path: str, moves: list[tuple[str, int]]) -> None:
                 'car': vehicle_name,
                 'move': steps
             })
+
+
+def read_moves_from_csv(file_path) -> list[tuple[str, int]]:
+    """
+    Read moves from a CSV file.
+
+    Creates a list of moves data for each row.
+    """
+    data: list[tuple[str, int]] = []
+
+    with open(file_path, 'r') as f:
+        reader = csv.DictReader(f, skipinitialspace=True)
+
+        for move in reader:
+            data.append((move['car'].upper(), int(move['move'])))
+
+    return data
