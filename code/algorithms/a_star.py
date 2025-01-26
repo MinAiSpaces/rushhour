@@ -23,21 +23,29 @@ def num_two_blocking_vehicles(state: Board) -> int:
     """
     Counts the number of vehicles directly blocking Carter in the front and the
     number of vehicles blocking these.
+
+
     """
-    carter_row_num = state.vehicles['X'].start_row
+    mover = Mover(state)
+    carter_row_num = state.vehicles[CARTER_NAME].start_row
     carter_row: np.ndarray[object] = state.locations[carter_row_num]
-    idx_after_carter = state.vehicles['X'].location[-1][0] + 1
+    col_in_front_of_carter = state.vehicles[CARTER_NAME].location[-1][0] + 1
 
-    first_blocking_vehicles = {carter_row[i] for i in range(idx_after_carter, state.size) if carter_row[i] != 0}
-    second_blocking_vehicles = 0
+    # Set of unique vehicle names in front of Carter
+    vehicles_first_degree = {
+        carter_row[i]
+        for i in range(col_in_front_of_carter, state.size)
+        if carter_row[i] != 0
+    }
+    vehicles_second_degree_counter = 0
 
-    for first_blocking_vehicle in first_blocking_vehicles:
-        if state.check_move_forwards(state.vehicles[first_blocking_vehicle]) == 0:
-            second_blocking_vehicles += 1
-        if state.check_move_backwards(state.vehicles[first_blocking_vehicle]) == 0:
-            second_blocking_vehicles += 1
+    for blocking_vehicle_name in vehicles_first_degree:
+        if mover.get_vehicle_max_steps(blocking_vehicle_name, Direction.FORWARDS) == 0:
+            vehicles_second_degree_counter += 1
+        if mover.get_vehicle_max_steps(blocking_vehicle_name, Direction.BACKWARDS) == 0:
+            vehicles_second_degree_counter += 1
 
-    return len(first_blocking_vehicles) + second_blocking_vehicles
+    return len(vehicles_first_degree) + vehicles_second_degree_counter
 
 
 class AStar:
