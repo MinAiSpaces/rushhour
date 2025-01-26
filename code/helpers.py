@@ -31,6 +31,13 @@ def get_output_path() -> str:
     return get_path('..', 'data', 'output')
 
 
+def get_experiment_path() -> str:
+    """
+    Helper function for getting the full path of the 'experiment' folder in this project
+    """
+    return get_path('..', 'data', 'experiment')
+
+
 def get_board_size_from_filename(filename: str) -> int:
     """
     Get the size of the board from the filename.

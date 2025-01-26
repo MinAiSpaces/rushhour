@@ -3,7 +3,7 @@ import os
 import time
 
 from code.classes import Board, Vehicle, Orientation
-from code.helpers import get_input_path, get_output_path, get_board_size_from_filename
+from code.helpers import get_input_path, get_output_path, get_experiment_path, get_board_size_from_filename
 from code.algorithms import BreadthFirst
 
 
@@ -45,13 +45,34 @@ def load_board_from_csv(filename_path: str) -> list[dict[str, str | int]]:
     return data
 
 
-def breadth_first(filename: str):
+def generate_results(num_moves_made: int, solving_time: float, dest_file: str) -> None:
+    """
+    Writes all the search results (solving time, number of moves made) to a
+    CSV file.
+    """
+    with open(dest_file, 'w', newline='') as f:
+        fieldnames = ['number moves made', 'solving time']
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerow({'number moves made': num_moves_made, 'solving time': solving_time})
+
+
+def breadth_first(filename: str) -> None:
+    """
+    Executes the Breadth First Search algorithm for a given Board, writes the
+    search results (solving time, number of moves made) to a CSV file in the
+    data/experiment folder, and exports the moves made during the search to
+    another CSV file in the data/output folder.
+    """
     filename_path = os.path.join(get_input_path(), 'gameboards', filename)
+
+    # get the output and experiment folder paths
     output_path = get_output_path()
     os.makedirs(output_path, exist_ok=True)
+    experiment_path = get_experiment_path()
+    os.makedirs(experiment_path, exist_ok=True)
 
     data = load_board_from_csv(filename_path)
-
     board = setup_board(get_board_size_from_filename(filename), data)
 
     print(f'Starting Breadth First for {filename}')
@@ -59,8 +80,15 @@ def breadth_first(filename: str):
 
     breadth = BreadthFirst(board)
     breadth.run()
+
+    # write the moves made to the file in the output folder
     export_file_path = os.path.join(output_path, f'BreadthFirst_{filename}')
     breadth.solution.export_steps(export_file_path)
 
-    end_time = time.time() - start_time
-    print(f'Breadth First used {end_time} seconds to solve {filename}')
+    # write the num moves made and solving time to the file in the experiment folder
+    experiment_file_path = os.path.join(experiment_path, f'BreadthFirst_experiment_{filename}')
+    num_moves_made = len(breadth.solution.steps)
+    solving_time = time.time() - start_time
+    generate_results(num_moves_made, solving_time, experiment_file_path)
+
+    print(f'Breadth First used {solving_time} seconds to solve {filename}')

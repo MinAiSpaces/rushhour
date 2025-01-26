@@ -48,15 +48,6 @@ def load_board_from_csv(filename_path: str) -> list[dict[str, str | int]]:
 
 
 def main():
-    filename = 'RushHour6x6_2.csv'
-    filename_path = os.path.join(get_input_path(), 'gameboards', filename)
-    output_path = get_output_path()
-    os.makedirs(output_path, exist_ok=True)
-
-    data = load_board_from_csv(filename_path)
-
-    board = setup_board(get_board_size_from_filename(filename), data)
-
     # --------------------------- Random ---------------------------------------
     # random_from_all_available_valid(board)
 
@@ -75,7 +66,7 @@ def main():
     # print(end_time)
 
     # --------------------------- Breadth First --------------------------------
-    breadth_first('RushHour6x6_2.csv')
+    breadth_first('RushHour6x6_3.csv')
 
     # --------------------------- Step Refiner --------------------------------
     # refiner = StepRefiner(board)
