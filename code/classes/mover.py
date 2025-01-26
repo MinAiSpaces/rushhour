@@ -12,28 +12,41 @@ class Direction(Enum):
 
 
 class MoveError(ValueError):
-    def __init__(self, message: str):
-        super().__init__(message)
+    def __init__(self, message: str, move: tuple[str, int] = None):
+        msg = f'{move}: {message}' if move else f'{message}'
+
+        super().__init__(msg)
 
 
 class MoveOutOfBoundsError(MoveError):
-    def __init__(self):
-        super().__init__('Move would place vehicle out of bounds')
+    def __init__(self, move: tuple[str, int]):
+        super().__init__(
+            'Move would place vehicle out of bounds',
+            move,
+        )
 
 
 class MoveStepIsZeroError(MoveError):
-    def __init__(self):
-        super().__init__('Move cannot have a step of 0')
+    def __init__(self, move: tuple[str, int]):
+        super().__init__(
+            'Move cannot have a step of 0',
+            move,
+        )
 
 
 class MoveVehicleNotExistError(MoveError):
     def __init__(self):
-        super().__init__('Trying to move a vehicle that does not exist')
+        super().__init__(
+            'Trying to move a vehicle that does not exist',
+        )
 
 
 class MoveVehicleBlockedError(MoveError):
-    def __init__(self):
-        super().__init__('Move is blocked by another vehicle')
+    def __init__(self, move: tuple[str, int]):
+        super().__init__(
+            'Move is blocked by another vehicle',
+            move,
+        )
 
 
 class Mover:
@@ -66,7 +79,7 @@ class Mover:
         # Get steps forwards
         max_steps_forward = self.get_vehicle_max_steps(
             vehicle_name,
-            Direction.FORWARDS
+            Direction.FORWARDS,
         )
 
         for steps in range(1, max_steps_forward + 1):
@@ -75,7 +88,7 @@ class Mover:
         # Get steps backwards
         max_steps_backward = self.get_vehicle_max_steps(
             vehicle_name,
-            Direction.BACKWARDS
+            Direction.BACKWARDS,
         )
 
         for steps in range(1, max_steps_backward + 1):
@@ -252,7 +265,7 @@ class Mover:
                     vehicle.orientation == Orientation.VERTICAL
                     and row_vehicle_front == last_board_row
                 ):
-                    raise MoveOutOfBoundsError()
+                    raise MoveOutOfBoundsError(move)
             elif direction == Direction.BACKWARDS:
                 if (
                     vehicle.orientation == Orientation.HORIZONTAL
@@ -261,10 +274,10 @@ class Mover:
                     vehicle.orientation == Orientation.VERTICAL
                     and row_vehicle_back == first_board_row
                 ):
-                    raise MoveOutOfBoundsError()
+                    raise MoveOutOfBoundsError(move)
 
-            raise MoveVehicleBlockedError()
+            raise MoveVehicleBlockedError(move)
 
         if abs(steps) > max_steps:
-            raise MoveOutOfBoundsError()
+            raise MoveOutOfBoundsError(move)
 
