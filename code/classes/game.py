@@ -76,14 +76,14 @@ class Game:
 
         return col_carter_front == self.board.size - 1
 
-    def plot_board(self, file_path: str | None = None) -> None:
+    def plot_board(self, file_path: str | None = None, dpi: int = 300) -> None:
         """
         Plots the current state of the board using the Plotter.
 
         if 'file_path' is provided it will try to export the image to the
         provided path.
         """
-        self.plotter.plot_board(self.board, file_path)
+        self.plotter.plot_board(self.board, file_path, dpi)
 
     def animate_moves(
         self,
