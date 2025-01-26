@@ -16,7 +16,7 @@ from .mover import (
     MoveVehicleBlockedError,
     MoveVehicleNotExistError,
 )
-from .plotter import Plotter
+from .plotter import Plotter, PlotterError, PlotterUnsupportedWriterError
 from .vehicle import (
     CARTER_NAME,
     Orientation,
@@ -34,6 +34,8 @@ __all__ = [
     'CARTER_NAME',
     'Direction',
     'Plotter',
+    'PlotterError',
+    'PlotterUnsupportedWriterError',
     'Game',
     'Mover',
     'MoveOutOfBoundsError',
