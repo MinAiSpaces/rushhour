@@ -1,20 +1,18 @@
 import csv
-from enum import Enum
 
 from code.classes import Orientation
 
 
 def read_board_state_from_csv(
     file_path: str
-) -> list[tuple[str, Enum, int, int, int]]:
+) -> list[tuple[str, Orientation, int, int, int]]:
     """
     Read game board setup from CSV file.
 
-    - Reads the board size from the file_path
-    - Creates a board with the correct size
-    - Places vehicles on the board
+    Creates a list of vehicle data for each row.
+    This data can then be used as input for setting up a game for example.
     """
-    data: list[tuple[str, Enum, int, int, int]] = []
+    data: list[tuple[str, Orientation, int, int, int]] = []
 
     with open(file_path, 'r') as f:
         reader = csv.DictReader(f, skipinitialspace=True)
