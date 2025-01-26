@@ -171,7 +171,7 @@ class Plotter:
             zorder=15
         )
 
-        def update(_):
+        def update(_):  # pragma: no cover
             if self.move_idx >= len(moves):
 
                 # No more moves to animate
@@ -202,7 +202,7 @@ class Plotter:
             update,
             frames=len(moves),
             interval=interval,
-            repeat=False
+            repeat=False,
         )
 
         if file_path:
