@@ -26,7 +26,7 @@ class BreadthFirst:
         self.seen_states: set[tuple[tuple[object]]] = set()
         self.solution = None
 
-    def build_children(self, next_state: Board) -> None:
+    def build_children(self, next_state: Board, max_moves: bool) -> None:
         """
         Generates all possible child states from the picked Board state and adds them
         to the queue of states if not seen earlier. Each child state represents the
@@ -36,7 +36,10 @@ class BreadthFirst:
         if finish_game:
             possible_moves: list[tuple[Vehicle, int]] = [(next_state.vehicles['X'], finish_game)]
         else:
-            possible_moves: list[tuple[Vehicle, int]] = next_state.check_available_moves()
+            if max_moves:
+                possible_moves: list[tuple[Vehicle, int]] = all_max_moves(next_state)
+            else:
+                possible_moves: list[tuple[Vehicle, int]] = next_state.check_available_moves()
 
         # add a new board instance to the queue for each unseen valid move
         for vehicle, steps in possible_moves:
@@ -52,7 +55,7 @@ class BreadthFirst:
                     self.seen_states.add(tuple(map(tuple, child_state.locations)))
                     self.queue.put(child_state)
 
-    def run(self, finish: np.array = None) -> None:
+    def run(self, finish: np.array = None, max_moves: bool = False) -> None:
         """
         Runs the algorithm until all possible Board states are visited or a solution
         is found.
@@ -71,6 +74,6 @@ class BreadthFirst:
                 if next_state.check_game_finished():
                     break
 
-            self.build_children(next_state)
+            self.build_children(next_state, max_moves)
 
         self.solution = next_state
