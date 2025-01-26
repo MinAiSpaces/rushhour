@@ -98,7 +98,7 @@ def main():
     # print(f'Step refiner used {end_time} seconds')
 
     # --------------------------- A-Star ---------------------------------------
-    astar = AStar(board, num_two_blocking_vehicles)
+    astar = AStar(board, num_blocking_vehicles)
 
     start_time = time.time()
 
