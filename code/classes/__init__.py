@@ -1,10 +1,49 @@
-from .vehicle import Vehicle, VehicleMoveViolationError, Orientation
-from .board import Board
+from .board import (
+    Board,
+    BoardPlacementError,
+    BoardPlacementOccupiedError,
+    BoardPlacementOutOfBoundsError,
+    BoardVehicleCarterOrientationError,
+    BoardVehicleNameExistError,
+)
+from .game import Game, SetupBoardNoCarterError, SetupBoardNoVehicleDataError
+from .mover import (
+    Direction,
+    Mover,
+    MoveError,
+    MoveOutOfBoundsError,
+    MoveStepIsZeroError,
+    MoveVehicleBlockedError,
+    MoveVehicleNotExistError,
+)
+from .plotter import Plotter, PlotterError, PlotterUnsupportedWriterError
+from .vehicle import (
+    CARTER_NAME,
+    Orientation,
+    Vehicle,
+)
 
 
 __all__ = [
-    'Vehicle',
-    'VehicleMoveViolationError',
+    'Board',
+    'BoardPlacementError',
+    'BoardPlacementOccupiedError',
+    'BoardPlacementOutOfBoundsError',
+    'BoardVehicleCarterOrientationError',
+    'BoardVehicleNameExistError',
+    'CARTER_NAME',
+    'Direction',
+    'Game',
+    'Mover',
+    'MoveOutOfBoundsError',
+    'MoveStepIsZeroError',
+    'MoveVehicleBlockedError',
+    'MoveVehicleNotExistError',
     'Orientation',
-    'Board'
+    'Plotter',
+    'PlotterError',
+    'PlotterUnsupportedWriterError',
+    'SetupBoardNoCarterError',
+    'SetupBoardNoVehicleDataError',
+    'Vehicle',
 ]

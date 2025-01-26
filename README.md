@@ -25,13 +25,22 @@ The project follows a modular structure for scalability and clarity:
     code/
         algorithms/
             __init__.py
+            a_star.py
+            breadth_first.py
+            depth_first.py
+            heuristics.py
             randomise.py
+            steprefiner.py
         classes/
             __init__.py
             board.py
+            game.py
+            mover.py
+            plotter.py
             vehicle.py
         __init__.py
         helpers.py
+        utils.py
     data/
         input/
             gameboards/
@@ -61,13 +70,16 @@ The project follows a modular structure for scalability and clarity:
         README.md
     tests/
         __init__.py
-        board_test.py
-        vehicle_test.py
+        test_board.py
+        test_game.py
+        test_plotter.py
+        test_vehicle.py
     .editorconfig
     .gitignore
     main.py
-    requirements.txt
+    pytest.ini
     README.md
+    requirements.txt
 ```
 
 ### Folder and files breakdown
@@ -76,7 +88,12 @@ The project follows a modular structure for scalability and clarity:
     - **`code/`**: Contains the core implementation of the game
         - **`algorithms/`**: Heuristic and randomization algorithms
             - `__init__.py`
+            - `a_star.py`: Implements A* algorithm for solving the game
+            - `breadth_first.py`: Implements a Breadth First Search (BFS) algorithms for solving the game
+            - `depth_first.py`: Implements Depth First Search (DFS) algorithms for solving the game
+            - `heuristics.py`: Implements some additional heuristics for solving the game
             - `randomize.py`: Implements randomization algorithms for solving the game
+            - `steprefiner.py`: Implements 'step refiner' heuristics for solving the game
         - **`classes/`**: Representations of the core objects
             - `__init__.py`
             - `board.py`: Represents the game board and manages vehicle placements and moves
@@ -98,13 +115,16 @@ The project follows a modular structure for scalability and clarity:
         - `README.md`: Overview of the documentation folder and its purpose
     - **`tests/`**: Unit tests for ensuring the correctness of core functionality
         - `__init__.py`
-        - `board_test.py`: Tests for the `Board` class
-        - `vehicle_test.py`: Tests for the `Vehicle` class
+        - `test_board.py`: Tests for the `Board` class
+        - `test_game.py`: Tests for the `Game` class
+        - `test_plotter.py`: Tests for the `Plotter` class
+        - `test_vehicle.py`: Tests for the `Vehicle` class
     - `.editorconfig`: Defines consistent coding styles across different editors
     - `.gitignore`: Specifies files and directories to intentionally ignore by `git`
     - `main.py`: Entry point for running the code
-    - `requirements.txt`: Lists Python package dependencies
+    - `pytest.ini`: Config file for PyTest
     - `README.md`: This documentation file
+    - `requirements.txt`: Lists Python package dependencies
 
 ---
 
@@ -137,8 +157,11 @@ The project follows a modular structure for scalability and clarity:
    pip install -r requirement.txt
    ```
 
+#### NB
+Generating animations of the moves using `ffmpeg` as `writer` will only work if ffmpeg is installed on the machine. `Pillow` should work as long as `Matplotlib` gets installed (which should be installed if you follow the steps above)
+
 ## Running the Project
-1. Navigate to the `<rush_hour_folder_name>`
+1. Navigate to the `<rush_hour_folder_name>`:
    ```bash
    cd <rush_hour_folder_name>
     ```
@@ -148,18 +171,30 @@ The project follows a modular structure for scalability and clarity:
    ```
 
 ## Running the Test Suite
-1. Navigate to the `<rush_hour_folder_name>`.
+1. Navigate to the `<rush_hour_folder_name>`:
    ```bash
    cd <rush_hour_folder_name>
    ```
-2. Run all tests using the `unittest` module:
+2. Run all tests:
    ```bash
-   python -m unittest discover -s tests -p "*.py" -v
+   pytest
    ```
 3. To run a specific test file:
    ```bash
-   python -m unittest tests/vehicle_test.py -v
+   pytest tests/vehicle_test.py
    ```
+4. To show verbose test results add the `-v` flag:
+   ```bash
+   pytest -v
+   ```
+
+   ```bash
+   pytest -v tests/test_vehicle.py
+   ```
+5. Show test coverage
+    ```bash
+    pytest --cov
+    ```
 
 ## Goals
 - Implement advanced solving algorithms, including:
@@ -167,6 +202,8 @@ The project follows a modular structure for scalability and clarity:
   - BFS (Breadth-First Search)
   - DFS (Depth-First Search)
   - A* (A-Star) Search
+  - Step Refiner
+  - Some additional heuristics
 
 ---
 
