@@ -21,6 +21,7 @@ class BreadthFirst:
         """
         self.queue = queue.Queue()
         self.queue.put((initial_state, []))
+        self.max_queue_size = 1
 
         self.seen_states: set[tuple[tuple[object]]] = set()
         self.solution = None
@@ -48,11 +49,15 @@ class BreadthFirst:
                 self.seen_states.add(tuple(map(tuple, child_state.locations)))
                 self.queue.put((child_state, move_history + [move]))
 
-    def run(self, finish: np.array = None) -> None:
+                # keep track of statistics
+                if self.queue.qsize() > self.max_queue_size:
+                    self.max_queue_size = self.queue.qsize()
+
+    def run(self, finish: np.ndarray = None) -> None:
         """
         Runs the algorithm until all possible Board states are visited or a solution
         is found.
-        Solution is check_game_finished method unless a np.array is given.
+        Solution is is_finished method unless a np.ndarray is given.
         """
         while not self.queue.empty():
             next_state, move_history = self.queue.get()

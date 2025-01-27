@@ -16,4 +16,8 @@ __all__ = [
     'all_max_moves',
     'DepthFirst',
     'BreadthFirst',
+    'StepRefiner',
+    'AStar',
+    'num_blocking_vehicles',
+    'num_two_blocking_vehicles'
 ]

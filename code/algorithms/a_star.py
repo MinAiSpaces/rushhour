@@ -14,17 +14,21 @@ def num_blocking_vehicles(state: Board) -> int:
     carter_row_num = state.vehicles[CARTER_NAME].start_row
     carter_row = state.locations[carter_row_num]
 
-    idx_after_carter = state.vehicles[CARTER_NAME].location[-1][0] + 1
+    col_in_front_of_carter = state.vehicles[CARTER_NAME].location[-1][0] + 1
 
-    return len({carter_row[i] for i in range(idx_after_carter, state.size) if carter_row[i] != 0})
+    return len(
+        {
+            carter_row[i]
+            for i in range(col_in_front_of_carter, state.size)
+            if carter_row[i] != 0
+        }
+    )
 
 
 def num_two_blocking_vehicles(state: Board) -> int:
     """
     Counts the number of vehicles directly blocking Carter in the front and the
     number of vehicles blocking these.
-
-
     """
     mover = Mover(state)
     carter_row_num = state.vehicles[CARTER_NAME].start_row

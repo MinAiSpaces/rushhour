@@ -32,7 +32,7 @@ def main():
 
     board = Game.setup_board(Board(board_size), data)
 
-    # # --------------------------- RandomAllAvailableValid ---------------------
+    # ----------------------------- RandomAllAvailableValid ---------------------
     # start_time = time.time()
     #
     # game = Game(data, board_size)
@@ -44,7 +44,7 @@ def main():
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # --------------------------- RandomVehicleFirst --------------------------
+    # ----------------------------- RandomVehicleFirst ---------------------------
     # start_time = time.time()
     #
     # game = Game(data, board_size)
@@ -56,7 +56,7 @@ def main():
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # --------------------------- RandomAllAvailableFinish ----------------------
+    # ----------------------------- RandomAllAvailableFinish ----------------------
     # start_time = time.time()
     #
     # game = Game(data, board_size)
@@ -68,7 +68,7 @@ def main():
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # --------------------------- RandomAllMaxMovesFinish ---------------------
+    # ----------------------------- RandomAllMaxMovesFinish ----------------------
     # start_time = time.time()
     #
     # game = Game(data, board_size)
@@ -80,7 +80,7 @@ def main():
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # --------------------------- Depth First ---------------------------------
+    # ---------------------------- Depth First ----------------------------------
     # depth = DepthFirst(board)
     #
     # start_time = time.time()
@@ -92,7 +92,7 @@ def main():
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # --------------------------- Breadth First --------------------------------
+    # ----------------------------- Breadth First --------------------------------
     # breadth = BreadthFirst(board)
     #
     # start_time = time.time()
@@ -104,7 +104,7 @@ def main():
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # --------------------------- Step Refiner --------------------------------
+    # ----------------------------- Step Refiner ---------------------------------
     # refiner = StepRefiner(board)
 
     # print('starting step refiner')
@@ -117,7 +117,7 @@ def main():
     # end_time = time.time() - start_time
     # print(f'Step refiner used {end_time} seconds')
 
-    # --------------------------- A-Star ---------------------------------------
+    # ------------------------------- A-Star -------------------------------------
     # astar = AStar(board, num_two_blocking_vehicles)
     #
     # start_time = time.time()
@@ -129,8 +129,10 @@ def main():
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # ------------------- Script ----------------------------------------------
-    # breadth_first('RushHour6x6_2.csv')
+    # -------------------------------- Scripts -----------------------------------
+    breadth_first('RushHour6x6_1.csv')
+    breadth_first('RushHour6x6_2.csv')
+    breadth_first('RushHour6x6_3.csv')
 
 
 if __name__ == '__main__':

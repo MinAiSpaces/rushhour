@@ -75,3 +75,22 @@ def read_moves_from_csv(file_path) -> list[tuple[str, int]]:
             data.append((move['car'].upper(), int(move['move'])))
 
     return data
+
+
+def generate_results(results: list[tuple[int, float, int, int]], dest_file: str) -> None:
+    """
+    Writes all the search results (number of moves made, solving time, number of
+    seen states, max size of queue) to a CSV file.
+    """
+    with open(dest_file, 'w', newline='') as f:
+        fieldnames = ['number moves made', 'solving time', 'number seen states', 'max_queue_size']
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for num_moves_made, solving_time, num_seen_states, max_queue_size in results:
+            writer.writerow({
+                    'number moves made': num_moves_made,
+                    'solving time': solving_time,
+                    'number seen states': num_seen_states,
+                    'max_queue_size': max_queue_size
+            })
