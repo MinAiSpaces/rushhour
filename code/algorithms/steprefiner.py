@@ -82,6 +82,4 @@ class StepRefiner:
             new_moves_lists.append(breadth.moves)
 
         # save moves in correct order
-        for list in reversed(new_moves_lists):
-            for move in list:
-                self.new_moves.append(move)
+self.new_moves.extend(list)
