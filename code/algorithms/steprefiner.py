@@ -31,6 +31,7 @@ class StepRefiner:
         self.last_bin_size: int = len(self.moves) % self.bin_size
 
         self.rewind_moves = self.create_rewind_moves()
+        self.new_moves: list[tuple[str, int]] = []
 
     def create_rewind_moves(self) -> list[tuple[str, int]]:
         """
@@ -48,47 +49,39 @@ class StepRefiner:
         """
         for i in range(moves):
             move = self.rewind_moves.pop()
-            # self.board.move_vehicle(self.board.vehicles[move[0]], move[1])
             self.mover.move_vehicle(move)
 
-    def run(self) -> Board:
+    def run(self) -> None:
         """
-        Runs the algorithm rewinding bin_size steps at a time.
+        Runs the algorithm rewinding bin_size moves at a time.
         """
         # list[list[tuple[str, int]]]
-        all_new_steps = []
-        #list[tuple[str, int]]
-        new_steps = []
+        new_moves_lists = []
 
         for bin in range(self.bins):
 
-            # save board state before further rewinding
+            # save board state before rewinding
             old_state = copy.deepcopy(self.board.locations)
             self.rewind_board(self.bin_size)
-
-            # reset steps
-            self.board.steps = []
 
             # find best path back to old_state and save it
             breadth = BreadthFirst(self.board)
             breadth.run(old_state)
-            all_new_steps.append(breadth.solution.steps)
+            new_moves_lists.append(breadth.moves)
 
-        # save board state before further rewinding
-        old_state = copy.deepcopy(self.board.locations)
-        self.rewind_board(self.last_bin_size)
+        # check for remaining moves
+        if self.last_bin_size > 0:
 
-        # reset steps
-        self.board.steps = []
+            # save board state before last rewind
+            old_state = copy.deepcopy(self.board.locations)
+            self.rewind_board(self.last_bin_size)
 
-        # find best path back to old_state and save it
-        breadth = BreadthFirst(self.board)
-        breadth.run(old_state)
-        all_new_steps.append(breadth.solution.steps)
+            # find best path back to old_state and save it
+            breadth = BreadthFirst(self.board)
+            breadth.run(old_state)
+            new_moves_lists.append(breadth.moves)
 
-        # save steps in correct order
-        for list in reversed(all_new_steps):
-            for step in list:
-                new_steps.append(step)
-
-        self.board.steps = new_steps
+        # save moves in correct order
+        for list in reversed(new_moves_lists):
+            for move in list:
+                self.new_moves.append(move)
