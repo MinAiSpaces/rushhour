@@ -3,7 +3,8 @@ import copy
 
 import numpy as np
 
-from code.classes import Board, Mover, Game
+from code.classes import Board, Mover, CARTER_NAME
+from .heuristics import free_carter
 
 
 class BreadthFirst:
@@ -66,7 +67,15 @@ class BreadthFirst:
                     break
 
             else:
-                if Game.is_finished(next_state):
+                if free_carter(next_state):
+                    steps = free_carter(next_state)
+                    mover = Mover(next_state)
+                    move = (CARTER_NAME, steps)
+
+                    # make final move
+                    mover.move_vehicle(move)
+                    move_history.append(move)
+
                     self.solution = next_state
                     self.moves = move_history
                     break
