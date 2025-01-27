@@ -4,7 +4,7 @@ import copy
 import numpy as np
 
 from code.classes import Board, Mover, CARTER_NAME
-from .heuristics import free_carter, all_max_moves
+from .heuristics import free_carter, all_max_moves, check_useful_move
 
 
 class BreadthFirst:
@@ -27,7 +27,7 @@ class BreadthFirst:
         self.solution = None
         self.moves: list[tuple[str, int]] = []
 
-    def build_children(self, next_state: Board, move_history: list[tuple[str, int]], max_moves: bool) -> None:
+    def build_children(self, next_state: Board, move_history: list[tuple[str, int]], max_moves: bool, useful_move: bool) -> None:
         """
         Generates all possible child states from the picked Board state and adds them
         to the queue of states if not seen earlier. Each child state represents the
@@ -39,10 +39,14 @@ class BreadthFirst:
             possible_moves: list[tuple[str, int]] = all_max_moves(next_state)
         else:
             possible_moves: list[tuple[str, int]] = mover.get_all_available_moves()
-        # possible_moves: list[tuple[str, int]] = mover.get_all_available_moves()
 
         # add a new board instance to the queue for each unseen valid move
         for move in possible_moves:
+            if useful_move:
+                if not check_useful_move(next_state, move[0], move[1]):
+                    print(move)
+                    continue
+
             child_state = copy.deepcopy(next_state)
             new_mover = Mover(child_state)
 
@@ -54,7 +58,7 @@ class BreadthFirst:
                 self.seen_states.add(tuple(map(tuple, child_state.locations)))
                 self.queue.put((child_state, move_history + [move]))
 
-    def run(self, finish: np.array = None, max_moves: bool = False) -> None:
+    def run(self, finish: np.array = None, max_moves: bool = False, useful_move: bool = False) -> None:
         """
         Runs the algorithm until all possible Board states are visited or a solution
         is found.
@@ -85,7 +89,7 @@ class BreadthFirst:
                     self.moves = move_history
                     break
 
-            self.build_children(next_state, move_history, max_moves)
+            self.build_children(next_state, move_history, max_moves, useful_move)
 
         if not self.solution:
             print('no solution found')
