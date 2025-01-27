@@ -1,6 +1,6 @@
 import csv
 
-from code.classes import Orientation
+from code.classes import Orientation, Vehicle
 
 
 def read_board_state_from_csv(
@@ -37,6 +37,29 @@ def read_board_state_from_csv(
             data.append((car_name, orientation, start_col, start_row, length))
 
     return data
+
+
+def write_board_state_to_csv(
+    file_path: str,
+    vehicles: list[Vehicle]
+) -> None:
+    with open(file_path, 'w', newline='') as f:
+        fieldnames = ['car', 'orientation', 'col', 'row', 'length']
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for vehicle in vehicles:
+            writer.writerow({
+                'car': vehicle.name,
+                'orientation': (
+                    'H'
+                    if vehicle.orientation == Orientation.HORIZONTAL
+                    else 'V'
+                ),
+                'col': vehicle.location[0][0],
+                'row': vehicle.location[0][1],
+                'length': vehicle.length,
+            })
 
 
 def write_moves_to_csv(file_path: str, moves: list[tuple[str, int]]) -> None:
