@@ -38,7 +38,7 @@ class StepRefiner:
         Returns a list with the opposite moves of the moves in self.moves.
         """
         rewind_moves = []
-        for vehicle_name, move in self.moves:
+        for vehicle_name, steps in self.moves:
             rewind_moves.append((vehicle_name, -move))
         return rewind_moves
 
