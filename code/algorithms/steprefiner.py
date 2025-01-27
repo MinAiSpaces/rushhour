@@ -39,7 +39,7 @@ class StepRefiner:
         """
         rewind_moves = []
         for vehicle_name, steps in self.moves:
-            rewind_moves.append((vehicle_name, -move))
+            rewind_moves.append((vehicle_name, -steps))
         return rewind_moves
 
 
@@ -82,4 +82,5 @@ class StepRefiner:
             new_moves_lists.append(breadth.moves)
 
         # save moves in correct order
-self.new_moves.extend(list)
+        for list in reversed(new_moves_lists):
+            self.new_moves.extend(list)
