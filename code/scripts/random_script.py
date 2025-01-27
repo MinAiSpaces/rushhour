@@ -1,13 +1,13 @@
 import os
 import time
 
-from code.classes import Board, Game
+from code.classes import Game
 from code.helpers import get_output_path, get_experiment_path, get_board_size_from_filename, get_gameboards_path
 from code.algorithms import all_max_moves_finish_check
 from code.utils import read_board_state_from_csv, write_moves_to_csv, generate_results
 
 
-def random(filename: str) -> Board:
+def random(filename: str) -> Game:
     """
     Executes the Random algorithm several times for a given Board, writes
     the search results (number of moves made, solving time) to a CSV file in
@@ -63,4 +63,4 @@ def random(filename: str) -> Board:
     experiment_file_path = os.path.join(experiment_path, f'Random_experiment_{filename}')
     generate_results(results, experiment_file_path)
 
-    return best_solution[0].board
+    return best_solution[0]
