@@ -20,7 +20,7 @@ from code.algorithms import (
     num_blocking_vehicles,
     num_two_blocking_vehicles
 )
-from code.scripts import breadth_first, a_star
+from code.scripts import random, breadth_first, a_star
 from code.utils import read_board_state_from_csv, write_moves_to_csv
 
 
@@ -133,6 +133,14 @@ def main():
     # print(end_time)
 
     # -------------------------------- Scripts -----------------------------------
+    # random('RushHour6x6_1.csv')
+    # random('RushHour6x6_2.csv')
+    # random('RushHour6x6_3.csv')
+    # random('RushHour9x9_4.csv')
+    # random('RushHour9x9_5.csv')
+    random('RushHour9x9_6.csv')
+    random('RushHour12x12_7.csv')
+
     # breadth_first('RushHour6x6_1.csv')
     # breadth_first('RushHour6x6_2.csv')
     # breadth_first('RushHour6x6_3.csv')

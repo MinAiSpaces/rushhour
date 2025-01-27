@@ -1,6 +1,6 @@
 import csv
 
-from code.classes import Orientation
+from code.classes import Orientation, Game
 
 
 def read_board_state_from_csv(
@@ -77,7 +77,7 @@ def read_moves_from_csv(file_path) -> list[tuple[str, int]]:
     return data
 
 
-def generate_results(results: list[tuple[int, float, int, int]], dest_file: str) -> None:
+def generate_results(results: list[tuple[int, float, int | str, int | str]], dest_file: str) -> None:
     """
     Writes all the search results (number of moves made, solving time, number of
     seen states, max size of queue) to a CSV file.
