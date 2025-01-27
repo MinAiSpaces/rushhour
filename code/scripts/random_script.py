@@ -11,7 +11,7 @@ def random(filename: str) -> Game:
     """
     Executes the Random algorithm several times for a given Board, writes
     the search results (number of moves made, solving time) to a CSV file in
-    the data/experiment folder, and exports the moves made during the search
+    the data/experiment folder, exports the moves made during the search
     to another CSV file in the data/output folder, and returns the Board from
     a run with the least number of moves made.
     """
