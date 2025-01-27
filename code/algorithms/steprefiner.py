@@ -1,90 +1,86 @@
 import copy
 
-from code.classes import Board
+from code.classes import Board, Mover, Game
 from .breadth_first import BreadthFirst
 
 
 class StepRefiner:
     """
-    This class explores the performed steps of a solved board. It does this by saving
-    the current board state before reverting the board state back a set number of steps.
+    This class explores the performed moves of a solved board. It does this by saving
+    the current board state before reverting the board state back a set number of moves.
     It will then use the Breadth First Search algorithm to find the best route back to
-    the previous board state. It will do this repeatedly from the last performed steps
-    till the first step while saving the steps from the Breadth First Search algorithm
+    the previous board state. It will do this repeatedly from the last performed moves
+    till the first move while saving the moves from the Breadth First Search algorithm
     as the new solution of the solved board.
     """
-    def __init__(self, board: Board, bin_size: int=20):
+    def __init__(self, board: Board, moves: list[tuple[str, int]], bin_size: int=20):
         """
-        Initializes StepRefiner with a solved board, using bin_size as the amount of steps
+        Initializes StepRefiner with a solved board, using bin_size as the amount of moves
         rewound each iteration. Bins is the amount of iterations necessary to rewind all
-        steps excluding a final iteration with last_bin_size amount of steps to rewind.
+        moves excluding a final iteration with last_bin_size amount of moves to rewind.
         """
-        if not board.check_game_finished():
+        if not Game.is_finished(board):
             raise Exception("StepRefiner requires a solved board.")
 
         self.board = copy.deepcopy(board)
+        self.mover = Mover(self.board)
+        self.moves = moves
+
         self.bin_size = bin_size
-        self.bins: int = len(self.board.steps) // self.bin_size
-        self.last_bin_size: int = len(self.board.steps) % self.bin_size
+        self.bins: int = len(self.moves) // self.bin_size
+        self.last_bin_size: int = len(self.moves) % self.bin_size
 
-        self.rewind_steps = self.create_rewind_steps()
+        self.rewind_moves = self.create_rewind_moves()
+        self.new_moves: list[tuple[str, int]] = []
 
-    def create_rewind_steps(self) -> list[tuple[str, int]]:
+    def create_rewind_moves(self) -> list[tuple[str, int]]:
         """
-        Returns a list with the opposite steps of the steps in self.board.steps.
+        Returns a list with the opposite moves of the moves in self.moves.
         """
-        rewind_steps = []
-        for vehicle_name, move in self.board.steps:
-            rewind_steps.append((vehicle_name, -move))
-        return rewind_steps
+        rewind_moves = []
+        for vehicle_name, steps in self.moves:
+            rewind_moves.append((vehicle_name, -steps))
+        return rewind_moves
 
 
-    def rewind_board(self, steps: int) -> None:
+    def rewind_board(self, moves: int) -> None:
         """
-        Rewind the board 'steps' number of moves.
+        Rewind the board 'moves' number of moves.
         """
-        for i in range(steps):
-            step = self.rewind_steps.pop()
-            self.board.move_vehicle(self.board.vehicles[step[0]], step[1])
+        for i in range(moves):
+            move = self.rewind_moves.pop()
+            self.mover.move_vehicle(move)
 
-    def run(self) -> Board:
+    def run(self) -> None:
         """
-        Runs the algorithm rewinding bin_size steps at a time.
+        Runs the algorithm rewinding bin_size moves at a time.
         """
         # list[list[tuple[str, int]]]
-        all_new_steps = []
-        #list[tuple[str, int]]
-        new_steps = []
+        new_moves_lists = []
 
         for bin in range(self.bins):
 
-            # save board state before further rewinding
+            # save board state before rewinding
             old_state = copy.deepcopy(self.board.locations)
             self.rewind_board(self.bin_size)
-
-            # reset steps
-            self.board.steps = []
 
             # find best path back to old_state and save it
             breadth = BreadthFirst(self.board)
             breadth.run(old_state)
-            all_new_steps.append(breadth.solution.steps)
+            new_moves_lists.append(breadth.moves)
 
-        # save board state before further rewinding
-        old_state = copy.deepcopy(self.board.locations)
-        self.rewind_board(self.last_bin_size)
+        # check for remaining moves
+        if self.last_bin_size > 0:
 
-        # reset steps
-        self.board.steps = []
+            # save board state before last rewind
+            old_state = copy.deepcopy(self.board.locations)
+            self.rewind_board(self.last_bin_size)
 
-        # find best path back to old_state and save it
-        breadth = BreadthFirst(self.board)
-        breadth.run(old_state)
-        all_new_steps.append(breadth.solution.steps)
+            # find best path back to old_state and save it
+            breadth = BreadthFirst(self.board)
+            breadth.run(old_state)
+            new_moves_lists.append(breadth.moves)
 
-        # save steps in correct order
-        for list in reversed(all_new_steps):
-            for step in list:
-                new_steps.append(step)
-
-        self.board.steps = new_steps
+        # save moves in correct order
+        for list in reversed(new_moves_lists):
+            self.new_moves.extend(list)
