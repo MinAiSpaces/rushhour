@@ -10,12 +10,15 @@ from code.helpers import (
 )
 from code.algorithms import (
     random_from_all_available_valid,
+    random_vehicle_first,
+    all_max_moves_finish_check,
+    all_available_valid_finish_check,
     DepthFirst,
     BreadthFirst,
     StepRefiner,
     AStar,
     num_blocking_vehicles,
-    num_two_blocking_vehicles,
+    num_two_blocking_vehicles
 )
 from code.scripts import breadth_first, a_star
 from code.utils import read_board_state_from_csv, write_moves_to_csv
@@ -34,49 +37,49 @@ def main():
 
     # ----------------------------- RandomAllAvailableValid ---------------------
     # start_time = time.time()
-    #
+
     # game = Game(data, board_size)
     # random_from_all_available_valid(game)
-    #
+
     # export_file_path = os.path.join(output_path, f'RandomAllAvailableValid_{filename}')
     # write_moves_to_csv(export_file_path, game.moves)
-    #
+
     # end_time = time.time() - start_time
     # print(end_time)
 
     # ----------------------------- RandomVehicleFirst ---------------------------
     # start_time = time.time()
-    #
+
     # game = Game(data, board_size)
     # random_vehicle_first(game)
-    #
+
     # export_file_path = os.path.join(output_path, f'RandomVehicleFirst_{filename}')
     # write_moves_to_csv(export_file_path, game.moves)
-    #
+
     # end_time = time.time() - start_time
     # print(end_time)
 
     # ----------------------------- RandomAllAvailableFinish ----------------------
     # start_time = time.time()
-    #
+
     # game = Game(data, board_size)
     # all_available_valid_finish_check(game)
-    #
+
     # export_file_path = os.path.join(output_path, f'RandomAllAvailableFinish_{filename}')
     # write_moves_to_csv(export_file_path, game.moves)
-    #
+
     # end_time = time.time() - start_time
     # print(end_time)
 
     # ----------------------------- RandomAllMaxMovesFinish ----------------------
     # start_time = time.time()
-    #
+
     # game = Game(data, board_size)
     # all_max_moves_finish_check(game)
-    #
+
     # export_file_path = os.path.join(output_path, f'RandomAllMaxMovesFinish_{filename}')
     # write_moves_to_csv(export_file_path, game.moves)
-    #
+
     # end_time = time.time() - start_time
     # print(end_time)
 
@@ -134,7 +137,10 @@ def main():
     # breadth_first('RushHour6x6_2.csv')
     # breadth_first('RushHour6x6_3.csv')
 
-    a_star('RushHour6x6_1.csv')
+    # a_star('RushHour6x6_1.csv')
+    # a_star('RushHour6x6_2.csv')
+    # a_star('RushHour6x6_3.csv')
+    # a_star('RushHour9x9_4.csv')
 
 
 if __name__ == '__main__':

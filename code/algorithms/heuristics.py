@@ -18,14 +18,14 @@ def free_carter(board: Board) -> int | None:
           return carter_max_steps_forward
 
 
-def all_max_moves(board: Board) -> list[tuple[Vehicle, int]]:
+def all_max_moves(board: Board) -> list[tuple[str, int]]:
      """
      Returns only the largest possible moves of all Vehicles on the board
      as a list of moves.
      """
      mover = Mover(board)
 
-     max_moves: list[tuple[Vehicle, int]] = []
+     max_moves: list[tuple[str, int]] = []
 
      for vehicle_name in board.vehicles:
 
