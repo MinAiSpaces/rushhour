@@ -42,13 +42,14 @@ class StepRefiner:
         return rewind_moves
 
 
-    def rewind_board(self, steps: int) -> None:
+    def rewind_board(self, moves: int) -> None:
         """
-        Rewind the board 'steps' number of moves.
+        Rewind the board 'moves' number of moves.
         """
-        for i in range(steps):
-            step = self.rewind_steps.pop()
-            self.board.move_vehicle(self.board.vehicles[step[0]], step[1])
+        for i in range(moves):
+            move = self.rewind_moves.pop()
+            # self.board.move_vehicle(self.board.vehicles[move[0]], move[1])
+            self.mover.move_vehicle(move)
 
     def run(self) -> Board:
         """
