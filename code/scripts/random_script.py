@@ -27,7 +27,7 @@ def random(filename: str) -> Game:
     results = []
     best_solution = ('game', float('inf'))
 
-    while time.time() - start_time < 3600:
+    while time.time() - start_time < 1800:
         start_run_time = time.time()
         game = Game(data, board_size)
         all_max_moves_finish_check(game)
