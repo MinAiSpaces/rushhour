@@ -34,7 +34,7 @@ def breadth_first(filename: str) -> None:
 
         n_runs += 1
         if n_runs % 10 == 0:
-            print(f'Run: {n_runs}')
+            print(f'Run: {n_runs} Passed time: {time.time() - start_time}')
 
         results.append((
             len(breadth.moves),
