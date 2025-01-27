@@ -17,7 +17,7 @@ from code.algorithms import (
     num_blocking_vehicles,
     num_two_blocking_vehicles,
 )
-from code.scripts import breadth_first
+from code.scripts import breadth_first, a_star
 from code.utils import read_board_state_from_csv, write_moves_to_csv
 
 
@@ -130,9 +130,11 @@ def main():
     # print(end_time)
 
     # -------------------------------- Scripts -----------------------------------
-    breadth_first('RushHour6x6_1.csv')
-    breadth_first('RushHour6x6_2.csv')
-    breadth_first('RushHour6x6_3.csv')
+    # breadth_first('RushHour6x6_1.csv')
+    # breadth_first('RushHour6x6_2.csv')
+    # breadth_first('RushHour6x6_3.csv')
+
+    a_star('RushHour6x6_1.csv')
 
 
 if __name__ == '__main__':

@@ -16,13 +16,11 @@ def num_blocking_vehicles(state: Board) -> int:
 
     col_in_front_of_carter = state.vehicles[CARTER_NAME].location[-1][0] + 1
 
-    return len(
-        {
-            carter_row[i]
-            for i in range(col_in_front_of_carter, state.size)
-            if carter_row[i] != 0
-        }
-    )
+    return len({
+        carter_row[i]
+        for i in range(col_in_front_of_carter, state.size)
+        if carter_row[i] != 0
+    })
 
 
 def num_two_blocking_vehicles(state: Board) -> int:
@@ -60,7 +58,7 @@ class AStar:
     valid moves and continues the search by selecting states with the lowest score
     based on depth and heuristics until a solution is found.
     """
-    def __init__(self, initial_state: Board, heuristic: Callable[[Board], int]) -> None:
+    def __init__(self, initial_state: Board, heuristic: Callable[[Board], int] = None) -> None:
         """
         Initializes the A* algorithm with a specified Board state, setting up a
         queue of Board states where the input Board serves as the initial state.
@@ -70,6 +68,7 @@ class AStar:
 
         # add the input board with its score, depth, and empty move history to the heap queue
         heapq.heappush(self.queue, (self.heuristic(initial_state), 0, random.random(), initial_state, []))
+        self.max_queue_size = 1
 
         self.seen_states: set[tuple[tuple[object]]] = set()
         self.solution = None
@@ -99,6 +98,10 @@ class AStar:
                 # add the state with its score to the heap queue
                 score = depth + 1 + self.heuristic(child_state)
                 heapq.heappush(self.queue, (score, depth + 1, random.random(), child_state, current_moves + [move]))
+
+                # keep track of statistics
+                if len(self.queue) > self.max_queue_size:
+                    self.max_queue_size = len(self.queue)
 
     def run(self) -> None:
         """
