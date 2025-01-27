@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 
 from .board import Board
-from .mover import Mover
+from .mover import Mover, MoveError
 from .plotter import Plotter
 from .vehicle import CARTER_NAME, Orientation, Vehicle
 
@@ -105,6 +105,82 @@ class Game:
             verbose,
         )
 
+    def reset(self):
+        """
+        Resets the game to its original starting state.
+
+        NB.
+        Removes any moves stored in the current game instance
+        """
+        original_data = [
+            (
+                vehicle.name,
+                vehicle.orientation,
+                vehicle.start_col,
+                vehicle.start_row,
+                vehicle.length
+            )
+            for vehicle in self.board.vehicles.values()
+        ]
+
+        self.board = self.setup_board(Board(self.board.size), original_data)
+        self.mover = Mover(self.board)
+        self.moves.clear()
+
+    def is_valid_solution(self, moves_file_path: str) -> bool:
+        """
+        Checks if the moves in the provided file lead to a valid solution
+
+        NB.
+        Replays all moves using the Game class so board needs to be in
+        correct 'start state' or we'll run into move conflicts.
+        """
+        from code.utils import read_moves_from_csv
+
+        moves = read_moves_from_csv(moves_file_path)
+
+        for move in moves:
+            try:
+                self.make_move(move)
+            except MoveError:
+                return False
+
+        return self.is_finished(self.board)
+
+    def write_moves_to_csv(self, file_path: str) -> None:
+        """
+        Write moves to a CSV file.
+
+        Writes a header row consisting of the fieldnames
+        And a row for every move containing:
+            - the vehicle name
+            - the steps (positive for forwards, negative for backwards)
+        """
+        from code.utils import write_moves_to_csv
+
+        write_moves_to_csv(file_path, self.moves)
+
+    def write_board_state_to_csv(self, file_path: str) -> None:
+        """
+        Write current board state to a CSV file.
+        """
+        from code.utils import write_board_state_to_csv
+
+        write_board_state_to_csv(file_path, list(self.board.vehicles.values()))
+
+    @classmethod
+    def load_board_state_from_csv(cls, board_file_path: str) -> 'Game':
+        """
+        Creates a new Game from board data from csv file.
+        """
+        from code.helpers import get_board_size_from_file_path
+        from code.utils import read_board_state_from_csv
+
+        board_size = get_board_size_from_file_path(board_file_path)
+        data = read_board_state_from_csv(board_file_path)
+
+        return cls(data, board_size)
+
     @staticmethod
     def is_finished(board: Board) -> bool:
         """
@@ -141,5 +217,4 @@ class Game:
             raise SetupBoardNoCarterError()
 
         return board
-
 
