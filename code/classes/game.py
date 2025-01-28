@@ -30,7 +30,7 @@ class Game:
     and checking if the game is finished. The Game class also allows for easy
     visualizing of the current state of the board through the Plotter.
     """
-    data: list[tuple[str, Orientation, int, int, int]]
+    start_state: list[tuple[str, Orientation, int, int, int]]
     board_size: int
     board: Board = field(init=False)
     mover: Mover = field(init=False)
@@ -45,7 +45,10 @@ class Game:
         Next we place all the vehicles on the board and encapsulate the Mover
         and Plotter.
         """
-        self.board = self.setup_board(Board(self.board_size), self.data)
+        self.board = self.setup_board(
+            Board(self.board_size),
+            self.start_state
+        )
         self.mover = Mover(self.board)
         self.plotter = Plotter()
 
@@ -112,18 +115,7 @@ class Game:
         NB.
         Removes any moves stored in the current game instance
         """
-        original_data = [
-            (
-                vehicle.name,
-                vehicle.orientation,
-                vehicle.start_col,
-                vehicle.start_row,
-                vehicle.length
-            )
-            for vehicle in self.board.vehicles.values()
-        ]
-
-        self.board = self.setup_board(Board(self.board.size), original_data)
+        self.board = self.setup_board(Board(self.board.size), self.start_state)
         self.mover = Mover(self.board)
         self.moves.clear()
 
