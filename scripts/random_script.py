@@ -77,13 +77,9 @@ if __name__ == '__main__':
             )
 
     parser.add_argument('filename', help='Filename of the gameboard')
-    parser.add_argument('-s', '--set-time', help='Set total run time in seconds of experiment (default: 3600)')
-    parser.add_argument('-dw', '--do-not-write-results', action='store_false', help='Boolean flag to disable writing the results to the CSV file')
 
     args = parser.parse_args()
 
     filename = args.filename
-    set_time = int(args.set_time) if args.set_time else 3600
-    dont_write = args.do_not_write_results
 
-    random(filename, set_time, dont_write)
+    random(filename)
