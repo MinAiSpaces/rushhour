@@ -287,6 +287,8 @@ python -m scripts.steprefiner_script <'RushHour6x6_1'>
 - `-bz` `<number>`
     - Specify the rewind steps (default: 10)
 
+Step Refiner needs a solved game, which we get from running the random script for 1800 seconds.
+
 ---
 
 Enjoy solving puzzles with **Rush Hour**!
