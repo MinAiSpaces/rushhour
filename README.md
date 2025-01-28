@@ -244,12 +244,6 @@ Example:
 python -m scripts.random_script 'RushHour6x6_1.csv'
 ```
 
-Optional arguments:
-- `-s` `<number>`
-    - Set total run time in seconds of experiment (default: 3600)
-- `-dw`
-    - Boolean flag to disable writing the results to the CSV file
-
 #### A*:
 ```bash
 python -m scripts.a_star_script <filename>
