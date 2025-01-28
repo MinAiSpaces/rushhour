@@ -75,7 +75,7 @@ class StepRefiner:
 
             # keep track of statistics
             self.total_seen_states += len(breadth.seen_states)
-            self.unique_seen_states.add(breadth.seen_states)
+            self.unique_seen_states.update(breadth.seen_states)
             if breadth.max_queue_size > self.max_queue_size:
                 self.max_queue_size = breadth.max_queue_size
 

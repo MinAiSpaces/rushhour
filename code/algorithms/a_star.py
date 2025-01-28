@@ -4,8 +4,8 @@ import copy
 import random
 from typing import Callable
 
-from code.classes import Board, CARTER_NAME, Mover, Game, Direction
-from code.algorithms import free_carter
+from code.classes import Board, CARTER_NAME, Mover, Direction
+from code.algorithms import free_carter, all_max_moves
 
 
 def num_blocking_vehicles(state: Board) -> int:
@@ -59,7 +59,7 @@ class AStar:
     valid moves and continues the search by selecting states with the lowest score
     based on depth and heuristics until a solution is found.
     """
-    def __init__(self, initial_state: Board, heuristic: Callable[[Board], int] = None) -> None:
+    def __init__(self, initial_state: Board, heuristic: Callable[[Board], int]=None) -> None:
         """
         Initializes the A* algorithm with a specified Board state, setting up a
         queue of Board states where the input Board serves as the initial state.
@@ -75,14 +75,24 @@ class AStar:
         self.solution = None
         self.moves: list[tuple[str, int]] = []
 
-    def build_children(self, next_state: Board, depth: int, current_moves: list[tuple[str, int]]) -> None:
+    def build_children(
+            self,
+            next_state: Board,
+            depth: int,
+            current_moves: list[tuple[str, int]],
+            max_moves: bool
+        ) -> None:
         """
         Generates all possible child states from the picked Board state and adds them
         to the heap queue of states if not seen earlier. Each child state represents
         the Board configuration after a valid move by a Vehicle.
         """
         mover = Mover(next_state)
-        possible_moves: list[tuple[str, int]] = mover.get_all_available_moves()
+
+        if max_moves:
+            possible_moves: list[tuple[str, int]] = all_max_moves(next_state)
+        else:
+            possible_moves: list[tuple[str, int]] = mover.get_all_available_moves()
 
         # add a new board instance to the heap queue for each unseen valid move
         for move in possible_moves:
@@ -104,7 +114,7 @@ class AStar:
                 if len(self.queue) > self.max_queue_size:
                     self.max_queue_size = len(self.queue)
 
-    def run(self) -> None:
+    def run(self, max_moves: bool=False) -> None:
         """
         Runs the algorithm until all possible Board states are visited or a solution
         is found.
@@ -128,6 +138,6 @@ class AStar:
 
                 break
 
-            self.build_children(current_state, depth, move_history)
+            self.build_children(current_state, depth, move_history, max_moves)
 
         self.solution = current_state

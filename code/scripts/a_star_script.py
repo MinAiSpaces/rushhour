@@ -7,7 +7,7 @@ from code.algorithms import AStar, num_blocking_vehicles
 from code.utils import read_board_state_from_csv, write_moves_to_csv, generate_results
 
 
-def a_star(filename: str) -> None:
+def a_star(filename: str, max_moves: bool=True) -> None:
     """
     Executes the A-Star algorithm several times for a given Board, writes
     the search results (number of moves made, solving time, number of seen states, max
@@ -26,10 +26,10 @@ def a_star(filename: str) -> None:
     n_runs = 0
     results = []
 
-    while time.time() - start_time < 3600:
+    while time.time() - start_time < 1:
         start_run_time = time.time()
         astar = AStar(board, num_blocking_vehicles)
-        astar.run()
+        astar.run(max_moves)
 
         n_runs += 1
         if n_runs % 10 == 0:
@@ -39,7 +39,8 @@ def a_star(filename: str) -> None:
             len(astar.moves),
             time.time() - start_run_time,
             len(astar.seen_states),
-            astar.max_queue_size
+            astar.max_queue_size,
+            len(astar.seen_states)
         ))
 
     print(f'A-Star used {time.time() - start_time} seconds for {n_runs} runs to solve {filename}')

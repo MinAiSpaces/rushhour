@@ -40,6 +40,7 @@ def random(filename: str, set_time: int=3600, write_results: bool=True) -> Game:
             len(game.moves),
             time.time() - start_run_time,
             len(game.moves),
+            'NaN',
             'NaN'
         ))
 

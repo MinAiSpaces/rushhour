@@ -37,8 +37,9 @@ def steprefiner(filename: str, game: Game, bin_size: int=15) -> None:
         results.append((
             len(steprefiner.new_moves),
             time.time() - start_run_time,
-            'NaN',
-            'NaN'
+            steprefiner.total_seen_states,
+            steprefiner.max_queue_size,
+            len(steprefiner.unique_seen_states)
         ))
 
     print(f'Step Refiner used {time.time() - start_time} seconds for {n_runs} runs to solve {filename}')

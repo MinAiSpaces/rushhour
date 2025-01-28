@@ -39,7 +39,8 @@ def breadth_first(filename: str, max_moves: bool=True, useful_move: bool=False) 
             len(breadth.moves),
             time.time() - start_run_time,
             len(breadth.seen_states),
-            breadth.max_queue_size
+            breadth.max_queue_size,
+            len(breadth.seen_states)
         ))
 
     print(f'Breadth First used {time.time() - start_time} seconds for {n_runs} runs to solve {filename}')
