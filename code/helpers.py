@@ -76,3 +76,20 @@ def get_board_size_from_file_path(file_path: str) -> int:
     name_first_part = filename.split('_')[0]
 
     return int(name_first_part.lower().split('x')[1])
+
+
+def get_gameboard_file_paths(gameboards_path: str | None = None) -> list[str]:
+    """
+    Get all filenames from the gameboards folder.
+    """
+    if gameboards_path is None:
+        gameboards_path = get_gameboards_path()
+
+    return [
+        os.path.join(gameboards_path, filename)
+        for filename in os.listdir(gameboards_path)
+        if (
+            filename.endswith('.csv')
+            and os.path.isfile(os.path.join(gameboards_path, filename))
+        )
+    ]
