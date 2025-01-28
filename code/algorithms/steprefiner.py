@@ -13,7 +13,7 @@ class StepRefiner:
     till the first move while saving the moves from the Breadth First Search algorithm
     as the new solution of the solved board.
     """
-    def __init__(self, board: Board, moves: list[tuple[str, int]], bin_size: int=20) -> None:
+    def __init__(self, board: Board, moves: list[tuple[str, int]], bin_size: int=10) -> None:
         """
         Initializes StepRefiner with a solved board, using bin_size as the amount of moves
         rewound each iteration. Bins is the amount of iterations necessary to rewind all

@@ -7,7 +7,7 @@ from code.algorithms import StepRefiner
 from code.utils import write_moves_to_csv, generate_results
 
 
-def steprefiner(filename: str, game: Game, bin_size: int=15) -> None:
+def steprefiner(filename: str, game: Game, bin_size: int=10) -> None:
     """
     Executes the Step Refiner algorithm several times for a given game.board,
     writes the search results (number of moves made, solving time) to a CSV file
