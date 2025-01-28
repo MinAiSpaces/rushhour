@@ -293,4 +293,6 @@ python -m scripts.steprefiner_script <'RushHour6x6_1'>
 - `-bz` `<number>`
     - Specify the rewind steps (default: 10)
 
+---
+
 Enjoy solving puzzles with **Rush Hour**!
