@@ -13,7 +13,7 @@ class StepRefiner:
     till the first move while saving the moves from the Breadth First Search algorithm
     as the new solution of the solved board.
     """
-    def __init__(self, board: Board, moves: list[tuple[str, int]], bin_size: int=20):
+    def __init__(self, board: Board, moves: list[tuple[str, int]], bin_size: int=10) -> None:
         """
         Initializes StepRefiner with a solved board, using bin_size as the amount of moves
         rewound each iteration. Bins is the amount of iterations necessary to rewind all
@@ -26,12 +26,16 @@ class StepRefiner:
         self.mover = Mover(self.board)
         self.moves = moves
 
-        self.bin_size = bin_size
+        self.bin_size = bin_size if len(self.moves) >= bin_size else len(self.moves)
         self.bins: int = len(self.moves) // self.bin_size
         self.last_bin_size: int = len(self.moves) % self.bin_size
 
         self.rewind_moves = self.create_rewind_moves()
         self.new_moves: list[tuple[str, int]] = []
+
+        self.total_seen_states = 0
+        self.unique_seen_states: set[tuple[tuple[object]]] = set()
+        self.max_queue_size = 0
 
     def create_rewind_moves(self) -> list[tuple[str, int]]:
         """
@@ -40,8 +44,8 @@ class StepRefiner:
         rewind_moves = []
         for vehicle_name, steps in self.moves:
             rewind_moves.append((vehicle_name, -steps))
-        return rewind_moves
 
+        return rewind_moves
 
     def rewind_board(self, moves: int) -> None:
         """
@@ -68,6 +72,12 @@ class StepRefiner:
             breadth = BreadthFirst(self.board)
             breadth.run(old_state)
             new_moves_lists.append(breadth.moves)
+
+            # keep track of statistics
+            self.total_seen_states += len(breadth.seen_states)
+            self.unique_seen_states.update(breadth.seen_states)
+            if breadth.max_queue_size > self.max_queue_size:
+                self.max_queue_size = breadth.max_queue_size
 
         # check for remaining moves
         if self.last_bin_size > 0:

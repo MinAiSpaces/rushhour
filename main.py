@@ -6,18 +6,20 @@ from code.classes import Board, Game
 from code.helpers import (
     get_input_path,
     get_output_path,
-    get_board_size_from_filename
+    get_board_size_from_file_path
 )
 from code.algorithms import (
     random_from_all_available_valid,
+    random_vehicle_first,
+    all_max_moves_finish_check,
+    all_available_valid_finish_check,
     DepthFirst,
     BreadthFirst,
     StepRefiner,
     AStar,
     num_blocking_vehicles,
-    num_two_blocking_vehicles,
+    num_two_blocking_vehicles
 )
-from code.scripts import breadth_first
 from code.utils import read_board_state_from_csv, write_moves_to_csv
 
 
@@ -28,59 +30,59 @@ def main():
     os.makedirs(output_path, exist_ok=True)
 
     data = read_board_state_from_csv(filename_path)
-    board_size = get_board_size_from_filename(filename)
+    board_size = get_board_size_from_file_path(filename)
 
     board = Game.setup_board(Board(board_size), data)
 
-    # # --------------------------- RandomAllAvailableValid ---------------------
+    # ----------------------------- RandomAllAvailableValid ---------------------
     # start_time = time.time()
-    #
+
     # game = Game(data, board_size)
     # random_from_all_available_valid(game)
-    #
+
     # export_file_path = os.path.join(output_path, f'RandomAllAvailableValid_{filename}')
     # write_moves_to_csv(export_file_path, game.moves)
-    #
+
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # --------------------------- RandomVehicleFirst --------------------------
+    # ----------------------------- RandomVehicleFirst ---------------------------
     # start_time = time.time()
-    #
+
     # game = Game(data, board_size)
     # random_vehicle_first(game)
-    #
+
     # export_file_path = os.path.join(output_path, f'RandomVehicleFirst_{filename}')
     # write_moves_to_csv(export_file_path, game.moves)
-    #
+
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # --------------------------- RandomAllAvailableFinish ----------------------
+    # ----------------------------- RandomAllAvailableFinish ----------------------
     # start_time = time.time()
-    #
+
     # game = Game(data, board_size)
     # all_available_valid_finish_check(game)
-    #
+
     # export_file_path = os.path.join(output_path, f'RandomAllAvailableFinish_{filename}')
     # write_moves_to_csv(export_file_path, game.moves)
-    #
+
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # --------------------------- RandomAllMaxMovesFinish ---------------------
+    # ----------------------------- RandomAllMaxMovesFinish ----------------------
     # start_time = time.time()
-    #
+
     # game = Game(data, board_size)
     # all_max_moves_finish_check(game)
-    #
+
     # export_file_path = os.path.join(output_path, f'RandomAllMaxMovesFinish_{filename}')
     # write_moves_to_csv(export_file_path, game.moves)
-    #
+
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # --------------------------- Depth First ---------------------------------
+    # ---------------------------- Depth First ----------------------------------
     # depth = DepthFirst(board)
     #
     # start_time = time.time()
@@ -92,7 +94,7 @@ def main():
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # --------------------------- Breadth First --------------------------------
+    # ----------------------------- Breadth First --------------------------------
     # breadth = BreadthFirst(board)
     #
     # start_time = time.time()
@@ -104,7 +106,7 @@ def main():
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # --------------------------- Step Refiner --------------------------------
+    # ----------------------------- Step Refiner ---------------------------------
     # refiner = StepRefiner(board)
 
     # print('starting step refiner')
@@ -117,7 +119,7 @@ def main():
     # end_time = time.time() - start_time
     # print(f'Step refiner used {end_time} seconds')
 
-    # --------------------------- A-Star ---------------------------------------
+    # ------------------------------- A-Star -------------------------------------
     # astar = AStar(board, num_two_blocking_vehicles)
     #
     # start_time = time.time()
@@ -129,8 +131,33 @@ def main():
     # end_time = time.time() - start_time
     # print(end_time)
 
-    # # ------------------- Script ----------------------------------------------
+    # -------------------------------- Scripts -----------------------------------
+    # steprefiner('RushHour6x6_1.csv', random('RushHour6x6_1.csv', 1800, False))
+    # steprefiner('RushHour6x6_2.csv', random('RushHour6x6_2.csv', 1800, False))
+    # steprefiner('RushHour6x6_2.csv', random('RushHour6x6_3.csv', 1800, False))
+    # steprefiner('RushHour9x9_4.csv', random('RushHour9x9_4.csv', 1800, False))
+    # steprefiner('RushHour9x9_5.csv', random('RushHour9x9_5.csv', 1800, False))
+    # steprefiner('RushHour9x9_6.csv', random('RushHour9x9_6.csv', 1800, False))
+    # steprefiner('RushHour12x12_7.csv', random('RushHour12x12_7.csv', 1800, False))
+
+    # random('RushHour6x6_1.csv')
+    # random('RushHour6x6_2.csv')
+    # random('RushHour6x6_3.csv')
+    # random('RushHour9x9_4.csv')
+    # random('RushHour9x9_5.csv')
+    # random('RushHour9x9_6.csv')
+    # random('RushHour12x12_7.csv')
+
+    # breadth_first('RushHour6x6_1.csv')
     # breadth_first('RushHour6x6_2.csv')
+    # breadth_first('RushHour6x6_3.csv')
+    # breadth_first('RushHour9x9_4.csv')
+    # breadth_first('RushHour9x9_5.csv')
+
+    # a_star('RushHour6x6_1.csv')
+    # a_star('RushHour6x6_2.csv')
+    # a_star('RushHour6x6_3.csv')
+    # a_star('RushHour9x9_4.csv')
 
 
 if __name__ == '__main__':

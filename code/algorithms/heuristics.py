@@ -18,14 +18,14 @@ def free_carter(board: Board) -> int | None:
           return carter_max_steps_forward
 
 
-def all_max_moves(board: Board) -> list[tuple[Vehicle, int]]:
+def all_max_moves(board: Board) -> list[tuple[str, int]]:
      """
      Returns only the largest possible moves of all Vehicles on the board
      as a list of moves.
      """
      mover = Mover(board)
 
-     max_moves: list[tuple[Vehicle, int]] = []
+     max_moves: list[tuple[str, int]] = []
 
      for vehicle_name in board.vehicles:
 
@@ -51,9 +51,9 @@ def check_useful_move(board: Board, vehicle_name: str, steps: int) -> bool:
      check_board = copy.deepcopy(board)
 
      mover = Mover(check_board)
-     moves_before = mover.get_all_available_moves()
+     moves_before: list[tuple[str, int]] = mover.get_all_available_moves()
      mover.move_vehicle((vehicle_name, steps))
-     moves_after = mover.get_all_available_moves()
+     moves_after: list[tuple[str, int]] = mover.get_all_available_moves()
 
      # find the difference in available moves
      differences = list(set(moves_after) - set(moves_before))
