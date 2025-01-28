@@ -3,19 +3,27 @@ import time
 import argparse
 
 from code.classes import Board, Game
-from code.helpers import get_output_path, get_experiment_path, get_board_size_from_file_path, get_gameboards_path
+from code.helpers import (
+    get_output_path,
+    get_experiment_path,
+    get_board_size_from_file_path,
+    get_gameboards_path,
+)
 from code.algorithms import AStar, num_blocking_vehicles
-from code.utils import read_board_state_from_csv, write_moves_to_csv, generate_results
+from code.utils import (
+    read_board_state_from_csv,
+    write_moves_to_csv,
+    generate_results,
+)
 
 
-def a_star(filename: str, max_moves: bool=True) -> None:
+def a_star(filename: str, max_moves: bool = True) -> None:
     """
     Executes the A-Star algorithm several times for a given Board, writes
     the search results (number of moves made, solving time, number of seen states, max
     size of queue) to a CSV file in the data/experiment folder, and exports the moves
     made during the search to another CSV file in the data/output folder.
     """
-    print(max_moves)
     filename_path = os.path.join(get_gameboards_path(), filename)
 
     board_size = get_board_size_from_file_path(filename)
@@ -45,12 +53,15 @@ def a_star(filename: str, max_moves: bool=True) -> None:
             len(astar.seen_states)
         ))
 
-    print(f'A-Star used {time.time() - start_time} seconds for {n_runs} runs to solve {filename}')
+    print(
+        f'A-Star used {time.time() - start_time} seconds '
+        f'for {n_runs} runs to solve {filename}'
+    )
 
     # get the output and experiment folder paths
     output_path = get_output_path()
-    os.makedirs(output_path, exist_ok=True)
     experiment_path = get_experiment_path()
+    os.makedirs(output_path, exist_ok=True)
     os.makedirs(experiment_path, exist_ok=True)
 
     # write the moves made in the last run to the file in the output folder
@@ -58,7 +69,9 @@ def a_star(filename: str, max_moves: bool=True) -> None:
     write_moves_to_csv(export_file_path, astar.moves)
 
     # write the search results to the file in the experiment folder
-    experiment_file_path = os.path.join(experiment_path, f'AStar_experiment_{filename}')
+    experiment_file_path = os.path.join(
+        experiment_path, f'AStar_experiment_{filename}'
+    )
     generate_results(results, experiment_file_path)
 
 
@@ -68,8 +81,16 @@ if __name__ == '__main__':
                 description='Runs an experiment for 3600 seconds for A-Star'
             )
 
-    parser.add_argument('filename', help='Filename of the gameboard')
-    parser.add_argument('-nmm', '--no-max-moves', action='store_false', help='Boolean flag to disable max moves')
+    parser.add_argument(
+        'filename',
+        help='Filename of the gameboard',
+    )
+    parser.add_argument(
+        '-nmm',
+        '--no-max-moves',
+        action='store_false',
+        help='Boolean flag to disable max moves',
+    )
 
     args = parser.parse_args()
 
