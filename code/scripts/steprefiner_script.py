@@ -1,10 +1,10 @@
 import os
 import time
 
-from code.classes import Board, Game
-from code.helpers import get_output_path, get_experiment_path, get_board_size_from_filename, get_gameboards_path
+from code.classes import Game
+from code.helpers import get_output_path, get_experiment_path
 from code.algorithms import StepRefiner
-from code.utils import read_board_state_from_csv, write_moves_to_csv, generate_results
+from code.utils import write_moves_to_csv, generate_results
 
 
 def steprefiner(filename: str, game: Game, bin_size: int=15) -> None:

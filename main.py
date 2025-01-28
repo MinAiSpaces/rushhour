@@ -6,7 +6,7 @@ from code.classes import Board, Game
 from code.helpers import (
     get_input_path,
     get_output_path,
-    get_board_size_from_filename
+    get_board_size_from_file_path
 )
 from code.algorithms import (
     random_from_all_available_valid,
@@ -31,7 +31,7 @@ def main():
     os.makedirs(output_path, exist_ok=True)
 
     data = read_board_state_from_csv(filename_path)
-    board_size = get_board_size_from_filename(filename)
+    board_size = get_board_size_from_file_path(filename)
 
     board = Game.setup_board(Board(board_size), data)
 

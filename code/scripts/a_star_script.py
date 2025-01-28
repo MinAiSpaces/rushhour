@@ -2,7 +2,7 @@ import os
 import time
 
 from code.classes import Board, Game
-from code.helpers import get_output_path, get_experiment_path, get_board_size_from_filename, get_gameboards_path
+from code.helpers import get_output_path, get_experiment_path, get_board_size_from_file_path, get_gameboards_path
 from code.algorithms import AStar, num_blocking_vehicles
 from code.utils import read_board_state_from_csv, write_moves_to_csv, generate_results
 
@@ -16,7 +16,7 @@ def a_star(filename: str) -> None:
     """
     filename_path = os.path.join(get_gameboards_path(), filename)
 
-    board_size = get_board_size_from_filename(filename)
+    board_size = get_board_size_from_file_path(filename)
     data = read_board_state_from_csv(filename_path)
     board = Game.setup_board(Board(board_size), data)
 

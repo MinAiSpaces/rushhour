@@ -2,7 +2,7 @@ import os
 import time
 
 from code.classes import Game
-from code.helpers import get_output_path, get_experiment_path, get_board_size_from_filename, get_gameboards_path
+from code.helpers import get_output_path, get_experiment_path, get_board_size_from_file_path, get_gameboards_path
 from code.algorithms import all_max_moves_finish_check
 from code.utils import read_board_state_from_csv, write_moves_to_csv, generate_results
 
@@ -17,7 +17,7 @@ def random(filename: str) -> Game:
     """
     filename_path = os.path.join(get_gameboards_path(), filename)
 
-    board_size = get_board_size_from_filename(filename)
+    board_size = get_board_size_from_file_path(filename)
     data = read_board_state_from_csv(filename_path)
 
     print(f'Starting Random for {filename}')
@@ -27,7 +27,7 @@ def random(filename: str) -> Game:
     results = []
     best_solution = ('game', float('inf'))
 
-    while time.time() - start_time < 1800:
+    while time.time() - start_time < 5:
         start_run_time = time.time()
         game = Game(data, board_size)
         all_max_moves_finish_check(game)
