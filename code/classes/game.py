@@ -119,18 +119,14 @@ class Game:
         self.mover = Mover(self.board)
         self.moves.clear()
 
-    def is_valid_solution(self, moves_file_path: str) -> bool:
+    def is_valid_solution(self, moves: list[tuple[str, int]]) -> bool:
         """
-        Checks if the moves in the provided file lead to a valid solution
+        Checks if the moves provided lead to a valid solution
 
         NB.
         Replays all moves using the Game class so board needs to be in
         correct 'start state' or we'll run into move conflicts.
         """
-        from code.utils import read_moves_from_csv
-
-        moves = read_moves_from_csv(moves_file_path)
-
         for move in moves:
             try:
                 self.make_move(move)
