@@ -7,7 +7,7 @@ from code.algorithms import all_max_moves_finish_check
 from code.utils import read_board_state_from_csv, write_moves_to_csv, generate_results
 
 
-def random(filename: str) -> Game:
+def random(filename: str, set_time: int=3600, write_results: bool=True) -> Game:
     """
     Executes the Random algorithm several times for a given Board, writes
     the search results (number of moves made, solving time) to a CSV file in
@@ -27,7 +27,7 @@ def random(filename: str) -> Game:
     results = []
     best_solution = ('game', float('inf'))
 
-    while time.time() - start_time < 5:
+    while time.time() - start_time < set_time:
         start_run_time = time.time()
         game = Game(data, board_size)
         all_max_moves_finish_check(game)
@@ -39,7 +39,7 @@ def random(filename: str) -> Game:
         results.append((
             len(game.moves),
             time.time() - start_run_time,
-            'NaN',
+            len(game.moves),
             'NaN'
         ))
 
@@ -49,18 +49,20 @@ def random(filename: str) -> Game:
 
     print(f'Random used {time.time() - start_time} seconds for {n_runs} runs to solve {filename}')
 
-    # get the output and experiment folder paths
-    output_path = get_output_path()
-    os.makedirs(output_path, exist_ok=True)
-    experiment_path = get_experiment_path()
-    os.makedirs(experiment_path, exist_ok=True)
+    if write_results:
 
-    # write the moves made in the best run to the file in the output folder
-    export_file_path = os.path.join(output_path, f'Random_{filename}')
-    write_moves_to_csv(export_file_path, best_solution[0].moves)
+        # get the output and experiment folder paths
+        output_path = get_output_path()
+        os.makedirs(output_path, exist_ok=True)
+        experiment_path = get_experiment_path()
+        os.makedirs(experiment_path, exist_ok=True)
 
-    # write the search results to the file in the experiment folder
-    experiment_file_path = os.path.join(experiment_path, f'Random_experiment_{filename}')
-    generate_results(results, experiment_file_path)
+        # write the moves made in the best run to the file in the output folder
+        export_file_path = os.path.join(output_path, f'Random_{filename}')
+        write_moves_to_csv(export_file_path, best_solution[0].moves)
+
+        # write the search results to the file in the experiment folder
+        experiment_file_path = os.path.join(experiment_path, f'Random_experiment_{filename}')
+        generate_results(results, experiment_file_path)
 
     return best_solution[0]

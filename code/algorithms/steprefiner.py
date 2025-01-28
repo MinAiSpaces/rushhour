@@ -33,6 +33,10 @@ class StepRefiner:
         self.rewind_moves = self.create_rewind_moves()
         self.new_moves: list[tuple[str, int]] = []
 
+        self.total_seen_states = 0
+        self.unique_seen_states: set[tuple[tuple[object]]] = set()
+        self.max_queue_size = 0
+
     def create_rewind_moves(self) -> list[tuple[str, int]]:
         """
         Returns a list with the opposite moves of the moves in self.moves.
@@ -68,6 +72,12 @@ class StepRefiner:
             breadth = BreadthFirst(self.board)
             breadth.run(old_state)
             new_moves_lists.append(breadth.moves)
+
+            # keep track of statistics
+            self.total_seen_states += len(breadth.seen_states)
+            self.unique_seen_states.add(breadth.seen_states)
+            if breadth.max_queue_size > self.max_queue_size:
+                self.max_queue_size = breadth.max_queue_size
 
         # check for remaining moves
         if self.last_bin_size > 0:

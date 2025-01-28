@@ -133,14 +133,15 @@ def main():
     # print(end_time)
 
     # -------------------------------- Scripts -----------------------------------
-    steprefiner('RushHour6x6_1.csv', random('RushHour6x6_1.csv'))
-    # steprefiner('RushHour6x6_2.csv', random('RushHour6x6_2.csv'))
-    # steprefiner('RushHour6x6_2.csv', random('RushHour6x6_3.csv'))
-    # steprefiner('RushHour9x9_4.csv', random('RushHour9x9_4.csv'))
-    # steprefiner('RushHour9x9_5.csv', random('RushHour9x9_5.csv'))
-    # steprefiner('RushHour9x9_6.csv', random('RushHour9x9_6.csv'))
-    # steprefiner('RushHour12x12_7.csv', random('RushHour12x12_7.csv'))
+    # steprefiner('RushHour6x6_1.csv', random('RushHour6x6_1.csv', 1800, False))
+    # steprefiner('RushHour6x6_2.csv', random('RushHour6x6_2.csv', 1800, False))
+    # steprefiner('RushHour6x6_2.csv', random('RushHour6x6_3.csv', 1800, False))
+    # steprefiner('RushHour9x9_4.csv', random('RushHour9x9_4.csv', 1800, False))
+    # steprefiner('RushHour9x9_5.csv', random('RushHour9x9_5.csv', 1800, False))
+    # steprefiner('RushHour9x9_6.csv', random('RushHour9x9_6.csv', 1800, False))
+    # steprefiner('RushHour12x12_7.csv', random('RushHour12x12_7.csv', 1800, False))
 
+    # random('RushHour6x6_1.csv')
     # random('RushHour6x6_2.csv')
     # random('RushHour6x6_3.csv')
     # random('RushHour9x9_4.csv')
@@ -151,6 +152,8 @@ def main():
     # breadth_first('RushHour6x6_1.csv')
     # breadth_first('RushHour6x6_2.csv')
     # breadth_first('RushHour6x6_3.csv')
+    # breadth_first('RushHour9x9_4.csv')
+    # breadth_first('RushHour9x9_5.csv')
 
     # a_star('RushHour6x6_1.csv')
     # a_star('RushHour6x6_2.csv')

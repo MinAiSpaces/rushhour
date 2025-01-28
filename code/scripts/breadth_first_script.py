@@ -7,7 +7,7 @@ from code.algorithms import BreadthFirst
 from code.utils import read_board_state_from_csv, write_moves_to_csv, generate_results
 
 
-def breadth_first(filename: str) -> None:
+def breadth_first(filename: str, max_moves: bool=True, useful_move: bool=False) -> None:
     """
     Executes the Breadth First Search algorithm several times for a given Board, writes
     the search results (number of moves made, solving time, number of seen states, max
@@ -29,7 +29,7 @@ def breadth_first(filename: str) -> None:
     while time.time() - start_time < 3600:
         start_run_time = time.time()
         breadth = BreadthFirst(board)
-        breadth.run()
+        breadth.run(max_moves=max_moves, useful_move=useful_move)
 
         n_runs += 1
         if n_runs % 10 == 0:

@@ -3,7 +3,8 @@ import copy
 
 import numpy as np
 
-from code.classes import Board, Mover, Game
+from code.classes import Board, Mover, CARTER_NAME
+from .heuristics import free_carter, all_max_moves, check_useful_move
 
 
 class BreadthFirst:
@@ -27,17 +28,32 @@ class BreadthFirst:
         self.solution = None
         self.moves: list[tuple[str, int]] = []
 
-    def build_children(self, next_state: Board, move_history: list[tuple[str, int]]) -> None:
+    def build_children(
+            self, next_state: Board,
+            move_history: list[tuple[str, int]],
+            max_moves: bool,
+            useful_move: bool
+        ) -> None:
         """
         Generates all possible child states from the picked Board state and adds them
         to the queue of states if not seen earlier. Each child state represents the
-        Board configuration after a valid move by a Vehicle.
+        Board configuration after a valid move by a Vehicle. Also accepts heuristics for
+        max_moves (only the largest possible moves) and useful_move (checks if more moves
+        become available).
         """
         mover = Mover(next_state)
-        possible_moves: list[tuple[str, int]] = mover.get_all_available_moves()
+
+        if max_moves:
+            possible_moves: list[tuple[str, int]] = all_max_moves(next_state)
+        else:
+            possible_moves: list[tuple[str, int]] = mover.get_all_available_moves()
 
         # add a new board instance to the queue for each unseen valid move
         for move in possible_moves:
+
+            if useful_move and not check_useful_move(next_state, move[0], move[1]):
+                continue
+
             child_state = copy.deepcopy(next_state)
             new_mover = Mover(child_state)
 
@@ -53,7 +69,11 @@ class BreadthFirst:
                 if self.queue.qsize() > self.max_queue_size:
                     self.max_queue_size = self.queue.qsize()
 
-    def run(self, finish: np.ndarray = None) -> None:
+    def run(self,
+            finish: np.ndarray=None,
+            max_moves: bool=False,
+            useful_move: bool=False
+        ) -> None:
         """
         Runs the algorithm until all possible Board states are visited or a solution
         is found.
@@ -62,21 +82,34 @@ class BreadthFirst:
         while not self.queue.empty():
             next_state, move_history = self.queue.get()
 
-            # stop if we find a solution
             if np.any(finish):
+
+                # stop if we find the finish
                 if np.array_equal(next_state.locations, finish):
                     self.solution = next_state
-                    self.moves = move_history
-                    print('state found')
+                    self.moves: list[tuple[str, int]] = move_history
+
+                    print('Step Refiner: state found')
+
                     break
 
             else:
-                if Game.is_finished(next_state):
+
+                # make the final move when carter can finish the game in one move
+                if free_carter(next_state):
+                    steps: int = free_carter(next_state)
+                    mover = Mover(next_state)
+                    move = (CARTER_NAME, steps)
+
+                    mover.move_vehicle(move)
+                    move_history.append(move)
+
                     self.solution = next_state
-                    self.moves = move_history
+                    self.moves: list[tuple[str, int]] = move_history
+
                     break
 
-            self.build_children(next_state, move_history)
+            self.build_children(next_state, move_history, max_moves, useful_move)
 
         if not self.solution:
-            print('no solution found')
+            print('No solution found')

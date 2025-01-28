@@ -5,6 +5,7 @@ import random
 from typing import Callable
 
 from code.classes import Board, CARTER_NAME, Mover, Game, Direction
+from code.algorithms import free_carter
 
 
 def num_blocking_vehicles(state: Board) -> int:
@@ -113,9 +114,18 @@ class AStar:
             # pop the state with the lowest score; pick randomly if tied
             score, depth, random_boundary, current_state, move_history = heapq.heappop(self.queue)
 
-            if Game.is_finished(current_state):
+            # make the final move when carter can finish the game in one move
+            if free_carter(current_state):
+                steps: int = free_carter(current_state)
+                mover = Mover(current_state)
+                move = (CARTER_NAME, steps)
+
+                mover.move_vehicle(move)
+                move_history.append(move)
+
                 self.solution = current_state
-                self.moves = move_history
+                self.moves: list[tuple[str, int]] = move_history
+
                 break
 
             self.build_children(current_state, depth, move_history)

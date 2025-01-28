@@ -51,9 +51,9 @@ def check_useful_move(board: Board, vehicle_name: str, steps: int) -> bool:
      check_board = copy.deepcopy(board)
 
      mover = Mover(check_board)
-     moves_before = mover.get_all_available_moves()
+     moves_before: list[tuple[str, int]] = mover.get_all_available_moves()
      mover.move_vehicle((vehicle_name, steps))
-     moves_after = mover.get_all_available_moves()
+     moves_after: list[tuple[str, int]] = mover.get_all_available_moves()
 
      # find the difference in available moves
      differences = list(set(moves_after) - set(moves_before))

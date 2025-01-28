@@ -55,6 +55,8 @@ def all_max_moves_finish_check(game: Game) -> None:
     Makes random moves until carter can finish the game.
     Picks a move at random from all maximum moves unless moving carter finishes the game.
     """
+    moved_vehicle = None
+
     while not Game.is_finished(game.board):
         finish_game: int | None = free_carter(game.board)
 
@@ -62,4 +64,8 @@ def all_max_moves_finish_check(game: Game) -> None:
             game.make_move((CARTER_NAME, finish_game))
         else:
             move: tuple[str, int] = random.choice(all_max_moves(game.board))
-            game.make_move(move)
+
+            # do not pick the same vehicle multiple times
+            if move[0] != moved_vehicle:
+                game.make_move(move)
+                moved_vehicle = move[0]
