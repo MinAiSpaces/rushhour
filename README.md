@@ -102,7 +102,10 @@ The project follows a modular structure for scalability and clarity:
             - `steprefiner.py`: Implements 'step refiner' heuristics for solving the game
         - **`classes/`**: Representations of the core objects
             - `__init__.py`
+            - `game.py`: Manages gameplay, board setup, moves
             - `board.py`: Represents the game board and manages vehicle placements and moves
+            - `mover.py`: Handles rules and move validations
+            - `plotter.py`: Handles visualization (static/animated)
             - `vehicle.py`: Represents vehicles, tracking their attributes and movements
         - `__init__.py`
         - `helpers.py`: Utility functions to support game logic
@@ -234,58 +237,63 @@ The scripts can be found in the **`scripts`** folder and are determined to be us
    python -m scripts.<script_name> <script_arguments>
    ```
 
-#### Random:
-```bash
-python -m scripts.random_script <filename>
-```
 
-Example:
-```bash
-python -m scripts.random_script 'RushHour6x6_1.csv'
-```
+#### Random:
+- Run
+    ```bash
+    python -m scripts.random_script <filename>
+    ```
+
+- Example:
+    ```bash
+    python -m scripts.random_script 'RushHour6x6_1.csv'
+    ```
 
 #### A*:
-```bash
-python -m scripts.a_star_script <filename>
-```
+- Run
+    ```bash
+    python -m scripts.a_star_script <filename>
+    ```
 
-Example:
-```bash
-python -m scripts.a_star_script 'RushHour6x6_1.csv'
-```
+- Example:
+    ```bash
+    python -m scripts.a_star_script 'RushHour6x6_1.csv'
+    ```
 
-Optional arguments:
-- `-nmm`
-    - Boolean flag to disable max moves
+    Optional arguments:
+    - `-nmm`
+        - Boolean flag to disable max moves
 
 #### BFS:
-```bash
-python -m scripts.breadth_first_script <filename>
-```
+- Run
+    ```bash
+    python -m scripts.breadth_first_script <filename>
+    ```
 
-Example:
-```bash
-python -m scripts.breadth_first_script 'RushHour6x6_1.csv'
-```
+- Example:
+    ```bash
+    python -m scripts.breadth_first_script 'RushHour6x6_1.csv'
+    ```
 
 Optional arguments:
 - `-nmm`
     - Boolean flag to disable max moves
-- `-um`
-    - Boolean flag to enable only useful moves
+  - `-um`
+      - Boolean flag to enable only useful moves
 
 #### Step Refiner:
-```bash
-python -m scripts.steprefiner_script <filename>
-```
+- Run
+    ```bash
+    python -m scripts.steprefiner_script <filename>
+    ```
 
-Example:
-```bash
-python -m scripts.steprefiner_script <'RushHour6x6_1'>
-```
+- Example:
+    ```bash
+    python -m scripts.steprefiner_script 'RushHour6x6_1'
+    ```
 
-- `-bz` `<number>`
-    - Specify the rewind steps (default: 10)
+  - `-bz` `<number>`
+      - Specify the rewind steps (default: 10)
 
 ---
 
