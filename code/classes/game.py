@@ -161,7 +161,7 @@ class Game:
         write_board_state_to_csv(file_path, list(self.board.vehicles.values()))
 
     @classmethod
-    def load_board_state_from_csv(cls, board_file_path: str) -> 'Game':
+    def load_game_from_csv(cls, board_file_path: str) -> 'Game':
         """
         Creates a new Game from board data from csv file.
         """
