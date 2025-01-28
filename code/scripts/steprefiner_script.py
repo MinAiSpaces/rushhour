@@ -7,7 +7,7 @@ from code.algorithms import StepRefiner
 from code.utils import read_board_state_from_csv, write_moves_to_csv, generate_results
 
 
-def steprefiner(filename: str, game: Game) -> None:
+def steprefiner(filename: str, game: Game, bin_size: int=15) -> None:
     """
     Executes the Step Refiner algorithm several times for a given game.board,
     writes the search results (number of moves made, solving time) to a CSV file
@@ -20,10 +20,15 @@ def steprefiner(filename: str, game: Game) -> None:
     n_runs = 0
     results = []
 
-    while time.time() - start_time < 1800:
+    while time.time() - start_time < 60:
         start_run_time = time.time()
-        steprefiner = StepRefiner(game.board, game.moves)
+        steprefiner = StepRefiner(game.board, game.moves, bin_size)
         steprefiner.run()
+
+        if len(steprefiner.new_moves) == len(game.moves):
+            break
+
+        game.moves = steprefiner.new_moves
 
         n_runs += 1
         if n_runs % 10 == 0:

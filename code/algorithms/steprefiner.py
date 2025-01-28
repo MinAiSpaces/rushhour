@@ -26,7 +26,7 @@ class StepRefiner:
         self.mover = Mover(self.board)
         self.moves = moves
 
-        self.bin_size = bin_size
+        self.bin_size = bin_size if len(self.moves) >= bin_size else len(self.moves)
         self.bins: int = len(self.moves) // self.bin_size
         self.last_bin_size: int = len(self.moves) % self.bin_size
 
