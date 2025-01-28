@@ -3,12 +3,25 @@ import time
 import argparse
 
 from code.classes import Game
-from code.helpers import get_output_path, get_experiment_path, get_board_size_from_file_path, get_gameboards_path
+from code.helpers import (
+    get_output_path,
+    get_experiment_path,
+    get_board_size_from_file_path,
+    get_gameboards_path,
+)
 from code.algorithms import all_max_moves_finish_check
-from code.utils import read_board_state_from_csv, write_moves_to_csv, generate_results
+from code.utils import (
+    read_board_state_from_csv,
+    write_moves_to_csv,
+    generate_results,
+)
 
 
-def random(filename: str, set_time: int=3600, write_results: bool=True) -> Game:
+def random(
+    filename: str,
+    set_time: int = 3600,
+    write_results: bool = True
+) -> Game:
     """
     Executes the Random algorithm several times for a given Board, writes
     the search results (number of moves made, solving time) to a CSV file in
@@ -49,14 +62,16 @@ def random(filename: str, set_time: int=3600, write_results: bool=True) -> Game:
         if len(game.moves) < best_solution[1]:
             best_solution = (game, len(game.moves))
 
-    print(f'Random used {time.time() - start_time} seconds for {n_runs} runs to solve {filename}')
+    print(
+        f'Random used {time.time() - start_time} seconds for '
+        f'{n_runs} runs to solve {filename}'
+    )
 
     if write_results:
-
         # get the output and experiment folder paths
         output_path = get_output_path()
-        os.makedirs(output_path, exist_ok=True)
         experiment_path = get_experiment_path()
+        os.makedirs(output_path, exist_ok=True)
         os.makedirs(experiment_path, exist_ok=True)
 
         # write the moves made in the best run to the file in the output folder
@@ -64,7 +79,9 @@ def random(filename: str, set_time: int=3600, write_results: bool=True) -> Game:
         write_moves_to_csv(export_file_path, best_solution[0].moves)
 
         # write the search results to the file in the experiment folder
-        experiment_file_path = os.path.join(experiment_path, f'Random_experiment_{filename}')
+        experiment_file_path = os.path.join(
+            experiment_path, f'Random_experiment_{filename}'
+        )
         generate_results(results, experiment_file_path)
 
     return best_solution[0]
@@ -73,10 +90,14 @@ def random(filename: str, set_time: int=3600, write_results: bool=True) -> Game:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
                 prog='Randomise script',
-                description='Runs an experiment for 3600 seconds for Randomise algorithm'
+                description='Runs an experiment for 3600 seconds for '
+                            'Randomise algorithm'
             )
 
-    parser.add_argument('filename', help='Filename of the gameboard')
+    parser.add_argument(
+        'filename',
+        help='Filename of the gameboard'
+    )
 
     args = parser.parse_args()
 

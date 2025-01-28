@@ -44,12 +44,15 @@ def steprefiner(filename: str, game: Game, bin_size: int=10) -> None:
             len(steprefiner.unique_seen_states)
         ))
 
-    print(f'Step Refiner used {time.time() - start_time} seconds for {n_runs} runs to solve {filename}')
+    print(
+        f'Step Refiner used {time.time() - start_time} seconds for '
+        f'{n_runs} runs to solve {filename}'
+    )
 
     # get the output and experiment folder paths
     output_path = get_output_path()
-    os.makedirs(output_path, exist_ok=True)
     experiment_path = get_experiment_path()
+    os.makedirs(output_path, exist_ok=True)
     os.makedirs(experiment_path, exist_ok=True)
 
     # write the moves made in the last run to the file in the output folder
@@ -57,18 +60,28 @@ def steprefiner(filename: str, game: Game, bin_size: int=10) -> None:
     write_moves_to_csv(export_file_path, steprefiner.new_moves)
 
     # write the search results to the file in the experiment folder
-    experiment_file_path = os.path.join(experiment_path, f'StepRefiner_experiment_{filename}')
+    experiment_file_path = os.path.join(
+        experiment_path, f'StepRefiner_experiment_{filename}'
+    )
     generate_results(results, experiment_file_path)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
                 prog='Step Refiner script',
-                description='Runs an experiment for 3600 seconds for Step Refiner algorithm'
+                description='Runs an experiment for 3600 seconds for Step '
+                            'Refiner algorithm'
             )
 
-    parser.add_argument('filename', help='Filename of the gameboard')
-    parser.add_argument('-bz', '--bin-size', help='Specify the rewind steps (default: 10)')
+    parser.add_argument(
+        'filename',
+        help='Filename of the gameboard'
+    )
+    parser.add_argument(
+        '-bz',
+        '--bin-size',
+        help='Specify the rewind steps (default: 10)'
+    )
 
     args = parser.parse_args()
 
