@@ -20,7 +20,6 @@ from code.algorithms import (
     num_blocking_vehicles,
     num_two_blocking_vehicles
 )
-from code.scripts import random, breadth_first, a_star, steprefiner
 from code.utils import read_board_state_from_csv, write_moves_to_csv
 
 

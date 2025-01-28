@@ -1,10 +1,12 @@
 import os
 import time
+import argparse
 
 from code.classes import Game
 from code.helpers import get_output_path, get_experiment_path
 from code.algorithms import StepRefiner
 from code.utils import write_moves_to_csv, generate_results
+from .random_script import random
 
 
 def steprefiner(filename: str, game: Game, bin_size: int=10) -> None:
@@ -20,7 +22,7 @@ def steprefiner(filename: str, game: Game, bin_size: int=10) -> None:
     n_runs = 0
     results = []
 
-    while time.time() - start_time < 60:
+    while time.time() - start_time < 1800:
         start_run_time = time.time()
         steprefiner = StepRefiner(game.board, game.moves, bin_size)
         steprefiner.run()
@@ -58,3 +60,20 @@ def steprefiner(filename: str, game: Game, bin_size: int=10) -> None:
     experiment_file_path = os.path.join(experiment_path, f'StepRefiner_experiment_{filename}')
     generate_results(results, experiment_file_path)
 
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+                prog='Step Refiner script',
+                description='Runs an experiment for 3600 seconds for Step Refiner algorithm'
+            )
+
+    parser.add_argument('filename', help='Filename of the gameboard')
+    parser.add_argument('-bz', '--bin-size', help='Specify the rewind steps (default: 10)')
+
+    args = parser.parse_args()
+
+    filename = args.filename
+    game = random(filename, 1800, False)
+    bin_size = int(args.bin_size) if args.bin_size else 10
+
+    steprefiner(filename, game, bin_size)

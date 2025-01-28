@@ -68,6 +68,12 @@ The project follows a modular structure for scalability and clarity:
         Algorithms.md
         Representation.md
         README.md
+    scripts/
+        __init__.py
+        a_star_script.py
+        breadth_first_script.py
+        random_script.py
+        steprefiner_script.py
     tests/
         __init__.py
         test_board.py
@@ -89,8 +95,8 @@ The project follows a modular structure for scalability and clarity:
         - **`algorithms/`**: Heuristic and randomization algorithms
             - `__init__.py`
             - `a_star.py`: Implements A* algorithm for solving the game
-            - `breadth_first.py`: Implements a Breadth First Search (BFS) algorithms for solving the game
-            - `depth_first.py`: Implements Depth First Search (DFS) algorithms for solving the game
+            - `breadth_first.py`: Implements a Breadth First Search (BFS) algorithm for solving the game
+            - `depth_first.py`: Implements a Depth First Search (DFS) algorithm for solving the game
             - `heuristics.py`: Implements some additional heuristics for solving the game
             - `randomize.py`: Implements randomization algorithms for solving the game
             - `steprefiner.py`: Implements 'step refiner' heuristics for solving the game
@@ -101,8 +107,9 @@ The project follows a modular structure for scalability and clarity:
         - `__init__.py`
         - `helpers.py`: Utility functions to support game logic
       - **`data/`**: Data folder for ingesting game boards and storing solutions
+        - **`experiment/`**: Contains the results of the experiments
         - **`input/`**: Contains game boards to ingest
-            - **`gameboards/`**: Contains 7 game boards to solve.
+            - **`gameboards/`**: Contains 7 game boards to solve
             - **`test_boards/`**: Contains game boards used for testing our algorithms and representation
         - **`output/`**: Folder for storing game solutions and exporting game state visualization
     - **`docs/`**: Documentation for the project's design, planning and results
@@ -113,6 +120,12 @@ The project follows a modular structure for scalability and clarity:
         - `Algorithms.md`: Explains the solving algorithms implemented in the project
         - `Representation.md`: Details the representation choices for modeling the game
         - `README.md`: Overview of the documentation folder and its purpose
+    - **`scripts/`**: Scripts to run experiments with the algorithms
+        - `__init__.py`
+        - `a_star_script.py`: Runs the A* algorithm
+        - `breadth_first_script.py`: Runs the BFS algorithm
+        - `random_script.py`: Runs the random algorithm
+        - `steprefiner_script.py`: Runs the Step Refiner algorithm
     - **`tests/`**: Unit tests for ensuring the correctness of core functionality
         - `__init__.py`
         - `test_board.py`: Tests for the `Board` class
@@ -207,5 +220,77 @@ Generating animations of the moves using `ffmpeg` as `writer` will only work if 
 
 ---
 
-Enjoy solving puzzles with **Rush Hour**!
+## Scripts
 
+The scripts can be found in the **`scripts`** folder and are determined to be used for experiments with the algorithms. Each algorithm has its own script. The experiments are set to run iterations of the chosen algorithm for 3600 seconds. After the set time, the results (number of moves made, solving time, total number of seen states, max queue size, number of unique seen states) of each iteration are written to the **`data/experiment`** folder.
+
+### Running the scripts:
+1. Navigate to the `<rush_hour_folder_name>`:
+   ```bash
+   cd <rush_hour_folder_name>
+   ```
+2. Run script:
+   ```bash
+   python -m scripts.<script_name> <script_arguments>
+   ```
+
+#### Random:
+```bash
+python -m scripts.random_script <filename>
+```
+
+Example:
+```bash
+python -m scripts.random_script 'RushHour6x6_1.csv'
+```
+
+Optional arguments:
+- `-s` `<number>`
+    - Set total run time in seconds of experiment (default: 3600)
+- `-dw`
+    - Boolean flag to disable writing the results to the CSV file
+
+#### A*:
+```bash
+python -m scripts.a_star_script <filename>
+```
+
+Example:
+```bash
+python -m scripts.a_star_script 'RushHour6x6_1.csv'
+```
+
+Optional arguments:
+- `-nmm`
+    - Boolean flag to disable max moves
+
+#### BFS:
+```bash
+python -m scripts.breadth_first_script <filename>
+```
+
+Example:
+```bash
+python -m scripts.breadth_first_script 'RushHour6x6_1.csv'
+```
+
+Optional arguments:
+- `-nmm`
+    - Boolean flag to disable max moves
+- `-um`
+    - Boolean flag to enable only useful moves
+
+#### Step Refiner:
+```bash
+python -m scripts.steprefiner_script <filename>
+```
+
+Example:
+```bash
+python -m scripts.steprefiner_script <'RushHour6x6_1'>
+```
+
+- `-bz` `<number>`
+    - Specify the rewind steps (default: 10)
+
+Enjoy solving puzzles with **Rush Hour**!

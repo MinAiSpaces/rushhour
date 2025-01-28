@@ -1,5 +1,6 @@
 import os
 import time
+import argparse
 
 from code.classes import Board, Game
 from code.helpers import get_output_path, get_experiment_path, get_board_size_from_file_path, get_gameboards_path
@@ -14,6 +15,8 @@ def breadth_first(filename: str, max_moves: bool=True, useful_move: bool=False) 
     size of queue) to a CSV file in the data/experiment folder, and exports the moves
     made during the search to another CSV file in the data/output folder.
     """
+    print(max_moves)
+    print(useful_move)
     filename_path = os.path.join(get_gameboards_path(), filename)
 
     board_size = get_board_size_from_file_path(filename)
@@ -58,3 +61,22 @@ def breadth_first(filename: str, max_moves: bool=True, useful_move: bool=False) 
     # write the search results to the file in the experiment folder
     experiment_file_path = os.path.join(experiment_path, f'BreadthFirst_experiment_{filename}')
     generate_results(results, experiment_file_path)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+                prog='Breadth First script',
+                description='Runs an experiment for 3600 seconds for Breadth First algorithm'
+            )
+
+    parser.add_argument('filename', help='Filename of the gameboard')
+    parser.add_argument('-nmm', '--no-max-moves', action='store_false', help='Boolean flag to disable max moves')
+    parser.add_argument('-um', '--useful-move', action='store_true', help='Boolean flag to enable only useful moves')
+
+    args = parser.parse_args()
+
+    filename = args.filename
+    no_max_moves = args.no_max_moves
+    useful_move = args.useful_move
+
+    breadth_first(filename, no_max_moves, useful_move)
