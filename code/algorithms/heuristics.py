@@ -42,25 +42,24 @@ def all_max_moves(board: Board) -> list[tuple[str, int]]:
      return max_moves
 
 
-def check_useful_move(board: Board, vehicle: Vehicle, steps: int) -> bool:
+def check_useful_move(board: Board, vehicle_name: str, steps: int) -> bool:
      """
      Checks for changes to the available moves after the move of 'vehicle' with
      'steps' length is performed. Returns True if at least one new move,
      except moves including the vehicle that was just moved, becomes available.
      """
      check_board = copy.deepcopy(board)
-     check_vehicle = check_board.vehicles[vehicle.name]
 
-     moves_before = check_board.check_available_moves()
-     check_board.move_vehicle(check_vehicle, steps)
-     moves_after = check_board.check_available_moves()
+     mover = Mover(check_board)
+     moves_before = mover.get_all_available_moves()
+     mover.move_vehicle((vehicle_name, steps))
+     moves_after = mover.get_all_available_moves()
 
      # find the difference in available moves
      differences = list(set(moves_after) - set(moves_before))
 
-
      for move in differences:
-          if move[0] != check_vehicle:
+          if move[0] != vehicle_name:
                return True
 
      return False

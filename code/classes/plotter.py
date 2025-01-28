@@ -127,7 +127,7 @@ class Plotter:
 
     def animate_moves(
         self,
-        game: "Game",
+        game: 'Game',
         moves: list[tuple[str, int]],
         interval: int = 500,
         file_path: str | None = None,
