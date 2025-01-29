@@ -100,4 +100,4 @@ class StepRefiner:
         # save moves in correct order
         for list in reversed(new_moves_lists):
             self.new_moves.extend(list)
-        print('Board rewound')
+        print(f'Board rewound in {len(self.new_moves)} steps')

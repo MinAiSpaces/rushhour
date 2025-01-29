@@ -112,6 +112,9 @@ class AStar:
             if tuple(map(tuple, child_state.locations)) not in self.seen_states:
                 self.seen_states.add(tuple(map(tuple, child_state.locations)))
 
+                if len(self.seen_states) % 50000 == 0:
+                    print(f'Number of seen states: {len(self.seen_states)}, Number of moves made: {len(current_moves) + 1}')
+
                 # add the state with its score to the heap queue
                 score = depth + 1 + self.heuristic(child_state)
                 heapq.heappush(self.queue, (score, depth + 1, random.random(), child_state, current_moves + [move]))

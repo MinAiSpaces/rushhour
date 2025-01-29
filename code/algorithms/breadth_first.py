@@ -70,6 +70,9 @@ class BreadthFirst:
                 self.seen_states.add(tuple(map(tuple, child_state.locations)))
                 self.queue.put((child_state, move_history + [move]))
 
+                if len(self.seen_states) % 50000 == 0:
+                    print(f'Number of seen states: {len(self.seen_states)}, Number of moves made: {len(move_history) + 1}')
+
                 # keep track of statistics
                 if self.queue.qsize() > self.max_queue_size:
                     self.max_queue_size = self.queue.qsize()
