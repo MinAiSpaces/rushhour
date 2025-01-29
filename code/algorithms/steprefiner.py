@@ -1,6 +1,6 @@
 import copy
 
-from code.classes import Board, Mover, Game
+from code.classes import Board, Mover, Game, Orientation
 from .breadth_first import BreadthFirst
 
 
@@ -22,7 +22,13 @@ class StepRefiner:
         if not Game.is_finished(board):
             raise Exception("StepRefiner requires a solved board.")
 
-        self.board = copy.deepcopy(board)
+         # create new board as self.board
+        data: list[tuple[str, Orientation, int, int, int]] = []
+        for vehicle in board.vehicles.values():
+            data.append((vehicle.name, vehicle.orientation, vehicle.location[0][0], vehicle.location[0][1], vehicle.length))
+
+        self.board = Game.setup_board(Board(board.size), data)
+
         self.mover = Mover(self.board)
         self.moves = moves
 
@@ -94,3 +100,4 @@ class StepRefiner:
         # save moves in correct order
         for list in reversed(new_moves_lists):
             self.new_moves.extend(list)
+        print('Board rewound')
