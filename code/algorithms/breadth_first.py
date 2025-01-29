@@ -1,9 +1,8 @@
 import queue
-import copy
 
 import numpy as np
 
-from code.classes import Board, Mover, CARTER_NAME
+from code.classes import Board, Mover, CARTER_NAME, Game, Orientation
 from .heuristics import free_carter, all_max_moves, check_useful_move
 
 
@@ -54,7 +53,13 @@ class BreadthFirst:
             if useful_move and not check_useful_move(next_state, move[0], move[1]):
                 continue
 
-            child_state = copy.deepcopy(next_state)
+            # create new board as child_state
+            data: list[tuple[str, Orientation, int, int, int]] = []
+            for vehicle in next_state.vehicles.values():
+                data.append((vehicle.name, vehicle.orientation, vehicle.location[0][0], vehicle.location[0][1], vehicle.length))
+
+            child_state = Game.setup_board(Board(next_state.size), data)
+
             new_mover = Mover(child_state)
 
             # make the valid move in the new board instance
@@ -88,8 +93,6 @@ class BreadthFirst:
                 if np.array_equal(next_state.locations, finish):
                     self.solution = next_state
                     self.moves: list[tuple[str, int]] = move_history
-
-                    print('Step Refiner: state found')
 
                     break
 
