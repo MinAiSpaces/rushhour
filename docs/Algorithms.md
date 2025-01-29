@@ -13,11 +13,11 @@
 
 - ##### Implementation
 
-```pseudocode
-while no solution found:
-    pick a random move from all available moves for current state
-    perform the selected move
-```
+    ```pseudocode
+    while no solution found:
+        pick a random move from all available moves for current state
+        perform the selected move
+    ```
 
 ### Algorithm 2: Randomization vehicle first
 
@@ -32,14 +32,14 @@ while no solution found:
 
 - ##### Implementation
 
-```pseudocode
-while no solution found:
-    find all available moves for current state
-    collect all unique vehicles from the available moves
-    randomly select a vehicle from these unique vehicles
-    pick a random move for selected vehicle
-    perform the selected move
-```
+    ```pseudocode
+    while no solution found:
+        find all available moves for current state
+        collect all unique vehicles from the available moves
+        randomly select a vehicle from these unique vehicles
+        pick a random move for selected vehicle
+        perform the selected move
+    ```
 
 ### Algorithm 3: Uniform randomization of all available valid moves with finish check
 
@@ -53,15 +53,15 @@ while no solution found:
 
 - ##### Implementation
 
-```pseudocode
-while no solution found:
-    check if carter is free
-    if carter is free:
-        make carter move to finish the game
-    else:
-        pick a random move from all available moves for current state
-        perform the selected move
-```
+    ```pseudocode
+    while no solution found:
+        check if carter is free
+        if carter is free:
+            make carter move to finish the game
+        else:
+            pick a random move from all available moves for current state
+            perform the selected move
+    ```
 
 ### Algorithm 4: Uniform randomization without double vehicles of all max steps with finish check
 
@@ -76,17 +76,17 @@ while no solution found:
 
 - ##### Implementation
 
-```pseudocode
-while no solution found:
-    check if carter is free
-    if carter is free:
-        make carter move to finish the game
-    else:
-        pick a random move from all maximum moves for current state
+    ```pseudocode
+    while no solution found:
+        check if carter is free
+        if carter is free:
+            make carter move to finish the game
+        else:
+            pick a random move from all maximum moves for current state
 
-        if vehicle is not the same as last moved vehicle:
-            perform the selected move and save moved vehicle
-```
+            if vehicle is not the same as last moved vehicle:
+                perform the selected move and save moved vehicle
+    ```
 
 ---
 
@@ -111,15 +111,15 @@ while no solution found:
 
 - ##### Implementation
 
-```pseudocode
-while queue is not empty or game is not finished:
-    pop best board state from heapqueue
-    move carter if this finishes the game
-    else:
-        for every valid max move:
-            create child
-            create score and save in heapqueue if child is not seen before
-```
+    ```pseudocode
+    while queue is not empty or game is not finished:
+        pop best board state from heapqueue
+        move carter if this finishes the game
+        else:
+            for every valid max move:
+                create child
+                create score and save in heapqueue if child is not seen before
+    ```
 
 ### Algorithm 2: A-Star with num blocking vehicles and all available valid moves
 
@@ -140,15 +140,15 @@ while queue is not empty or game is not finished:
 
 - ##### Implementation
 
-```pseudocode
-while queue is not empty or game is not finished:
-    pop best board state from heapqueue
-    move carter if this finishes the game
-    else:
-        for every available valid move:
-            create child
-            create score and save in heapqueue if child is not seen before
-```
+    ```pseudocode
+    while queue is not empty or game is not finished:
+        pop best board state from heapqueue
+        move carter if this finishes the game
+        else:
+            for every available valid move:
+                create child
+                create score and save in heapqueue if child is not seen before
+    ```
 
 ### Algorithm 3: A-Star with num two blocking vehicles and max steps
 
@@ -169,15 +169,15 @@ while queue is not empty or game is not finished:
 
 - ##### Implementation
 
-```pseudocode
-while queue is not empty or game is not finished:
-    pop best board state from heapqueue
-    move carter if this finishes the game
-    else:
-        for every valid max move:
-            create child
-            create score and save in heapqueue if child is not seen before
-```
+    ```pseudocode
+    while queue is not empty or game is not finished:
+        pop best board state from heapqueue
+        move carter if this finishes the game
+        else:
+            for every valid max move:
+                create child
+                create score and save in heapqueue if child is not seen before
+    ```
 
 ### Algorithm 4: A-Star with num two blocking vehicles and all available valid moves
 
@@ -198,15 +198,15 @@ while queue is not empty or game is not finished:
 
 - ##### Implementation
 
-```pseudocode
-while queue is not empty or game is not finished:
-    pop best board state from heapqueue
-    move carter if this finishes the game
-    else:
-        for every available valid move:
-            create child
-            create score and save in heapqueue if child is not seen before
-```
+    ```pseudocode
+    while queue is not empty or game is not finished:
+        pop best board state from heapqueue
+        move carter if this finishes the game
+        else:
+            for every available valid move:
+                create child
+                create score and save in heapqueue if child is not seen before
+    ```
 
 ---
 
@@ -224,15 +224,15 @@ while queue is not empty or game is not finished:
 
 - ##### Implementation
 
-```pseudocode
-while queue is not empty and no finish is found:
-    pop first board state from queue
-    check if finish is reached
-    move carter if this finishes the game
-    else:
-        for every valid max move:
-            create child and save in queue if child is not seen before
-```
+    ```pseudocode
+    while queue is not empty and no finish is found:
+        pop first board state from queue
+        check if finish is reached
+        move carter if this finishes the game
+        else:
+            for every valid max move:
+                create child and save in queue if child is not seen before
+    ```
 
 ### Algorithm 2: Breadth First with all available valid moves and without useful move check
 
@@ -246,15 +246,15 @@ while queue is not empty and no finish is found:
 
 - ##### Implementation
 
-```pseudocode
-while queue is not empty and no finish is found:
-    pop first board state from queue
-    check if finish is reached
-    move carter if this finishes the game
-    else:
-        for every available valid move:
-            create child and save in queue if child is not seen before
-```
+    ```pseudocode
+    while queue is not empty and no finish is found:
+        pop first board state from queue
+        check if finish is reached
+        move carter if this finishes the game
+        else:
+            for every available valid move:
+                create child and save in queue if child is not seen before
+    ```
 
 ### Algorithm 3: Breadth First with max steps and with useful move check
 
@@ -268,15 +268,15 @@ while queue is not empty and no finish is found:
 
 - ##### Implementation
 
-```pseudocode
-while queue is not empty and no finish is found:
-    pop first board state from queue
-    check if finish is reached
-    move carter if this finishes the game
-    else:
-        for every useful max move:
-            create child and save in queue if child is not seen before
-```
+    ```pseudocode
+    while queue is not empty and no finish is found:
+        pop first board state from queue
+        check if finish is reached
+        move carter if this finishes the game
+        else:
+            for every useful max move:
+                create child and save in queue if child is not seen before
+    ```
 
 ### Algorithm 4: Breadth First with all available valid moves and with useful move check
 
@@ -291,15 +291,15 @@ while queue is not empty and no finish is found:
 
 - ##### Implementation
 
-```pseudocode
-while queue is not empty and no finish is found:
-    pop first board state from queue
-    check if finish is reached
-    move carter if this finishes the game
-    else:
-        for every useful available move:
-            create child and save in queue if child is not seen before
-```
+    ```pseudocode
+    while queue is not empty and no finish is found:
+        pop first board state from queue
+        check if finish is reached
+        move carter if this finishes the game
+        else:
+            for every useful available move:
+                create child and save in queue if child is not seen before
+    ```
 
 ---
 
@@ -313,12 +313,12 @@ while queue is not empty and no finish is found:
 
 - ##### Implementation
 
-```pseudocode
-create list of rewind moves
-while list of rewind moves is not empty:
-    create new board state by rewinding specified amount of moves
-    run breadth first till old board state is found and save breadth first moves
-```
+    ```pseudocode
+    create list of rewind moves
+    while list of rewind moves is not empty:
+        create new board state by rewinding specified amount of moves
+        run breadth first till old board state is found and save breadth first moves
+    ```
 
 ---
 
@@ -333,13 +333,13 @@ while list of rewind moves is not empty:
 
 - ##### Implementation
 
-```pseudocode
-while stack is not empty:
-    pop last board state from stack
-    check if board is solved
-        for every available valid move:
-            create child and save in stack if child is not seen before
-```
+    ```pseudocode
+    while stack is not empty:
+        pop last board state from stack
+        check if board is solved
+            for every available valid move:
+                create child and save in stack if child is not seen before
+    ```
 
 
 
