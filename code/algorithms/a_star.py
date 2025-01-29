@@ -1,10 +1,9 @@
 import numpy as np
 import heapq
-import copy
 import random
 from typing import Callable
 
-from code.classes import Board, CARTER_NAME, Mover, Direction
+from code.classes import Board, CARTER_NAME, Mover, Direction, Game, Orientation
 from code.algorithms import free_carter, all_max_moves
 
 
@@ -96,7 +95,14 @@ class AStar:
 
         # add a new board instance to the heap queue for each unseen valid move
         for move in possible_moves:
-            child_state = copy.deepcopy(next_state)
+
+            # create new board as child_state
+            data: list[tuple[str, Orientation, int, int, int]] = []
+            for vehicle in next_state.vehicles.values():
+                data.append((vehicle.name, vehicle.orientation, vehicle.location[0][0], vehicle.location[0][1], vehicle.length))
+
+            child_state = Game.setup_board(Board(next_state.size), data)
+
             new_mover = Mover(child_state)
 
             # make the valid move in the state
