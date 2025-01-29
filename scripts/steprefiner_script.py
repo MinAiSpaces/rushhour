@@ -16,7 +16,7 @@ def steprefiner(filename: str, game: Game, bin_size: int=10) -> None:
     in the data/experiment folder, and exports the moves made during the search
     to another CSV file in the data/output folder.
     """
-    print(f'Starting Step Refiner for {filename}')
+    print(f'Starting Step Refiner for {filename} with {len(game.moves)} steps')
     start_time = time.time()
 
     n_runs = 0
