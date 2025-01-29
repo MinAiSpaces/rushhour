@@ -7,7 +7,7 @@ To calculate the amount of different configurations for a single row/column we c
 - A vehicle is considered present in the row/column if the entirety of the vehicle is within that row/column.
 - A space in the row/column is considered empty if it is not occupied by a vehicle present in that row/column.
 - Only for the vehicles present in the row/column we adhere to the rule that vehicles cannot be placed on top of each other or cross one another.
-- For the row where **carter** is present the final space does not count as an 'empty' space since **carter** being there constitutes a finished game.
+- For the row where **Carter** is present the final space does not count as an 'empty' space since **Carter** being there constitutes a finished game.
 
 
 ### Formulas
@@ -71,7 +71,8 @@ $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 - col 6: v=1, s=4 &rarr; n=5
 
 #### statespace
-1.62E6
+$$3 * 6 * 4 * 6 * 5 * 1 * 1 * 6 * 5 * 1 * 5 =$$
+$$1.620E6$$
 
 ---
 
@@ -93,7 +94,8 @@ $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 - col 6: v=1, s=3 &rarr; n=4
 
 #### statespace
-1.08E7
+$$6 * 6 * 4 * 6 * 5 * 5 * 5 * 1 * 1 * 5 * 5 * 4 =$$
+$$1.080E7$$
 
 ---
 
@@ -115,7 +117,8 @@ $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 - col 6: v=1, s=3 &rarr; n=4
 
 #### statespace
-8E5
+$$5 * 1 * 4 * 5 * 5 * 5 * 5 * 1 * 4 * 4 * 1 * 4 =$$
+$$8.000E5$$
 
 ---
 
@@ -143,7 +146,8 @@ $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 - col 9: v=1, s=4 &rarr; n=10
 
 #### statespace
-5.930E12
+$$7 * 7 * 1 * 15 * 7 * 7 * 21 * 1 * 10 * 20 * 1 * 7 * 10 * 8 * 7 * 1 * 1 * 10 =$$
+$$5.930E12$$
 
 ---
 
@@ -172,7 +176,8 @@ $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 
 
 #### statespace
-8.431E16
+$$7 * 8 * 8* 21 * 10 * 1 * 21 * 15 * 8 * 21 * 8 * 8 * 7 * 8 * 15 * 21 * 1 *15 =$$
+$$8.431E16$$
 
 ---
 
@@ -200,7 +205,8 @@ $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 - col 9: v=1, s=6 &rarr; n=7
 
 #### statespace
-4.519E17
+$$21 * 15 * 21 * 7 * 7 * 21 * 15 * 21 * 7 * 15 * 8 * 8 * 7 * 10 * 8 * 1 8 * 7 =$$
+$$4.519E17$$
 
 ---
 
@@ -234,4 +240,5 @@ $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 - col 12: v=3, s=6 &rarr; n=84
 
 #### statespace
-1.088E30
+$$36 * 1 * 56 * 45 * 28 * 10 * 36 * 56 * 35 * 36  * 1 * 56 * 36 * 10 * 11 * 11 * 11 * 84 * 5 * 11 * 1 * 45 * 36 * 84 =$$
+$$1.088E30$$
