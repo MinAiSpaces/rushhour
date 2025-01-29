@@ -28,7 +28,10 @@ def steprefiner(filename: str, game: Game, bin_size: int=10) -> None:
         steprefiner.run()
 
         if len(steprefiner.new_moves) == len(game.moves):
-            break
+            if bin_size > 5:
+                bin_size -= 1
+            else:
+                break
 
         game.moves = steprefiner.new_moves
 
