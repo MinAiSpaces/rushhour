@@ -7,7 +7,7 @@ To calculate the amount of different configurations for a single row/column we c
 - A vehicle is considered present in the row/column if the entirety of the vehicle is within that row/column.
 - A space in the row/column is considered empty if it is not occupied by a vehicle present in that row/column.
 - Only for the vehicles present in the row/column we adhere to the rule that vehicles cannot be placed on top of each other or cross one another.
-- For the row where **carter** is present the final space does not count as an 'empty' space since **carter** being there constitutes a finished game.
+- For the row where **Carter** is present the final space does not count as an 'empty' space since **Carter** being there constitutes a finished game.
 
 
 ### Formulas
