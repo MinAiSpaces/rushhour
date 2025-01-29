@@ -217,7 +217,7 @@ while queue is not empty or game is not finished:
 #### Description
 
 - ##### Selection Process
-    - Take the board state from queue.
+    - Take the first board state from queue.
     - Check if the path for Carter is free to finish the game and make this move if so.
     - All maximum moves are collected and stored in a list of tuples.
     - For every maximum move found, save the new state if not seen before.
@@ -226,7 +226,7 @@ while queue is not empty or game is not finished:
 
 ```pseudocode
 while queue is not empty and no finish is found:
-    pop board state from queue
+    pop first board state from queue
     check if finish is reached
     move carter if this finishes the game
     else:
@@ -239,7 +239,7 @@ while queue is not empty and no finish is found:
 #### Description
 
 - ##### Selection Process
-    - Take the board state from queue.
+    - Take the first board state from queue.
     - Check if the path for Carter is free to finish the game and make this move if so.
     - All available valid moves are collected and stored in a list of tuples.
     - For every available valid move found, save the new state if not seen before.
@@ -248,7 +248,7 @@ while queue is not empty and no finish is found:
 
 ```pseudocode
 while queue is not empty and no finish is found:
-    pop board state from queue
+    pop first board state from queue
     check if finish is reached
     move carter if this finishes the game
     else:
@@ -261,7 +261,7 @@ while queue is not empty and no finish is found:
 #### Description
 
 - ##### Selection Process
-    - Take the board state from queue.
+    - Take the first board state from queue.
     - Check if the path for Carter is free to finish the game and make this move if so.
     - All maximum moves are collected and stored in a list of tuples.
     - For every useful maximum move found, save the new state if not seen before.
@@ -270,7 +270,7 @@ while queue is not empty and no finish is found:
 
 ```pseudocode
 while queue is not empty and no finish is found:
-    pop board state from queue
+    pop first board state from queue
     check if finish is reached
     move carter if this finishes the game
     else:
@@ -284,7 +284,7 @@ while queue is not empty and no finish is found:
 
 - ##### Selection Process
 
-    - Take the board state from queue.
+    - Take the first board state from queue.
     - Check if the path for Carter is free to finish the game and make this move if so.
     - All available valid moves are collected and stored in a list of tuples.
     - For every useful available move found, save the new state if not seen before.
@@ -293,11 +293,53 @@ while queue is not empty and no finish is found:
 
 ```pseudocode
 while queue is not empty and no finish is found:
-    pop board state from queue
+    pop first board state from queue
     check if finish is reached
     move carter if this finishes the game
     else:
         for every useful available move:
             create child and save in queue if child is not seen before
 ```
+
+---
+
+## Step Refiner
+
+### Description
+
+- ##### Parameters
+    - Bin size: the specified number of steps used to rewind the board
+    - Requires a solved board and its corresponding solved moves
+
+- ##### Implementation
+
+```pseudocode
+create list of rewind moves
+while list of rewind moves is not empty:
+    create new board state by rewinding specified amount of moves
+    run breadth first till old board state is found and save breadth first moves
+```
+
+---
+
+## Depth First
+
+#### Description
+
+- ##### Selection Process
+    - Take the last board state from queue.
+    - All available valid moves are collected and stored in a list of tuples.
+    - For every available valid move found, save the new state if not seen before.
+
+- ##### Implementation
+
+```pseudocode
+while stack is not empty:
+    pop last board state from stack
+    check if board is solved
+        for every available valid move:
+            create child and save in stack if child is not seen before
+```
+
+
 
