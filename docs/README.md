@@ -6,7 +6,7 @@ This folder contains the documentation for our project.
 
 - [Representation](Representation.md)
 - [Algorithms](Algorithms.md)
-- [State_Space](state_space.md)
+- [State space](State_space.md)
 
 
 ## Baseline measurements
