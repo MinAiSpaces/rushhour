@@ -1,10 +1,13 @@
 import queue
 import copy
+import os
 
 import numpy as np
 
 from code.classes import Board, Mover, CARTER_NAME
+from code.utils import write_board_state_to_csv, write_moves_to_csv
 from .heuristics import free_carter, all_max_moves, check_useful_move
+from code.helpers import get_intermediate_states_path
 
 
 class BreadthFirst:
@@ -64,6 +67,20 @@ class BreadthFirst:
             if tuple(map(tuple, child_state.locations)) not in self.seen_states:
                 self.seen_states.add(tuple(map(tuple, child_state.locations)))
                 self.queue.put((child_state, move_history + [move]))
+
+                if len(self.seen_states) % 50000 == 0:
+                    intermediate_states_path = get_intermediate_states_path()
+                    os.makedirs(intermediate_states_path, exist_ok=True)
+
+
+                    state_file_path = os.path.join(intermediate_states_path, f'BreadthFirst_state_{len(self.seen_states)}')
+                    vehicles = child_state.vehicles.values()
+                    write_board_state_to_csv(state_file_path, vehicles)
+
+                    moves_file_path = os.path.join(intermediate_states_path, f'BreadthFirst_moves_{len(self.seen_states)}')
+                    moves = move_history + [move]
+                    write_moves_to_csv(moves_file_path, moves)
+                    print(f'saved progress at {len(self.seen_states)} seen states')
 
                 # keep track of statistics
                 if self.queue.qsize() > self.max_queue_size:
