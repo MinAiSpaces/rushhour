@@ -2,17 +2,23 @@
 ## Explanation
 
 For the calculation of the state space of each board we take the product of all possible configurations of every row and column.
-To calculate the amount of different configurations for a single row/column we check te amount of vehicle present in that row/colomn and the amount of 'empty' spaces left.
+To calculate the amount of different configurations for a single row/column we check the amount of vehicles present in that row/colomn and the amount of 'empty' spaces left.
 
 - A vehicle is considered present in the row/column if the entirety of the vehicle is within that row/column.
 - A space in the row/column is considered empty if it is not occupied by a vehicle present in that row/column.
-- For the vehicles present in the row/column we adhere to the rule that vehicles cannot be placed on top of each other or cross one another.
+- Only for the vehicles present in the row/column we adhere to the rule that vehicles cannot be placed on top of each other or cross one another.
 - For the row where **carter** is present the final space does not count as an 'empty' space since **carter** being there constitutes a finished game.
 
 
 ### Formulas
 
-To calculate the amount of different configurations of a single row/column
+To calculate the amount of different configurations of a single row/column:
+
+---
+- n = amount of different configurations
+- v = number of vehicles present
+- s = number of empty spaces
+---
 
 for v=0
 $$n = 1$$
@@ -31,10 +37,6 @@ $$n = \sum_{k=0}^{s}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 
 for v=5:
 $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
-
-- n = amount of different configurations
-- v = number of vehicles present
-- s = number of empty spaces
 
 
 ### Table
@@ -71,6 +73,7 @@ $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 #### statespace
 1.62E6
 
+---
 
 ### 6x6_2
 
@@ -92,6 +95,7 @@ $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 #### statespace
 1.08E7
 
+---
 
 ### 6x6_3
 
@@ -113,6 +117,7 @@ $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 #### statespace
 8E5
 
+---
 
 ### 9x9_4
 
@@ -140,6 +145,7 @@ $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 #### statespace
 5.930E12
 
+---
 
 ### 9x9_5
 
@@ -168,6 +174,7 @@ $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 #### statespace
 8.431E16
 
+---
 
 ### 9x9_6
 
@@ -195,6 +202,7 @@ $$n = \sum_{l=0}^{s}\sum_{k=0}^{l}\sum_{j=0}^{k}\sum_{i=0}^{j}1+i$$
 #### statespace
 4.519E17
 
+---
 
 ### 12x12_7
 
