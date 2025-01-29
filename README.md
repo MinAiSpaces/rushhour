@@ -42,6 +42,7 @@ The project follows a modular structure for scalability and clarity:
         helpers.py
         utils.py
     data/
+        experiment/
         input/
             gameboards/
                 Rushhour6x6_1.csv
@@ -61,13 +62,14 @@ The project follows a modular structure for scalability and clarity:
                 Rushhour6x6_test.csv
         output/
     docs/
-        Baseline/
+        baseline/
             images/
             Baseline.md
         images/
         Algorithms.md
-        Representation.md
         README.md
+        Representation.md
+        State_space.md
     scripts/
         __init__.py
         a_star_script.py
@@ -94,11 +96,11 @@ The project follows a modular structure for scalability and clarity:
     - **`code/`**: Contains the core implementation of the game
         - **`algorithms/`**: Heuristic and randomization algorithms
             - `__init__.py`
-            - `a_star.py`: Implements A* algorithm for solving the game
+            - `a_star.py`: Implements a A* algorithm for solving the game
             - `breadth_first.py`: Implements a Breadth First Search (BFS) algorithm for solving the game
             - `depth_first.py`: Implements a Depth First Search (DFS) algorithm for solving the game
             - `heuristics.py`: Implements some additional heuristics for solving the game
-            - `randomize.py`: Implements randomization algorithms for solving the game
+            - `randomise.py`: Implements randomization algorithms for solving the game
             - `steprefiner.py`: Implements 'step refiner' heuristics for solving the game
         - **`classes/`**: Representations of the core objects
             - `__init__.py`
@@ -108,7 +110,8 @@ The project follows a modular structure for scalability and clarity:
             - `plotter.py`: Handles visualization (static/animated)
             - `vehicle.py`: Represents vehicles, tracking their attributes and movements
         - `__init__.py`
-        - `helpers.py`: Utility functions to support game logic
+        - `helpers.py`: Helper functions to support finding paths
+        - `utils.py`: Utility functions to support writing and reading from files
       - **`data/`**: Data folder for ingesting game boards and storing solutions
         - **`experiment/`**: Contains the results of the experiments
         - **`input/`**: Contains game boards to ingest
@@ -116,18 +119,19 @@ The project follows a modular structure for scalability and clarity:
             - **`test_boards/`**: Contains game boards used for testing our algorithms and representation
         - **`output/`**: Folder for storing game solutions and exporting game state visualization
     - **`docs/`**: Documentation for the project's design, planning and results
-        - **`Baseline/`**: Contains data and images related to the results of randomization algorithms
+        - **`baseline/`**: Contains data and images related to the results of randomization algorithms
             - `images/`: Visualizations of baseline measurement results
             - `Baseline.md`: Documents the baseline results and statistical insights
         - **`images/`**: Images used in the various documents
         - `Algorithms.md`: Explains the solving algorithms implemented in the project
         - `Representation.md`: Details the representation choices for modeling the game
         - `README.md`: Overview of the documentation folder and its purpose
+        - `State_space.md`: Shows the calculations for the state space sizes for each board
     - **`scripts/`**: Scripts to run experiments with the algorithms
         - `__init__.py`
         - `a_star_script.py`: Runs the A* algorithm
         - `breadth_first_script.py`: Runs the BFS algorithm
-        - `random_script.py`: Runs the random algorithm
+        - `random_script.py`: Runs the Random algorithm
         - `steprefiner_script.py`: Runs the Step Refiner algorithm
     - **`tests/`**: Unit tests for ensuring the correctness of core functionality
         - `__init__.py`
@@ -149,6 +153,8 @@ The project follows a modular structure for scalability and clarity:
   - [Representation](docs/Representation.md)
   - [Algorithms](docs/Algorithms.md)
   - [Baseline measurements](docs/Baseline/Baseline.md)
+  - [State space](docs/State_space.md)
+  - [Heuristics](docs/Heuristics.md)
 
 ---
 
@@ -181,6 +187,7 @@ Generating animations of the moves using `ffmpeg` as `writer` will only work if 
    ```bash
    cd <rush_hour_folder_name>
     ```
+
 2. Run the main script to start the game:
    ```bash
    python main.py
@@ -191,14 +198,17 @@ Generating animations of the moves using `ffmpeg` as `writer` will only work if 
    ```bash
    cd <rush_hour_folder_name>
    ```
+
 2. Run all tests:
    ```bash
    pytest
    ```
+
 3. To run a specific test file:
    ```bash
    pytest tests/vehicle_test.py
    ```
+
 4. To show verbose test results add the `-v` flag:
    ```bash
    pytest -v
@@ -232,25 +242,24 @@ The scripts can be found in the **`scripts`** folder and are determined to be us
    ```bash
    cd <rush_hour_folder_name>
    ```
-2. Run script:
+2. Run:
    ```bash
    python -m scripts.<script_name> <script_arguments>
    ```
 
 
-#### Random:
-- Run
+### Random:
+- Run:
     ```bash
     python -m scripts.random_script <filename>
     ```
-
 - Example:
     ```bash
     python -m scripts.random_script 'RushHour6x6_1.csv'
     ```
 
-#### A*:
-- Run
+### A*:
+- Run:
     ```bash
     python -m scripts.a_star_script <filename>
     ```
@@ -260,12 +269,14 @@ The scripts can be found in the **`scripts`** folder and are determined to be us
     python -m scripts.a_star_script 'RushHour6x6_1.csv'
     ```
 
-    Optional arguments:
-    - `-nmm`
-        - Boolean flag to disable max moves
+Optional arguments:
+- `-nmm`
+    - Boolean flag to disable max moves
 
-#### BFS:
-- Run
+---
+
+### BFS:
+- Run:
     ```bash
     python -m scripts.breadth_first_script <filename>
     ```
@@ -278,10 +289,12 @@ The scripts can be found in the **`scripts`** folder and are determined to be us
 Optional arguments:
 - `-nmm`
     - Boolean flag to disable max moves
-  - `-um`
-      - Boolean flag to enable only useful moves
+- `-um`
+    - Boolean flag to enable only useful moves
 
-#### Step Refiner:
+---
+
+### Step Refiner:
 - Run
     ```bash
     python -m scripts.steprefiner_script <filename>
@@ -292,8 +305,11 @@ Optional arguments:
     python -m scripts.steprefiner_script 'RushHour6x6_1'
     ```
 
-  - `-bz` `<number>`
-      - Specify the rewind steps (default: 10)
+Optional arguments:
+- `-bz` `<number>`
+    - Specify the rewind steps (default: 10)
+
+---
 
 Step Refiner needs a solved game, which we get from running the random script for 1800 seconds.
 
