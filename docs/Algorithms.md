@@ -87,3 +87,123 @@ while no solution found:
         if vehicle is not the same as last moved vehicle:
             perform the selected move and save moved vehicle
 ```
+
+---
+
+## A-Star
+
+### Algorithm 1: A-Star with num blocking vehicles and max steps
+
+#### Description
+
+- ##### Selection Process
+
+    - Take the board state with lowest score from heapqueue.
+    - Check if the path for Carter is free to finish the game and make this move if so.
+    - All maximum moves are collected and stored in a list of tuples.
+    - For every maximum moves found, save the new state and score if not seen before.
+
+- ##### Score calculation
+
+    ```pseudocode
+    Score = depth + 1 + number vehicles blocking carter in the front
+    ```
+
+- ##### Implementation
+
+```pseudocode
+while queue is not empty or game is not finished:
+    pop best board state from heapqueue
+    move carter if this finishes the game
+    else:
+        for every max move:
+            create child
+            create score and save in heapqueue if child is not seen before
+```
+
+### Algorithm 2: A-Star with num blocking vehicles and all available valid moves
+
+#### Description
+
+- ##### Selection Process
+
+    - Take the board state with lowest score from heapqueue.
+    - Check if the path for Carter is free to finish the game and make this move if so.
+    - All available valid moves are collected and stored in a list of tuples.
+    - For every available valid move found, save the new state and score if not seen before.
+
+- ##### Score calculation
+
+    ```pseudocode
+    Score = depth + 1 + number vehicles blocking carter in the front
+    ```
+
+- ##### Implementation
+
+```pseudocode
+while queue is not empty or game is not finished:
+    pop best board state from heapqueue
+    move carter if this finishes the game
+    else:
+        for every available valid move:
+            create child
+            create score and save in heapqueue if child is not seen before
+```
+
+### Algorithm 3: A-Star with num two blocking vehicles and max steps
+
+#### Description
+
+- ##### Selection Process
+
+    - Take the board state with lowest score from heapqueue.
+    - Check if the path for Carter is free to finish the game and make this move if so.
+    - All maximum moves are collected and stored in a list of tuples.
+    - For every maximum moves found, save the new state and score if not seen before.
+
+- ##### Score calculation
+
+    ```pseudocode
+    Score = depth + 1 + number vehicles blocking carter in the front + number vehicles blocking those vehicles
+    ```
+
+- ##### Implementation
+
+```pseudocode
+while queue is not empty or game is not finished:
+    pop best board state from heapqueue
+    move carter if this finishes the game
+    else:
+        for every max move:
+            create child
+            create score and save in heapqueue if child is not seen before
+```
+
+### Algorithm 4: A-Star with num two blocking vehicles and all available valid moves
+
+#### Description
+
+- ##### Selection Process
+
+    - Take the board state with lowest score from heapqueue.
+    - Check if the path for Carter is free to finish the game and make this move if so.
+    - All available valid moves are collected and stored in a list of tuples.
+    - For every available valid move found, save the new state and score if not seen before.
+
+- ##### Score calculation
+
+    ```pseudocode
+    Score = depth + 1 + number vehicles blocking carter in the front + number vehicles blocking those vehicles
+    ```
+
+- ##### Implementation
+
+```pseudocode
+while queue is not empty or game is not finished:
+    pop best board state from heapqueue
+    move carter if this finishes the game
+    else:
+        for every available valid move:
+            create child
+            create score and save in heapqueue if child is not seen before
+```
