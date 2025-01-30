@@ -172,7 +172,7 @@ The project follows a modular structure for scalability and clarity:
 2. Create a virtual environment (optional but recommended):
    ```bash
    python3 -m venv rushhour
-   source venv/bin/activate    # On Windows: venv\Scripts\activate
+   source rushhour/bin/activate    # On Windows: rushhour\Scripts\activate
    ```
 3. Install dependencies:
    ```bash
